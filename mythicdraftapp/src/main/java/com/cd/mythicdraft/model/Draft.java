@@ -20,7 +20,12 @@ public class Draft implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "HASH")
+	@Column(name   = "NAME",
+			length = 20)	
+	private String name;
+	
+	@Column(name   = "HASH",
+			length = 32)
 	private String hash;	
 	
 	public Integer getId() {
@@ -29,6 +34,14 @@ public class Draft implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getHash() {
