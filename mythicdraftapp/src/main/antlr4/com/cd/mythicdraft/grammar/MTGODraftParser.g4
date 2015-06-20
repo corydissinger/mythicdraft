@@ -14,8 +14,8 @@ time: TIMESTAMP;
 
 playersField: PLAYERS_FIELD SEPARATOR SEPARATOR playersList+ SEPARATOR SEPARATOR;
 playersList: ((TAB aPlayer | SELECTED currentPlayer ) SEPARATOR SEPARATOR);
-currentPlayer: CARD_NAME;
-aPlayer: CARD_NAME;
+currentPlayer: USER_NAME;
+aPlayer: USER_NAME;
 
 packsField: pack*;
 pack: HYPHEN_LEFT set HYPHEN_RIGHT SEPARATOR SEPARATOR SEPARATOR SEPARATOR packPicks*;

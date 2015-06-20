@@ -5,41 +5,37 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.cd.mythicdraft.model.DraftSets.DraftSetsId;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 @Entity
-@Table(name = "DRAFT_SETS")
-@IdClass(DraftSetsId.class)
-public class DraftSets implements Serializable {
+@Table(name = "DRAFT_PACK")
+public class DraftPack implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	@SuppressWarnings(value = { "unused", "serial" })
-	class DraftSetsId implements Serializable {
-		private Integer draftId;
-		private Integer setId;
-		private Integer sequenceId;		
-	}	
 	
 	@Id
+	@Column(name = "ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
 	@Column(name = "DRAFT_ID",
 			insertable = false,
 			updatable = false)
 	private Integer draftId;
 
-	@Id
 	@Column(name = "SET_ID",
 			insertable = false,
 			updatable = false)	
 	private Integer setId;
 	
-	@Id
 	@Column(name = "SEQUENCE_ID")
 	private Integer sequenceId;
 	
@@ -59,6 +55,14 @@ public class DraftSets implements Serializable {
 
 	public void setDraftId(Integer draftId) {
 		this.draftId = draftId;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Integer getSetId() {
@@ -92,5 +96,9 @@ public class DraftSets implements Serializable {
 	public void setSet(Set set) {
 		this.set = set;
 	}	
-	
+
+	@Override
+	public String toString() {
+		return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}	
 }

@@ -32,12 +32,10 @@ public class MTGODraftListenerImpl extends MTGODraftParserBaseListener {
 	
 	@Override
 	public void enterEventId(EventIdContext ctx) {
-		logger.debug(ctx.getText());
 	}
 
 	@Override
 	public void enterTime(TimeContext ctx) {
-		logger.debug(ctx.getText());
 	}
 
 	@Override 
@@ -65,7 +63,6 @@ public class MTGODraftListenerImpl extends MTGODraftParserBaseListener {
 	
 	@Override 
 	public void enterPick(PickContext ctx) { 
-		logger.debug(ctx.getText());		
 	}
 
 	public List<String> getOtherPlayers() {

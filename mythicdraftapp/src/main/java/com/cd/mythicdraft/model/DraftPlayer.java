@@ -12,17 +12,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.cd.mythicdraft.model.DraftPlayers.DraftPlayersId;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import com.cd.mythicdraft.model.DraftPlayer.DraftPlayerId;
 
 @Entity
-@Table(name = "DRAFT_PLAYERS")
-@IdClass(DraftPlayersId.class)
-public class DraftPlayers implements Serializable {
+@Table(name = "DRAFT_PLAYER")
+@IdClass(DraftPlayerId.class)
+public class DraftPlayer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@SuppressWarnings(value = { "unused", "serial" })
-	class DraftPlayersId implements Serializable {
+	class DraftPlayerId implements Serializable {
 		private Integer playerId;
 		private Integer draftId;
 		private Boolean isActivePlayer;		
@@ -93,5 +96,9 @@ public class DraftPlayers implements Serializable {
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
-	
+
+	@Override
+	public String toString() {
+		return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}	
 }

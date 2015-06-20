@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 @Entity
 @Table(name = "DRAFT")
 public class Draft implements Serializable {
@@ -27,15 +30,14 @@ public class Draft implements Serializable {
 			length = 20)	
 	private String name;
 	
-	@Column(name   = "HASH",
-			length = 32)
-	private String hash;	
+	@Column(name   = "EVENT_ID")
+	private Integer eventId;	
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<DraftPlayers> draftPlayers;
+	private List<DraftPlayer> draftPlayers;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<DraftSets> draftSets;
+	private List<DraftPack> draftPacks;
 	
 	public Integer getId() {
 		return id;
@@ -43,6 +45,14 @@ public class Draft implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Integer getEventId() {
+		return eventId;
+	}
+
+	public void setEventId(Integer eventId) {
+		this.eventId = eventId;
 	}
 
 	public String getName() {
@@ -53,27 +63,24 @@ public class Draft implements Serializable {
 		this.name = name;
 	}
 
-	public String getHash() {
-		return hash;
-	}
-
-	public void setHash(String hash) {
-		this.hash = hash;
-	}
-
-	public List<DraftPlayers> getDraftPlayers() {
+	public List<DraftPlayer> getDraftPlayers() {
 		return draftPlayers;
 	}
 
-	public void setDraftPlayers(List<DraftPlayers> draftPlayers) {
+	public void setDraftPlayers(List<DraftPlayer> draftPlayers) {
 		this.draftPlayers = draftPlayers;
 	}
 
-	public List<DraftSets> getDraftSets() {
-		return draftSets;
+	public List<DraftPack> getDraftPacks() {
+		return draftPacks;
 	}
 
-	public void setDraftSets(List<DraftSets> draftSets) {
-		this.draftSets = draftSets;
+	public void setDraftPacks(List<DraftPack> draftPacks) {
+		this.draftPacks = draftPacks;
+	}
+
+	@Override
+	public String toString() {
+		return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
 	}	
 }

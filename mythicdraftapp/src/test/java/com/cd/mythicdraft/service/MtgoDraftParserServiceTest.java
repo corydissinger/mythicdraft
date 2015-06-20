@@ -16,6 +16,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.cd.mythicdraft.grammar.impl.MTGODraftListenerImpl;
 import com.cd.mythicdraft.model.Draft;
+import com.cd.mythicdraft.model.DraftPack;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -47,34 +48,49 @@ public class MtgoDraftParserServiceTest {
 		Draft aDraft = mtgoDraftParserService.parse(tprDraftStream);
 		
 		assertTrue(aDraft.getDraftPlayers().size() == 8);
-		assertTrue(aDraft.getDraftSets().size() == 3);
+		assertTrue(aDraft.getDraftPacks().size() == 3);
+
+		System.out.println(aDraft.toString());
 	}
 
+	@Test
 	public void testDTKDTKFRF() throws Exception{
 		InputStream tprDraftStream = loadResource("DTKDTKFRF1.txt");
 		
 		Draft aDraft = mtgoDraftParserService.parse(tprDraftStream);
 		
 		assertTrue(aDraft.getDraftPlayers().size() == 8);
-		assertTrue(aDraft.getDraftSets().size() == 3);
+		assertTrue(aDraft.getDraftPacks().size() == 3);
+		
+		DraftPack shouldBeFrf = aDraft.getDraftPacks().get(2);
+		
+		assertTrue("FRF".equals(shouldBeFrf.getSet().getName()));
+		
+		System.out.println(aDraft.toString());		
 	}	
 
+	@Test	
 	public void testMM2MM2MM21() throws Exception{
 		InputStream tprDraftStream = loadResource("MM2MM2MM21.txt");
 		
 		Draft aDraft = mtgoDraftParserService.parse(tprDraftStream);
 		
 		assertTrue(aDraft.getDraftPlayers().size() == 8);
-		assertTrue(aDraft.getDraftSets().size() == 3);
+		assertTrue(aDraft.getDraftPacks().size() == 3);
+		
+		System.out.println(aDraft.toString());		
 	}	
 	
+	@Test	
 	public void testMM2MM2MM22() throws Exception{
 		InputStream tprDraftStream = loadResource("MM2MM2MM22.txt");
 		
 		Draft aDraft = mtgoDraftParserService.parse(tprDraftStream);
 		
 		assertTrue(aDraft.getDraftPlayers().size() == 8);
-		assertTrue(aDraft.getDraftSets().size() == 3);
+		assertTrue(aDraft.getDraftPacks().size() == 3);
+		
+		System.out.println(aDraft.toString());		
 	}	
 	
 	private InputStream loadResource(String resourceName) throws IOException {

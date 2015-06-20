@@ -19,8 +19,8 @@ import com.cd.mythicdraft.grammar.MTGODraftLexer;
 import com.cd.mythicdraft.grammar.MTGODraftParser;
 import com.cd.mythicdraft.grammar.impl.MTGODraftListenerImpl;
 import com.cd.mythicdraft.model.Draft;
-import com.cd.mythicdraft.model.DraftPlayers;
-import com.cd.mythicdraft.model.DraftSets;
+import com.cd.mythicdraft.model.DraftPack;
+import com.cd.mythicdraft.model.DraftPlayer;
 import com.cd.mythicdraft.model.Player;
 import com.cd.mythicdraft.model.Set;
 
@@ -47,16 +47,16 @@ public class MtgoDraftParserService {
 		Draft draft = new Draft();
 		
 		draft.setDraftPlayers(createDraftPlayers(draft));
-		draft.setDraftSets(createDraftSets(draft));
+		draft.setDraftPacks(createDraftPacks(draft));
 		
 		return draft;
 	}
 	
-	private List<DraftPlayers> createDraftPlayers(Draft aDraft) {
-		List<DraftPlayers> draftPlayers = new ArrayList<DraftPlayers>(8);
+	private List<DraftPlayer> createDraftPlayers(Draft aDraft) {
+		List<DraftPlayer> draftPlayers = new ArrayList<DraftPlayer>(8);
 		
 		for(String aPlayer : mtgoDraftListener.getOtherPlayers()) {
-			DraftPlayers otherPlayer = new DraftPlayers();
+			DraftPlayer otherPlayer = new DraftPlayer();
 			Player player = new Player();
 			player.setName(aPlayer);
 			
@@ -67,7 +67,7 @@ public class MtgoDraftParserService {
 			draftPlayers.add(otherPlayer);
 		}
 		
-		DraftPlayers activePlayer = new DraftPlayers();
+		DraftPlayer activePlayer = new DraftPlayer();
 		Player player = new Player();
 		player.setName(mtgoDraftListener.getActivePlayer());
 		
@@ -80,12 +80,12 @@ public class MtgoDraftParserService {
 		return draftPlayers;
 	}
 
-	private List<DraftSets> createDraftSets(Draft aDraft) {
-		List<DraftSets> draftSets = new ArrayList<DraftSets>(3);
+	private List<DraftPack> createDraftPacks(Draft aDraft) {
+		List<DraftPack> draftPacks = new ArrayList<DraftPack>(3);
 		
 		for(int i = 0; i < mtgoDraftListener.getPackSets().size(); i++) {
 			String aSetName = mtgoDraftListener.getPackSets().get(i);
-			DraftSets draftSet = new DraftSets();
+			DraftPack draftSet = new DraftPack();
 			Set set = new Set();
 			
 			set.setName(aSetName);
@@ -94,9 +94,9 @@ public class MtgoDraftParserService {
 			draftSet.setSet(set);
 			draftSet.setSequenceId(i);
 			
-			draftSets.add(draftSet);
+			draftPacks.add(draftSet);
 		}
 		
-		return draftSets;
+		return draftPacks;
 	}	
 }
