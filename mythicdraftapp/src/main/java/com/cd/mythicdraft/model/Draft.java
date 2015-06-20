@@ -1,12 +1,15 @@
 package com.cd.mythicdraft.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,6 +30,9 @@ public class Draft implements Serializable {
 	@Column(name   = "HASH",
 			length = 32)
 	private String hash;	
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<DraftPlayers> draftPlayers;
 	
 	public Integer getId() {
 		return id;
@@ -52,4 +58,11 @@ public class Draft implements Serializable {
 		this.hash = hash;
 	}
 
+	public List<DraftPlayers> getDraftPlayers() {
+		return draftPlayers;
+	}
+
+	public void setDraftPlayers(List<DraftPlayers> draftPlayers) {
+		this.draftPlayers = draftPlayers;
+	}	
 }

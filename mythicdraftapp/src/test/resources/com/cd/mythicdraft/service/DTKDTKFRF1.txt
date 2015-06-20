@@ -1,0 +1,468 @@
+Event #: 8305539
+Time:    5/21/2015 9:26:40 PM
+Players:
+    XoXelo
+    DaltonCastle
+    CoolMrFrosty
+--> baronvonfonz
+    uhavebeenrobbed
+    CptnNimo
+    yo1.t
+    Teddarooski
+
+------ DTK ------ 
+
+Pack 1 pick 1:
+    Qarsi Sadist
+    Sabertooth Outrider
+    Champion of Arashin
+    Shambling Goblin
+    Zephyr Scribe
+    Pinion Feast
+    Misthoof Kirin
+    Ojutai's Breath
+    Spidersilk Net
+    Twin Bolt
+    Silumgar's Scorn
+    Great Teacher's Decree
+    Youthful Scholar
+--> Silumgar Assassin
+    Swamp
+
+Pack 1 pick 2:
+    Marsh Hulk
+    Lose Calm
+    Territorial Roc
+    Mind Rot
+    Mystic Meditation
+    Tread Upon
+--> Sprinting Warbrute
+    Stampeding Elk Herd
+    Ancestral Statue
+    Duress
+    Sight of the Scalelords
+    Dragonlord's Servant
+    Void Squall
+    Swamp
+
+Pack 1 pick 3:
+    Resupply
+    Gravepurge
+    Hardened Berserker
+    Sandstorm Charger
+    Zephyr Scribe
+    Sheltered Aerie
+    Silumgar Butcher
+--> Evolving Wilds
+    Duress
+    Scaleguard Sentinels
+    Strongarm Monk
+    Gudul Lurker
+    Swamp
+
+Pack 1 pick 4:
+--> Sabertooth Outrider
+    Dromoka Dunecaster
+    Sibsig Icebreakers
+    Magmatic Chasm
+    Updraft Elemental
+    Dragon-Scarred Bear
+    Shape the Sands
+    Ancestral Statue
+    Lurking Arynx
+    Stormcrag Elemental
+    Encase in Ice
+    Mountain
+
+Pack 1 pick 5:
+--> Hand of Silumgar
+    Screamreach Brawler
+    Resupply
+    Gravepurge
+    Gurmag Drowner
+    Tread Upon
+    Naturalize
+    Marang River Skeleton
+    Shape the Sands
+    Learn from the Past
+    Mountain
+
+Pack 1 pick 6:
+    Mind Rot
+    Magmatic Chasm
+    Resupply
+--> Hand of Silumgar
+    Negate
+    Tread Upon
+    Taigam's Strike
+    Custodian of the Trove
+    Marang River Skeleton
+    Plains
+
+Pack 1 pick 7:
+    Silumgar's Scorn
+    Dutiful Attendant
+--> Impact Tremors
+    Custodian of the Trove
+    Taigam's Strike
+    Circle of Elders
+    Qarsi Deceiver
+    Commune with Lava
+    Island
+
+Pack 1 pick 8:
+    Volcanic Rush
+--> Dromoka Warrior
+    Wandering Tombshell
+    Sidisi's Faithful
+    Dirgur Nemesis
+    Naturalize
+    Enduring Scalelord
+    Mountain
+
+Pack 1 pick 9:
+    Qarsi Sadist
+    Champion of Arashin
+    Zephyr Scribe
+--> Ojutai's Breath
+    Spidersilk Net
+    Silumgar's Scorn
+    Swamp
+
+Pack 1 pick 10:
+--> Mind Rot
+    Mystic Meditation
+    Ancestral Statue
+    Duress
+    Dragonlord's Servant
+    Swamp
+
+Pack 1 pick 11:
+    Resupply
+    Gravepurge
+--> Sandstorm Charger
+    Sheltered Aerie
+    Swamp
+
+Pack 1 pick 12:
+--> Sibsig Icebreakers
+    Shape the Sands
+    Ancestral Statue
+    Mountain
+
+Pack 1 pick 13:
+    Resupply
+--> Gravepurge
+    Mountain
+
+Pack 1 pick 14:
+--> Resupply
+    Plains
+
+Pack 1 pick 15:
+--> Island
+
+------ DTK ------ 
+
+Pack 2 pick 1:
+    Sabertooth Outrider
+    Dromoka Dunecaster
+    Sibsig Icebreakers
+    Ojutai Interceptor
+    Herald of Dromoka
+    Segmented Krotiq
+    Tail Slash
+    Defeat
+    Glade Watcher
+    Gurmag Drowner
+    Herdchaser Dragon
+    Stormwing Dragon
+    Minister of Pain
+--> Corpseweft
+    Plains
+
+Pack 2 pick 2:
+    Dromoka Dunecaster
+    Dutiful Attendant
+    Glint
+    Artful Maneuver
+    Revealing Wind
+    Vandalize
+    Fate Forgotten
+--> Flatten
+    Servant of the Scale
+    Contradict
+    Ainok Survivalist
+    Rending Volley
+    Silumgar Sorcerer
+    Forest
+
+Pack 2 pick 3:
+    Champion of Arashin
+    Shambling Goblin
+    Reduce in Stature
+    Dragon's Eye Sentry
+    Guardian Shield-Bearer
+    Vial of Dragonfire
+--> Butcher's Glee
+    Sheltered Aerie
+    Zephyr Scribe
+    Learn from the Past
+    Atarka Monument
+    Damnable Pact
+    Plains
+
+Pack 2 pick 4:
+    Dragon Fodder
+    Glaring Aegis
+--> Marsh Hulk
+    Lose Calm
+    Mystic Meditation
+    Sandsteppe Scavenger
+    Taigam's Strike
+    Silumgar Butcher
+    Evolving Wilds
+    Scion of Ugin
+    Dragon Tempest
+    Swamp
+
+Pack 2 pick 5:
+    Dromoka Warrior
+    Coat with Venom
+    Kolaghan Aspirant
+    Dromoka Dunecaster
+    Mystic Meditation
+    Evolving Wilds
+--> Summit Prowler
+    Naturalize
+    Echoes of the Kin Tree
+    Sarkhan's Triumph
+    Swamp
+
+Pack 2 pick 6:
+    Territorial Roc
+    Marsh Hulk
+    Kindled Fury
+    Sandstorm Charger
+    Monastery Loremaster
+    Spidersilk Net
+    Shape the Sands
+    Display of Dominance
+--> Self-Inflicted Wound
+    Island
+
+Pack 2 pick 7:
+--> Kolaghan Skirmisher
+    Herald of Dromoka
+    Tormenting Voice
+    Keeper of the Lens
+    Dragon-Scarred Bear
+    Zephyr Scribe
+    Lurking Arynx
+    Dragonlord's Servant
+    Swamp
+
+Pack 2 pick 8:
+    Qarsi Sadist
+--> Sabertooth Outrider
+    Ancient Carp
+    Foul-Tongue Shriek
+    Conifer Strider
+    Echoes of the Kin Tree
+    Surge of Righteousness
+    Plains
+
+Pack 2 pick 9:
+    Dromoka Dunecaster
+    Sibsig Icebreakers
+--> Defeat
+    Herdchaser Dragon
+    Stormwing Dragon
+    Minister of Pain
+    Plains
+
+Pack 2 pick 10:
+    Dromoka Dunecaster
+--> Glint
+    Revealing Wind
+    Vandalize
+    Fate Forgotten
+    Forest
+
+Pack 2 pick 11:
+    Reduce in Stature
+    Dragon's Eye Sentry
+    Sheltered Aerie
+--> Learn from the Past
+    Plains
+
+Pack 2 pick 12:
+    Glaring Aegis
+--> Lose Calm
+    Taigam's Strike
+    Swamp
+
+Pack 2 pick 13:
+--> Mystic Meditation
+    Naturalize
+    Swamp
+
+Pack 2 pick 14:
+--> Shape the Sands
+    Island
+
+Pack 2 pick 15:
+--> Swamp
+
+------ FRF ------ 
+
+Pack 3 pick 1:
+    Jeskai Runemark
+    Douse in Gloom
+    War Flare
+    Arashin Cleric
+    Whisk Away
+    Sibsig Host
+    Collateral Damage
+    Formless Nurturing
+    Sandsteppe Outcast
+    Temur Battle Rage
+    Grave Strength
+    Arashin War Beast
+    Ugin's Construct
+--> Alesha, Who Smiles at Death
+    Tranquil Cove
+
+Pack 3 pick 2:
+    Will of the Naga
+    Sultai Runemark
+    Abzan Runemark
+    Aven Surveyor
+    Ancestral Vengeance
+    War Flare
+    Temur Runemark
+    Write into Being
+--> Bathe in Dragonfire
+    Map the Wastes
+    Diplomacy of the Wastes
+    Ruthless Instincts
+    Sage's Reverie
+    Tranquil Cove
+
+Pack 3 pick 3:
+    Abzan Advantage
+    Refocus
+    Hooded Assassin
+    Abzan Skycaptain
+    Pyrotechnics
+    Great-Horn Krushok
+    Ambush Krotiq
+    Gore Swine
+    Frontier Mastodon
+    Fascination
+    Wild Slash
+    Valorous Stance
+--> Archfiend of Depravity
+
+Pack 3 pick 4:
+    Soul Summons
+    Sultai Skullkeeper
+--> Reach of Shadows
+    Harsh Sustenance
+    Pressure Point
+    Whisk Away
+    Lightning Shrieker
+    Sandsteppe Outcast
+    Fearsome Awakening
+    Renowned Weaponsmith
+    Mardu Woe-Reaper
+    Swiftwater Cliffs
+
+Pack 3 pick 5:
+    Grim Contest
+    Aven Skirmisher
+    Sultai Emissary
+    Harsh Sustenance
+    Abzan Skycaptain
+    Ambush Krotiq
+    Write into Being
+    Reality Shift
+    Channel Harm
+--> Vaultbreaker
+    Bloodfell Caves
+
+Pack 3 pick 6:
+    Grim Contest
+    Rakshasa's Disdain
+--> Gurmag Angler
+    Abzan Advantage
+    Alesha's Vanguard
+    Defiant Ogre
+    Shifting Loyalties
+    Qarsi High Priest
+    Ugin's Construct
+    Rugged Highlands
+
+Pack 3 pick 7:
+    Abzan Advantage
+    Refocus
+    Hooded Assassin
+    Abzan Skycaptain
+    Enhanced Awareness
+    Great-Horn Krushok
+    Ambush Krotiq
+    Reality Shift
+--> Rageform
+
+Pack 3 pick 8:
+    Aven Skirmisher
+--> Lotus Path Djinn
+    Ethereal Ambush
+    Feral Krushok
+    Lightning Shrieker
+    Archers of Qarsi
+    Smoldering Efreet
+    Return to the Earth
+
+Pack 3 pick 9:
+    Jeskai Runemark
+    War Flare
+    Arashin Cleric
+    Sibsig Host
+    Formless Nurturing
+--> Grave Strength
+    Arashin War Beast
+
+Pack 3 pick 10:
+    Sultai Runemark
+    Abzan Runemark
+    Ancestral Vengeance
+    War Flare
+    Temur Runemark
+--> Diplomacy of the Wastes
+
+Pack 3 pick 11:
+    Abzan Advantage
+--> Hooded Assassin
+    Great-Horn Krushok
+    Ambush Krotiq
+    Fascination
+
+Pack 3 pick 12:
+    Pressure Point
+--> Lightning Shrieker
+    Fearsome Awakening
+    Renowned Weaponsmith
+
+Pack 3 pick 13:
+    Aven Skirmisher
+--> Harsh Sustenance
+    Ambush Krotiq
+
+Pack 3 pick 14:
+    Abzan Advantage
+--> Alesha's Vanguard
+
+Pack 3 pick 15:
+--> Enhanced Awareness
+

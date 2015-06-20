@@ -1,0 +1,468 @@
+Event #: 8283017
+Time:    5/15/2015 11:14:29 PM
+Players:
+    Scryb
+--> baronvonfonz
+    WWWWWWWWWWWW
+    Pesz
+    Ilyon
+    grundlegus
+    Pheonix35
+    falcon_asmira
+
+------ TPR ------ 
+
+Pack 1 pick 1:
+    Soltari Lancer
+    Sea Monster
+    Twitch
+    Cursed Flesh
+    Maniacal Rage
+    Rampant Growth
+    Patchwork Gnomes
+    Bandage
+    Canopy Spider
+    Sandstone Warrior
+    Soltari Priest
+    Thalakos Drifters
+    Goblin Bombardment
+--> Ephemeron
+    Mountain
+
+Pack 1 pick 2:
+    Dauthi Jackal
+    Standing Troops
+    Shadow Rift
+--> Diabolic Edict
+    Flowstone Blade
+    Elvish Fury
+    Bandage
+    Spike Colony
+    Barbed Sliver
+    Caldera Lake
+    Legerdemain
+    Fugue
+    Shaman en-Kor
+    Swamp
+
+Pack 1 pick 3:
+    Mounted Archers
+    Wind Drake
+--> Diabolic Edict
+    Flowstone Blade
+    Elvish Fury
+    Bandage
+    Whispers of the Muse
+    Skyshroud Troll
+    Mogg Conscripts
+    Fighting Drake
+    Pegasus Stampede
+    Skyshroud Vampire
+    Island
+
+Pack 1 pick 4:
+    Lab Rats
+    Mounted Archers
+    Whispers of the Muse
+    Cursed Flesh
+    Seething Anger
+    Elven Rite
+    Angelic Blessing
+    Endangered Armodon
+    Anarchist
+--> Dauthi Slayer
+    Repentance
+    Mountain
+
+Pack 1 pick 5:
+    Thalakos Scout
+--> Dauthi Horror
+    Nomads en-Kor
+    Stun
+    Mulch
+    Smite
+    Furnace Brood
+    Crashing Boars
+    Cannibalize
+    Kor Chant
+    Forest
+
+Pack 1 pick 6:
+    Mounted Archers
+--> Carnophage
+    Spirit en-Kor
+    Mogg Flunkies
+    Death's Duet
+    Shatter
+    Gaseous Form
+    Renegade Warlord
+    Salt Flats
+    Forest
+
+Pack 1 pick 7:
+    Dauthi Jackal
+--> Death Stroke
+    Elven Rite
+    Patchwork Gnomes
+    Angelic Blessing
+    Wall of Souls
+    Soltari Monk
+    Skyshroud Forest
+    Forest
+
+Pack 1 pick 8:
+    Serpent Warrior
+    Maniacal Rage
+    Provoke
+    Anoint
+    Whispers of the Muse
+--> Soltari Monk
+    Tranquility
+    Mountain
+
+Pack 1 pick 9:
+--> Soltari Lancer
+    Sea Monster
+    Cursed Flesh
+    Patchwork Gnomes
+    Bandage
+    Canopy Spider
+    Mountain
+
+Pack 1 pick 10:
+    Standing Troops
+    Shadow Rift
+    Elvish Fury
+    Bandage
+--> Spike Colony
+    Swamp
+
+Pack 1 pick 11:
+    Mounted Archers
+    Bandage
+--> Whispers of the Muse
+    Skyshroud Troll
+    Island
+
+Pack 1 pick 12:
+--> Lab Rats
+    Mounted Archers
+    Angelic Blessing
+    Mountain
+
+Pack 1 pick 13:
+    Nomads en-Kor
+--> Smite
+    Crashing Boars
+
+Pack 1 pick 14:
+--> Shatter
+    Forest
+
+Pack 1 pick 15:
+--> Forest
+
+------ TPR ------ 
+
+Pack 2 pick 1:
+    Merfolk Looter
+    Lab Rats
+    Death Stroke
+    Kindle
+    Elven Rite
+    Patchwork Gnomes
+    Angelic Blessing
+--> Mana Leak
+    Endangered Armodon
+    Craven Giant
+    Deadshot
+    Victual Sliver
+    Volrath's Curse
+    Jinxed Idol
+    Mountain
+
+Pack 2 pick 2:
+    Thalakos Seer
+    Rats of Rath
+    Dark Ritual
+    Stun
+    Rampant Growth
+    Staunch Defenders
+    Shadow Rift
+    Heartwood Dryad
+    Anarchist
+    Crystalline Sliver
+--> Carnassid
+    Shadowstorm
+    Mogg Infestation
+    Island
+
+Pack 2 pick 3:
+    Clot Sliver
+    Youthful Knight
+    Hammerhead Shark
+    Mana Leak
+    Dark Ritual
+    Stun
+    Rampant Growth
+    Staunch Defenders
+    Skyshroud Troll
+    Crashing Boars
+    Sabertooth Wyvern
+--> Forbid
+    Swamp
+
+Pack 2 pick 4:
+    Youthful Knight
+    Hammerhead Shark
+    Standing Troops
+    Merfolk Looter
+    Anarchist
+    Time Ebb
+    Coercion
+    Shackles
+--> Killer Whale
+    Cinder Marsh
+    Field of Souls
+    Mountain
+
+Pack 2 pick 5:
+    Winged Sliver
+    Thrull Surgeon
+    Charging Paladin
+--> Merfolk Looter
+    Canopy Spider
+    Heartwood Dryad
+    Shatter
+    Conviction
+    Salt Flats
+    Shadowstorm
+    Island
+
+Pack 2 pick 6:
+    Hammerhead Shark
+    Horned Sliver
+    Barbed Sliver
+    Spined Wurm
+    Aftershock
+    Reality Anchor
+    Wall of Blossoms
+    Gallantry
+--> Gerrard's Battle Cry
+    Plains
+
+Pack 2 pick 7:
+    Dungeon Shade
+    Nomads en-Kor
+    Shadow Rift
+    Seething Anger
+    Elvish Fury
+    Coiled Tinviper
+--> Skyshroud Elf
+    Spike Hatcher
+    Island
+
+Pack 2 pick 8:
+    Armored Pegasus
+--> Wayward Soul
+    Seething Anger
+    Elvish Fury
+    Coiled Tinviper
+    Anoint
+    Trained Armodon
+    Plains
+
+Pack 2 pick 9:
+    Lab Rats
+    Elven Rite
+    Angelic Blessing
+--> Endangered Armodon
+    Volrath's Curse
+    Jinxed Idol
+    Mountain
+
+Pack 2 pick 10:
+    Dark Ritual
+    Stun
+--> Rampant Growth
+    Shadow Rift
+    Heartwood Dryad
+    Island
+
+Pack 2 pick 11:
+    Dark Ritual
+    Stun
+    Rampant Growth
+--> Crashing Boars
+    Swamp
+
+Pack 2 pick 12:
+    Youthful Knight
+--> Time Ebb
+    Coercion
+    Mountain
+
+Pack 2 pick 13:
+    Charging Paladin
+--> Canopy Spider
+    Salt Flats
+
+Pack 2 pick 14:
+--> Reality Anchor
+    Plains
+
+Pack 2 pick 15:
+--> Island
+
+------ TPR ------ 
+
+Pack 3 pick 1:
+    Scrivener
+    Serpent Warrior
+    Death Stroke
+    Seething Anger
+    Elvish Fury
+    Coiled Tinviper
+    Anoint
+    Mana Leak
+    Skyshroud Troll
+    Mogg Fanatic
+    Spike Feeder
+    Sabertooth Wyvern
+    Spellshock
+--> Mirri, Cat Warrior
+    Forest
+
+Pack 3 pick 2:
+    Soltari Trooper
+    Serpent Warrior
+    Diabolic Edict
+    Maniacal Rage
+    Provoke
+    Skyshroud Troll
+    Whispers of the Muse
+    Heartwood Dryad
+    Mogg Fanatic
+    Hermit Druid
+    Mogg Maniac
+    Rolling Thunder
+--> Tradewind Rider
+    Island
+
+Pack 3 pick 3:
+    Horned Turtle
+--> Gravedigger
+    Death Stroke
+    Seething Anger
+    Elvish Fury
+    Coiled Tinviper
+    Anoint
+    Exalted Dragon
+    Mogg Fanatic
+    Curiosity
+    Fugue
+    Spirit Mirror
+    Plains
+
+Pack 3 pick 4:
+    Dungeon Shade
+    Nomads en-Kor
+    Thalakos Scout
+    Canopy Spider
+    Coercion
+    Shackles
+    Death's Duet
+    Shatter
+    Dauthi Marauder
+--> Skyshroud Forest
+    Wood Sage
+    Mountain
+
+Pack 3 pick 5:
+    Armored Pegasus
+    Wayward Soul
+    Dungeon Shade
+    Canopy Spider
+    Lowland Giant
+    Reality Anchor
+    Skyshaper
+--> Harrow
+    Reanimate
+    Necrologia
+    Island
+
+Pack 3 pick 6:
+    Mnemonic Sliver
+    Spirit en-Kor
+    Dark Ritual
+    Stun
+--> Rampant Growth
+    Staunch Defenders
+    Shadow Rift
+    Horned Sliver
+    Wall of Souls
+    Forest
+
+Pack 3 pick 7:
+    Clot Sliver
+    Spirit en-Kor
+    Elvish Fury
+    Bandage
+    Whispers of the Muse
+--> Spike Colony
+    Needle Storm
+    Goblin Bombardment
+    Mountain
+
+Pack 3 pick 8:
+    Clot Sliver
+    Spirit en-Kor
+    Heartwood Dryad
+    Telethopter
+    Disenchant
+    Death's Duet
+--> Lowland Basilisk
+    Island
+
+Pack 3 pick 9:
+    Seething Anger
+    Elvish Fury
+    Coiled Tinviper
+    Anoint
+--> Skyshroud Troll
+    Sabertooth Wyvern
+    Forest
+
+Pack 3 pick 10:
+--> Soltari Trooper
+    Maniacal Rage
+    Provoke
+    Skyshroud Troll
+    Heartwood Dryad
+    Island
+
+Pack 3 pick 11:
+    Seething Anger
+--> Elvish Fury
+    Coiled Tinviper
+    Anoint
+    Plains
+
+Pack 3 pick 12:
+    Nomads en-Kor
+    Death's Duet
+--> Wood Sage
+    Mountain
+
+Pack 3 pick 13:
+--> Canopy Spider
+    Reality Anchor
+    Island
+
+Pack 3 pick 14:
+--> Stun
+    Forest
+
+Pack 3 pick 15:
+--> Mountain
+

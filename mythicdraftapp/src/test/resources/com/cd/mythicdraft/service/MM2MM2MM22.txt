@@ -1,0 +1,468 @@
+Event #: 8404278
+Time:    6/19/2015 8:15:36 PM
+Players:
+    micahmbg
+    nyoro_
+    Alvas
+    trexgameeater
+    skeelog2004
+    AgonizingDefeat
+    nothingman22780
+--> baronvonfonz
+
+------ MM2 ------ 
+
+Pack 1 pick 1:
+    Thief of Hope
+    Viashino Slaughtermaster
+    Kami of Ancient Law
+    Gnarlid Pack
+    Sickleslicer
+    Mighty Leap
+    Gust-Skimmer
+    Sign in Blood
+    Helium Squirter
+    Aquastrand Spider
+    Pillory of the Sleepless
+    Mortarpod
+    Algae Gharial
+--> Fulminator Mage
+    Evolving Wilds
+
+Pack 1 pick 2:
+    Waxmane Baku
+    Ghostly Changeling
+    Viashino Slaughtermaster
+    Moonlit Strider
+    Steady Progress
+    Kavu Primarch
+    Frogmite
+    Myr Enforcer
+    Waking Nightmare
+    Thoughtcast
+    Lightning Bolt
+    Reassembling Skeleton
+    Everflowing Chalice
+--> Indomitable Archangel
+
+Pack 1 pick 3:
+    Viashino Slaughtermaster
+    Kami of Ancient Law
+    Vampire Lacerator
+    Blood Ogre
+    Mana Leak
+    Vines of Vastwood
+    Alloy Myr
+--> Rusted Relic
+    Ulamog's Crusher
+    Skyreach Manta
+    Tezzeret's Gambit
+    Cytoplast Root-Kin
+    Gust-Skimmer
+
+Pack 1 pick 4:
+    Dragonsoul Knight
+    Skyhunter Skirmisher
+    Duskhunter Bat
+    Simic Initiate
+    Runed Servitor
+    Mighty Leap
+    Repeal
+    Flayer Husk
+    Telling Time
+--> Remand
+    Stormblood Berserker
+    Scion of the Wild
+
+Pack 1 pick 5:
+    Dread Drone
+    Brute Force
+    Kami of Ancient Law
+    Vines of Vastwood
+    Helium Squirter
+    Ulamog's Crusher
+    Kitesail
+    Skyreach Manta
+--> Remand
+    Lorescale Coatl
+    Flayer Husk
+
+Pack 1 pick 6:
+    Soulbright Flamekin
+    Conclave Phalanx
+    Scuttling Death
+    Steady Progress
+    Matca Rioters
+    Sundering Vitae
+    Frogmite
+    Myr Enforcer
+    Devouring Greed
+--> Blinkmoth Nexus
+
+Pack 1 pick 7:
+--> Court Homunculus
+    Duskhunter Bat
+    Soulbright Flamekin
+    Sunspear Shikari
+    Stoic Rebuttal
+    Alloy Myr
+    Culling Dais
+    Ulamog, the Infinite Gyre
+    Drooling Groodion
+
+Pack 1 pick 8:
+    Vampire Lacerator
+    Gut Shot
+    Waxmane Baku
+    Terashi's Grasp
+--> Gust-Skimmer
+    Shrivel
+    Water Servant
+    Myrsmith
+
+Pack 1 pick 9:
+    Thief of Hope
+    Viashino Slaughtermaster
+    Kami of Ancient Law
+    Mighty Leap
+--> Gust-Skimmer
+    Sign in Blood
+    Helium Squirter
+
+Pack 1 pick 10:
+    Waxmane Baku
+    Ghostly Changeling
+    Moonlit Strider
+    Steady Progress
+--> Frogmite
+    Waking Nightmare
+
+Pack 1 pick 11:
+    Viashino Slaughtermaster
+    Kami of Ancient Law
+    Vampire Lacerator
+--> Mana Leak
+    Vines of Vastwood
+
+Pack 1 pick 12:
+--> Skyhunter Skirmisher
+    Simic Initiate
+    Mighty Leap
+    Telling Time
+
+Pack 1 pick 13:
+    Brute Force
+    Kami of Ancient Law
+--> Flayer Husk
+
+Pack 1 pick 14:
+--> Myr Enforcer
+    Devouring Greed
+
+Pack 1 pick 15:
+--> Soulbright Flamekin
+
+------ MM2 ------ 
+
+Pack 2 pick 1:
+    Bloodthrone Vampire
+    Burst Lightning
+--> Sunlance
+    Thief of Hope
+    Telling Time
+    Matca Rioters
+    Thoughtcast
+    Kitesail
+    Wrap in Flames
+    Wayfarer's Bauble
+    Izzet Boilerworks
+    Spread the Sickness
+    Eldrazi Temple
+    Emrakul, the Aeons Torn
+    Stormblood Berserker
+
+Pack 2 pick 2:
+    Vampire Lacerator
+    Blood Ogre
+    Tribal Flames
+    Simic Initiate
+    Terashi's Grasp
+    Cloud Elemental
+    Flayer Husk
+    Goblin War Paint
+    Æthersnipe
+    Plummet
+    Rakdos Carnarium
+    Worldheart Phoenix
+    Eldrazi Temple
+--> Mirror Entity
+
+Pack 2 pick 3:
+    Dragonsoul Knight
+    Apostle's Blessing
+    Vampire Lacerator
+    Gut Shot
+    Stoic Rebuttal
+    Kavu Primarch
+    Ulamog's Crusher
+    Kitesail
+    Skyreach Manta
+    Azorius Chancery
+    Combust
+    Vengeful Rebirth
+--> Glint Hawk Idol
+
+Pack 2 pick 4:
+    Goblin Fireslinger
+    Moonlit Strider
+    Plagued Rusalka
+    Smokebraider
+    Æthersnipe
+    Evolving Wilds
+    Sphere of the Suns
+    Frogmite
+    Death Denied
+--> Dispatch
+    Hearthfire Hobgoblin
+    Scavenger Drake
+
+Pack 2 pick 5:
+    Conclave Phalanx
+    Scuttling Death
+    Court Homunculus
+    Stoic Rebuttal
+    Skyreach Manta
+    Ulamog's Crusher
+    Kitesail
+    Celestial Purge
+--> Ethercaste Knight
+    Ashenmoor Gouger
+    Aquastrand Spider
+
+Pack 2 pick 6:
+    Sickle Ripper
+    Goblin Fireslinger
+    Blades of Velis Vel
+    Fortify
+    Repeal
+--> Vapor Snag
+    Overwhelm
+    Artisan of Kozilek
+    Bloodshot Trainee
+    Mana Leak
+
+Pack 2 pick 7:
+    Ghostly Changeling
+    Brute Force
+    Steady Progress
+    Waking Nightmare
+    Frogmite
+--> Darksteel Citadel
+    Qumulox
+    Boros Swiftblade
+    Etched Oracle
+
+Pack 2 pick 8:
+    Soulbright Flamekin
+    Sunspear Shikari
+    Copper Carapace
+    Wrap in Flames
+--> Myr Enforcer
+    Darksteel Citadel
+    Sigil Blessing
+    Brute Force
+
+Pack 2 pick 9:
+    Thief of Hope
+    Telling Time
+    Matca Rioters
+--> Thoughtcast
+    Kitesail
+    Wrap in Flames
+    Izzet Boilerworks
+
+Pack 2 pick 10:
+    Simic Initiate
+--> Terashi's Grasp
+    Cloud Elemental
+    Goblin War Paint
+    Plummet
+    Worldheart Phoenix
+
+Pack 2 pick 11:
+    Dragonsoul Knight
+--> Apostle's Blessing
+    Gut Shot
+    Kitesail
+    Skyreach Manta
+
+Pack 2 pick 12:
+    Moonlit Strider
+    Smokebraider
+--> Frogmite
+    Death Denied
+
+Pack 2 pick 13:
+    Conclave Phalanx
+    Scuttling Death
+--> Stoic Rebuttal
+
+Pack 2 pick 14:
+    Blades of Velis Vel
+--> Fortify
+
+Pack 2 pick 15:
+--> Frogmite
+
+------ MM2 ------ 
+
+Pack 3 pick 1:
+    Kami of Ancient Law
+    Nameless Inversion
+    Goblin Fireslinger
+    Moonlit Strider
+    Steady Progress
+    Matca Rioters
+    Darksteel Citadel
+    Copper Carapace
+    Thoughtcast
+    Alloy Myr
+    Pillory of the Sleepless
+    Root-Kin Ally
+    Scavenger Drake
+--> Lodestone Golem
+    Gorehorn Minotaurs
+
+Pack 3 pick 2:
+    Raise the Alarm
+    Sickle Ripper
+    Inner-Flame Igniter
+    Conclave Phalanx
+    Vapor Snag
+    Kozilek's Predator
+    Sundering Vitae
+--> Cathodion
+    Waking Nightmare
+    Sphere of the Suns
+    Boros Garrison
+    Air Servant
+    Daybreak Coronet
+    Nest Invader
+
+Pack 3 pick 3:
+    Thief of Hope
+    Gorehorn Minotaurs
+    Fiery Fall
+    Thrive
+    Thrummingbird
+    Sign in Blood
+    Goblin War Paint
+--> Vapor Snag
+    Scion of the Wild
+    Orzhov Basilica
+    Mutagenic Growth
+    Shrewd Hatchling
+    Inner-Flame Igniter
+
+Pack 3 pick 4:
+    Waxmane Baku
+    Sickle Ripper
+    Goblin Fireslinger
+    Evolving Wilds
+    Sphere of the Suns
+    Frogmite
+    Death Denied
+    Orzhov Basilica
+    Worldheart Phoenix
+--> Tumble Magnet
+    Long-Forgotten Gohei
+    Eldrazi Temple
+
+Pack 3 pick 5:
+    Smokebraider
+    Otherworldly Journey
+    Blades of Velis Vel
+    Sylvan Bounty
+    Thrummingbird
+    Instill Infection
+    Smash to Smithereens
+--> Faerie Mechanist
+    Azorius Chancery
+    Drooling Groodion
+    Faerie Mechanist
+
+Pack 3 pick 6:
+    Dread Drone
+    Dragonsoul Knight
+    Skyhunter Skirmisher
+    Duskhunter Bat
+    Wings of Velis Vel
+--> Darksteel Citadel
+    Alloy Myr
+    Novijen Sages
+    Hurkyl's Recall
+    Thoughtcast
+
+Pack 3 pick 7:
+    Tukatongue Thallid
+    Fortify
+    Vigean Graftmage
+    Instill Infection
+--> Somber Hoverguard
+    Commune with Nature
+    Hikari, Twilight Guardian
+    Root-Kin Ally
+    Instill Infection
+
+Pack 3 pick 8:
+    Otherworldly Journey
+    Plagued Rusalka
+    Waxmane Baku
+    Wings of Velis Vel
+--> Thoughtcast
+    Kitesail
+    Wrap in Flames
+    Surrakar Spellblade
+
+Pack 3 pick 9:
+    Kami of Ancient Law
+    Goblin Fireslinger
+    Moonlit Strider
+    Steady Progress
+--> Darksteel Citadel
+    Thoughtcast
+    Root-Kin Ally
+
+Pack 3 pick 10:
+    Raise the Alarm
+    Sickle Ripper
+--> Conclave Phalanx
+    Vapor Snag
+    Waking Nightmare
+    Daybreak Coronet
+
+Pack 3 pick 11:
+--> Thief of Hope
+    Thrive
+    Sign in Blood
+    Goblin War Paint
+    Shrewd Hatchling
+
+Pack 3 pick 12:
+    Waxmane Baku
+--> Frogmite
+    Death Denied
+    Long-Forgotten Gohei
+
+Pack 3 pick 13:
+--> Smokebraider
+    Otherworldly Journey
+    Blades of Velis Vel
+
+Pack 3 pick 14:
+--> Duskhunter Bat
+    Wings of Velis Vel
+
+Pack 3 pick 15:
+--> Commune with Nature
+
