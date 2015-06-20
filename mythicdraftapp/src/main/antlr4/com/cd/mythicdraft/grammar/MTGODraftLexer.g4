@@ -15,13 +15,10 @@ PICK: ' pick ';
 SEPARATOR: [\n\r];
 NUMBER: ('0'..'9')+;
 SET_NAME: ('A'..'Z' | '0'..'9')('A'..'Z' | '0'..'9')('A'..'Z' | '0'..'9');
-USERNAME: ('a'..'z' | 'A'..'Z' | '0'..'9' | '_')+;
 
 //Split so that it can recognize one pronoun | or a sequence of pronouns and nouns... ugh
-CARD_NAME: (CARD_NAME_START CARD_NAME_PART) |
-		   (CARD_NAME_START CARD_NAME_PART (CARD_NAME_SEPARATOR (CARD_NAME_START CARD_NAME_PART | CARD_NAME_PART))*);
-fragment CARD_NAME_START: ('A'..'Z'); 
-fragment CARD_NAME_PART: ('a'..'z' | '\'' | ',' | CARD_NUMBER)+;
+CARD_NAME: CARD_NAME_PART (CARD_NAME_SEPARATOR CARD_NAME)*;
+fragment CARD_NAME_PART: ('a'..'z' | '\'' | ',' | 'A'..'Z' | '0'..'9' | '_' | '.' | '\u00C6' | 'Æ')+;
 fragment CARD_NAME_SEPARATOR: (' ' | '-');
 
 //Super rare edge cases, hopefully

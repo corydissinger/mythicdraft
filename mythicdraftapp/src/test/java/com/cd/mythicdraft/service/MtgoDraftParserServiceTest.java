@@ -47,33 +47,34 @@ public class MtgoDraftParserServiceTest {
 		Draft aDraft = mtgoDraftParserService.parse(tprDraftStream);
 		
 		assertTrue(aDraft.getDraftPlayers().size() == 8);
+		assertTrue(aDraft.getDraftSets().size() == 3);
 	}
 
-	@Test
 	public void testDTKDTKFRF() throws Exception{
 		InputStream tprDraftStream = loadResource("DTKDTKFRF1.txt");
 		
 		Draft aDraft = mtgoDraftParserService.parse(tprDraftStream);
 		
 		assertTrue(aDraft.getDraftPlayers().size() == 8);
+		assertTrue(aDraft.getDraftSets().size() == 3);
 	}	
 
-	@Test
 	public void testMM2MM2MM21() throws Exception{
 		InputStream tprDraftStream = loadResource("MM2MM2MM21.txt");
 		
 		Draft aDraft = mtgoDraftParserService.parse(tprDraftStream);
 		
 		assertTrue(aDraft.getDraftPlayers().size() == 8);
+		assertTrue(aDraft.getDraftSets().size() == 3);
 	}	
 	
-	@Test
 	public void testMM2MM2MM22() throws Exception{
 		InputStream tprDraftStream = loadResource("MM2MM2MM22.txt");
 		
 		Draft aDraft = mtgoDraftParserService.parse(tprDraftStream);
 		
 		assertTrue(aDraft.getDraftPlayers().size() == 8);
+		assertTrue(aDraft.getDraftSets().size() == 3);
 	}	
 	
 	private InputStream loadResource(String resourceName) throws IOException {

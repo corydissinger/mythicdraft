@@ -34,6 +34,9 @@ public class Draft implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<DraftPlayers> draftPlayers;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<DraftSets> draftSets;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -64,5 +67,13 @@ public class Draft implements Serializable {
 
 	public void setDraftPlayers(List<DraftPlayers> draftPlayers) {
 		this.draftPlayers = draftPlayers;
+	}
+
+	public List<DraftSets> getDraftSets() {
+		return draftSets;
+	}
+
+	public void setDraftSets(List<DraftSets> draftSets) {
+		this.draftSets = draftSets;
 	}	
 }
