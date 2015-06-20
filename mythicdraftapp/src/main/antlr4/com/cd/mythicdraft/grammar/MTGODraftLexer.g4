@@ -12,7 +12,7 @@ POUND: '#';
 PACK: 'Pack ';
 PICK: ' pick ';
 
-SEPARATOR: [\n\r];
+SEPARATOR: '\r'? '\n';
 NUMBER: ('0'..'9')+;
 
 //Lexer rule precedence is killing me. If CARD_NAME is defind after USER_NAME, then
