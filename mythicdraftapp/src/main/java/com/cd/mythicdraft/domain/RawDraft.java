@@ -9,7 +9,7 @@ import org.apache.commons.lang3.tuple.MutablePair;
 public class RawDraft {
 
 	private final Map<Integer, List<MutablePair<Integer, List<Integer>>>> packToListOfPickToAvailablePicksMap;
-	private final Map<String, Integer> cardNameToTempIdMap;
+	private final Map<String, RawCard> cardNameToRawCardMap;
 	private final Integer eventId;
 	private final Date eventDate;
 	private final String activePlayer;
@@ -17,14 +17,14 @@ public class RawDraft {
 	private final List<String> packSets;
 	
 	public RawDraft(final Map<Integer, List<MutablePair<Integer, List<Integer>>>> packToListOfPickToAvailablePicksMap,
-					final Map<String, Integer> cardNameToTempIdMap, 
+					final Map<String, RawCard> cardNameToTempIdMap, 
 					final Integer eventId,
 					final Date eventDate,
 					final String activePlayer,
 					final List<String> otherPlayers,
 					final List<String> packSets) {
 		this.packToListOfPickToAvailablePicksMap = packToListOfPickToAvailablePicksMap;
-		this.cardNameToTempIdMap = cardNameToTempIdMap;
+		this.cardNameToRawCardMap = cardNameToTempIdMap;
 		this.eventId = eventId;
 		this.eventDate = eventDate;
 		this.activePlayer = activePlayer;
@@ -36,8 +36,8 @@ public class RawDraft {
 		return packToListOfPickToAvailablePicksMap;
 	}
 	
-	public Map<String, Integer> getCardNameToTempIdMap() {
-		return cardNameToTempIdMap;
+	public Map<String, RawCard> getCardNameToRawCardMap() {
+		return cardNameToRawCardMap;
 	}
 
 	public Integer getEventId() {

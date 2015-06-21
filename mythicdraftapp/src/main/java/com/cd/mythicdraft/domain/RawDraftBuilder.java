@@ -8,8 +8,9 @@ import org.apache.commons.lang3.tuple.MutablePair;
 
 public class RawDraftBuilder {
 
+	//Look at all those right arrows
 	private Map<Integer, List<MutablePair<Integer, List<Integer>>>> packToListOfPickToAvailablePicksMap;
-	private Map<String, Integer> cardNameToTempIdMap;
+	private Map<String, RawCard> cardNameToTempIdMap;
 	private Integer eventId;
 	private Date eventDate;
 	private String activePlayer;
@@ -30,7 +31,7 @@ public class RawDraftBuilder {
 			Map<Integer, List<MutablePair<Integer, List<Integer>>>> packToListOfPickToAvailablePicksMap) {
 		this.packToListOfPickToAvailablePicksMap = packToListOfPickToAvailablePicksMap;
 	}
-	public void setCardNameToTempIdMap(Map<String, Integer> cardNameToTempIdMap) {
+	public void setCardNameToRawCardMap(Map<String, RawCard> cardNameToTempIdMap) {
 		this.cardNameToTempIdMap = cardNameToTempIdMap;
 	}
 	public void setEventId(Integer eventId) {

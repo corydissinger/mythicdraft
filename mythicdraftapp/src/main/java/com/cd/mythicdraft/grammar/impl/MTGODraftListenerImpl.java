@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import com.cd.mythicdraft.domain.RawCard;
 import com.cd.mythicdraft.grammar.MTGODraftParser;
 import com.cd.mythicdraft.grammar.MTGODraftParser.APlayerContext;
 import com.cd.mythicdraft.grammar.MTGODraftParser.AvailablePickContext;
@@ -31,7 +32,7 @@ public class MTGODraftListenerImpl extends MTGODraftParserBaseListener {
 	private String eventDate;
 	private String eventId;
 	
-	private Map<String, Integer> cardNameToTempIdMap;
+	private Map<String, RawCard> cardNameToRawCardMap;
 	private int uniqueCardCount = 0;
 	private int currentPackNumber = 0;
 	
@@ -48,7 +49,7 @@ public class MTGODraftListenerImpl extends MTGODraftParserBaseListener {
 		packSets = new ArrayList<String>(3);
 		eventDate = "";
 		eventId = "";
-		cardNameToTempIdMap = new HashMap<String, Integer>();
+		cardNameToRawCardMap = new HashMap<String, RawCard>();
 		uniqueCardCount = 0;
 		currentPackNumber = 0;
 		
@@ -61,7 +62,7 @@ public class MTGODraftListenerImpl extends MTGODraftParserBaseListener {
 	}
 	
 	public void cleanup() {
-		cardNameToTempIdMap = null;
+		cardNameToRawCardMap = null;
 		packToListOfPickToAvailablePicksMap = null;
 		currentListOfPicks = null;
 		currentPairOfPickToAvailablePicks = null;
@@ -153,8 +154,8 @@ public class MTGODraftListenerImpl extends MTGODraftParserBaseListener {
 		return eventId;
 	}
 
-	public Map<String, Integer> getCardNameToTempIdMap() {
-		return cardNameToTempIdMap;
+	public Map<String, RawCard> getCardNameToTempIdMap() {
+		return cardNameToRawCardMap;
 	}
 
 	public Map<Integer, List<MutablePair<Integer, List<Integer>>>> getPackToListOfPickToAvailablePicksMap() {
@@ -162,14 +163,14 @@ public class MTGODraftListenerImpl extends MTGODraftParserBaseListener {
 	}	
 	
 	private Integer getCardIdAndAddCardName(String aCardName) {
-		Integer cardId = cardNameToTempIdMap.get(aCardName);
+		RawCard rawCard = cardNameToRawCardMap.get(aCardName);
 		
-		if(cardId == null) {
-			cardId = uniqueCardCount++;
-			cardNameToTempIdMap.put(aCardName, cardId);
+		if(rawCard == null) {
+			rawCard = new RawCard(uniqueCardCount++, packSets.get(currentPackNumber));
+			cardNameToRawCardMap.put(aCardName, rawCard);
 		}
 		
-		return cardId;
+		return rawCard.getTempId();
 	}
 
 }

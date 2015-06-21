@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cd.mythicdraft.service.MtgoDraftParserService;
+import com.cd.mythicdraft.service.DraftService;
 
 @Controller
 @RequestMapping("/upload")
@@ -20,18 +20,20 @@ public class FileUploadController {
 	private static final Logger logger = Logger.getLogger(FileUploadController.class);	
 	
 	@Autowired
-	private MtgoDraftParserService mtgoDraftParserService;
+	private DraftService draftService;
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public @ResponseBody String processUpload(@RequestParam String name,
 							  				  @RequestParam MultipartFile file) {
+		
 		if(!file.isEmpty()) {
 			try {
-				mtgoDraftParserService.parse(file.getInputStream());
+				draftService.addDraft(file.getInputStream());
 				
 				return "File upload succeeded";
 			} catch (IOException e) {
 				logger.error("File upload failed!");
+				throw new RuntimeException(e);
 			}			
 		}
 			

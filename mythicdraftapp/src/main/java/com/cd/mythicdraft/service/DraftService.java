@@ -4,13 +4,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cd.mythicdraft.dao.DraftDAO;
+import com.cd.mythicdraft.domain.RawCard;
 import com.cd.mythicdraft.domain.RawDraft;
+import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Draft;
 import com.cd.mythicdraft.model.DraftPack;
 import com.cd.mythicdraft.model.DraftPlayer;
@@ -78,6 +81,7 @@ public class DraftService {
 
 	private List<DraftPack> createDraftPacks(Draft aDraft, RawDraft aRawDraft) {
 		List<DraftPack> draftPacks = new ArrayList<DraftPack>(3);
+		final Map<String, Card> cardNameToCardMap = draftDao.getCardNameToCardMap(createCardNameToCardSetMap(aRawDraft));
 		
 		for(int i = 0; i < aRawDraft.getPackSets().size(); i++) {
 			String aSetName = aRawDraft.getPackSets().get(i);
@@ -94,5 +98,13 @@ public class DraftService {
 		}
 		
 		return draftPacks;
+	}
+
+	private Map<String, String> createCardNameToCardSetMap(RawDraft aRawDraft) {
+		for(Map.Entry<String, RawCard > anEntry : aRawDraft.getCardNameToRawCardMap().entrySet()) {
+			
+		}
+		
+		return null;
 	}	
 }

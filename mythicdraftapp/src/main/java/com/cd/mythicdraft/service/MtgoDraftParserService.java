@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -24,11 +22,6 @@ import com.cd.mythicdraft.domain.RawDraftBuilder;
 import com.cd.mythicdraft.grammar.MTGODraftLexer;
 import com.cd.mythicdraft.grammar.MTGODraftParser;
 import com.cd.mythicdraft.grammar.impl.MTGODraftListenerImpl;
-import com.cd.mythicdraft.model.Draft;
-import com.cd.mythicdraft.model.DraftPack;
-import com.cd.mythicdraft.model.DraftPlayer;
-import com.cd.mythicdraft.model.Player;
-import com.cd.mythicdraft.model.Set;
 
 @Service(value = "mtgoDraftParserService")
 public class MtgoDraftParserService {
@@ -52,7 +45,7 @@ public class MtgoDraftParserService {
 		
 		builder.setEventDate(createEventDate());
 		builder.setEventId(Integer.parseInt(mtgoDraftListener.getEventId()));
-		builder.setCardNameToTempIdMap(mtgoDraftListener.getCardNameToTempIdMap());
+		builder.setCardNameToRawCardMap(mtgoDraftListener.getCardNameToTempIdMap());
 		builder.setPackToListOfPickToAvailablePicksMap(mtgoDraftListener.getPackToListOfPickToAvailablePicksMap());
 		builder.setActivePlayer(mtgoDraftListener.getActivePlayer());
 		builder.setOtherPlayers(mtgoDraftListener.getOtherPlayers());
