@@ -1,6 +1,7 @@
 package com.cd.mythicdraft.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "DRAFT")
@@ -32,6 +34,10 @@ public class Draft implements Serializable {
 	
 	@Column(name   = "EVENT_ID")
 	private Integer eventId;	
+	
+	@Column(name = "EVENT_DATE")
+	@Type(type = "timestamp")
+	private Date eventDate;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<DraftPlayer> draftPlayers;
@@ -53,6 +59,14 @@ public class Draft implements Serializable {
 
 	public void setEventId(Integer eventId) {
 		this.eventId = eventId;
+	}
+
+	public Date getEventDate() {
+		return eventDate;
+	}
+
+	public void setEventDate(Date eventDate) {
+		this.eventDate = eventDate;
 	}
 
 	public String getName() {

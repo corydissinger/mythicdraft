@@ -1,6 +1,7 @@
 package com.cd.mythicdraft.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -48,6 +50,9 @@ public class DraftPack implements Serializable {
 			   cascade = CascadeType.ALL)
 	@JoinColumn(name = "SET_ID")
 	private Set set;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<DraftPackPick> draftPackPicks;	
 
 	public Integer getDraftId() {
 		return draftId;
@@ -96,6 +101,14 @@ public class DraftPack implements Serializable {
 	public void setSet(Set set) {
 		this.set = set;
 	}	
+
+	public List<DraftPackPick> getDraftPackPicks() {
+		return draftPackPicks;
+	}
+
+	public void setDraftPackPicks(List<DraftPackPick> draftPackPicks) {
+		this.draftPackPicks = draftPackPicks;
+	}
 
 	@Override
 	public String toString() {

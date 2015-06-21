@@ -49,6 +49,7 @@ public class MtgoDraftParserServiceTest {
 		
 		assertTrue(aDraft.getDraftPlayers().size() == 8);
 		assertTrue(aDraft.getDraftPacks().size() == 3);
+		assertTrue(aDraft.getEventId() == 8283017);
 
 		System.out.println(aDraft.toString());
 	}
@@ -61,6 +62,7 @@ public class MtgoDraftParserServiceTest {
 		
 		assertTrue(aDraft.getDraftPlayers().size() == 8);
 		assertTrue(aDraft.getDraftPacks().size() == 3);
+		assertTrue(aDraft.getEventId() == 8305539);		
 		
 		DraftPack shouldBeFrf = aDraft.getDraftPacks().get(2);
 		
@@ -77,6 +79,7 @@ public class MtgoDraftParserServiceTest {
 		
 		assertTrue(aDraft.getDraftPlayers().size() == 8);
 		assertTrue(aDraft.getDraftPacks().size() == 3);
+		assertTrue(aDraft.getEventId() == 8404751);		
 		
 		System.out.println(aDraft.toString());		
 	}	
@@ -89,6 +92,7 @@ public class MtgoDraftParserServiceTest {
 		
 		assertTrue(aDraft.getDraftPlayers().size() == 8);
 		assertTrue(aDraft.getDraftPacks().size() == 3);
+		assertTrue(aDraft.getEventId() == 8404278);		
 		
 		System.out.println(aDraft.toString());		
 	}	
