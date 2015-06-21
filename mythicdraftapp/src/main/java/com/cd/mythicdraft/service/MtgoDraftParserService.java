@@ -19,7 +19,8 @@ import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cd.mythicdraft.dao.DraftDAO;
+import com.cd.mythicdraft.domain.RawDraft;
+import com.cd.mythicdraft.domain.RawDraftBuilder;
 import com.cd.mythicdraft.grammar.MTGODraftLexer;
 import com.cd.mythicdraft.grammar.MTGODraftParser;
 import com.cd.mythicdraft.grammar.impl.MTGODraftListenerImpl;
@@ -37,10 +38,7 @@ public class MtgoDraftParserService {
 	@Autowired
 	private MTGODraftListenerImpl mtgoDraftListener;
 	
-	@Autowired
-	private DraftDAO draftDao;
-	
-	public Draft parse(InputStream mtgoDraft) throws IOException {
+	public RawDraft parse(InputStream mtgoDraft) throws IOException {
 		ANTLRInputStream input = new ANTLRInputStream(new InputStreamReader(mtgoDraft, StandardCharsets.UTF_8));
 		TokenStream tokens = new CommonTokenStream(new MTGODraftLexer(input));
 		MTGODraftParser parser = new MTGODraftParser(tokens);
@@ -50,64 +48,19 @@ public class MtgoDraftParserService {
 		mtgoDraftListener.reset();
 		walker.walk(mtgoDraftListener, parser.file());
 		
-		Draft draft = new Draft();
+		RawDraftBuilder builder = new RawDraftBuilder();
 		
-		draft.setDraftPlayers(createDraftPlayers(draft));
-		draft.setDraftPacks(createDraftPacks(draft));
-		draft.setEventDate(createEventDate());
-		draft.setEventId(Integer.parseInt(mtgoDraftListener.getEventId()));
+		builder.setEventDate(createEventDate());
+		builder.setEventId(Integer.parseInt(mtgoDraftListener.getEventId()));
+		builder.setCardNameToTempIdMap(mtgoDraftListener.getCardNameToTempIdMap());
+		builder.setPackToListOfPickToAvailablePicksMap(mtgoDraftListener.getPackToListOfPickToAvailablePicksMap());
+		builder.setActivePlayer(mtgoDraftListener.getActivePlayer());
+		builder.setOtherPlayers(mtgoDraftListener.getOtherPlayers());
+		builder.setPackSets(mtgoDraftListener.getPackSets());
 		
 		mtgoDraftListener.cleanup();
 		
-		return draft;
-	}
-
-	private List<DraftPlayer> createDraftPlayers(Draft aDraft) {
-		List<DraftPlayer> draftPlayers = new ArrayList<DraftPlayer>(8);
-		
-		for(String aPlayer : mtgoDraftListener.getOtherPlayers()) {
-			DraftPlayer otherPlayer = new DraftPlayer();
-			Player player = new Player();
-			player.setName(aPlayer);
-			
-			otherPlayer.setDraft(aDraft);
-			otherPlayer.setPlayer(player);
-			otherPlayer.setIsActivePlayer(false);
-			
-			draftPlayers.add(otherPlayer);
-		}
-		
-		DraftPlayer activePlayer = new DraftPlayer();
-		Player player = new Player();
-		player.setName(mtgoDraftListener.getActivePlayer());
-		
-		activePlayer.setDraft(aDraft);
-		activePlayer.setPlayer(player);
-		activePlayer.setIsActivePlayer(true);
-		
-		draftPlayers.add(activePlayer);
-		
-		return draftPlayers;
-	}
-
-	private List<DraftPack> createDraftPacks(Draft aDraft) {
-		List<DraftPack> draftPacks = new ArrayList<DraftPack>(3);
-		
-		for(int i = 0; i < mtgoDraftListener.getPackSets().size(); i++) {
-			String aSetName = mtgoDraftListener.getPackSets().get(i);
-			DraftPack draftSet = new DraftPack();
-			Set set = new Set();
-			
-			set.setName(aSetName);
-			
-			draftSet.setDraft(aDraft);
-			draftSet.setSet(set);
-			draftSet.setSequenceId(i);
-			
-			draftPacks.add(draftSet);
-		}
-		
-		return draftPacks;
+		return builder.build();
 	}
 	
 	private Date createEventDate() {

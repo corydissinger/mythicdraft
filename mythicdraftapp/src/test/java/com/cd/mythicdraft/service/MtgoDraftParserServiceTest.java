@@ -14,9 +14,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import com.cd.mythicdraft.domain.RawDraft;
 import com.cd.mythicdraft.grammar.impl.MTGODraftListenerImpl;
-import com.cd.mythicdraft.model.Draft;
-import com.cd.mythicdraft.model.DraftPack;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -45,10 +44,11 @@ public class MtgoDraftParserServiceTest {
 	public void testTPR() throws Exception{
 		InputStream tprDraftStream = loadResource("TPRTPRTPR1.txt");
 		
-		Draft aDraft = mtgoDraftParserService.parse(tprDraftStream);
+		RawDraft aDraft = mtgoDraftParserService.parse(tprDraftStream);
 		
-		assertTrue(aDraft.getDraftPlayers().size() == 8);
-		assertTrue(aDraft.getDraftPacks().size() == 3);
+		assertTrue(aDraft.getOtherPlayers().size() == 7);
+		assertTrue(!aDraft.getActivePlayer().isEmpty());
+		assertTrue(aDraft.getPackSets().size() == 3);
 		assertTrue(aDraft.getEventId() == 8283017);
 
 		System.out.println(aDraft.toString());
@@ -58,15 +58,16 @@ public class MtgoDraftParserServiceTest {
 	public void testDTKDTKFRF() throws Exception{
 		InputStream tprDraftStream = loadResource("DTKDTKFRF1.txt");
 		
-		Draft aDraft = mtgoDraftParserService.parse(tprDraftStream);
+		RawDraft aDraft = mtgoDraftParserService.parse(tprDraftStream);
 		
-		assertTrue(aDraft.getDraftPlayers().size() == 8);
-		assertTrue(aDraft.getDraftPacks().size() == 3);
+		assertTrue(aDraft.getOtherPlayers().size() == 7);
+		assertTrue(!aDraft.getActivePlayer().isEmpty());
+		assertTrue(aDraft.getPackSets().size() == 3);
 		assertTrue(aDraft.getEventId() == 8305539);		
 		
-		DraftPack shouldBeFrf = aDraft.getDraftPacks().get(2);
+		String shouldBeFrf = aDraft.getPackSets().get(2);
 		
-		assertTrue("FRF".equals(shouldBeFrf.getSet().getName()));
+		assertTrue("FRF".equals(shouldBeFrf));
 		
 		System.out.println(aDraft.toString());		
 	}	
@@ -75,10 +76,11 @@ public class MtgoDraftParserServiceTest {
 	public void testMM2MM2MM21() throws Exception{
 		InputStream tprDraftStream = loadResource("MM2MM2MM21.txt");
 		
-		Draft aDraft = mtgoDraftParserService.parse(tprDraftStream);
+		RawDraft aDraft = mtgoDraftParserService.parse(tprDraftStream);
 		
-		assertTrue(aDraft.getDraftPlayers().size() == 8);
-		assertTrue(aDraft.getDraftPacks().size() == 3);
+		assertTrue(aDraft.getOtherPlayers().size() == 7);
+		assertTrue(!aDraft.getActivePlayer().isEmpty());
+		assertTrue(aDraft.getPackSets().size() == 3);
 		assertTrue(aDraft.getEventId() == 8404751);		
 		
 		System.out.println(aDraft.toString());		
@@ -88,10 +90,11 @@ public class MtgoDraftParserServiceTest {
 	public void testMM2MM2MM22() throws Exception{
 		InputStream tprDraftStream = loadResource("MM2MM2MM22.txt");
 		
-		Draft aDraft = mtgoDraftParserService.parse(tprDraftStream);
+		RawDraft aDraft = mtgoDraftParserService.parse(tprDraftStream);
 		
-		assertTrue(aDraft.getDraftPlayers().size() == 8);
-		assertTrue(aDraft.getDraftPacks().size() == 3);
+		assertTrue(aDraft.getOtherPlayers().size() == 7);
+		assertTrue(!aDraft.getActivePlayer().isEmpty());
+		assertTrue(aDraft.getPackSets().size() == 3);
 		assertTrue(aDraft.getEventId() == 8404278);		
 		
 		System.out.println(aDraft.toString());		
