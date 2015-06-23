@@ -1,6 +1,6 @@
 package com.cd.mythicdraft.service;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,18 +30,19 @@ public class MtgJsonService implements ApplicationListener<ContextRefreshedEvent
 		RestTemplate restTemplate = new RestTemplate();
 		
 		try {
-			List<String> unknownSets = checkSetsToUpdate(restTemplate);
-			System.out.println(unknownSets);
+			List<Set> unknownSets = checkSetsToUpdate(restTemplate);
+			
+			logger.debug(unknownSets.toString());
+			
+			draftDao.persistSets(unknownSets);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private List<String> checkSetsToUpdate(RestTemplate restTemplate) throws Exception {
+	private List<Set> checkSetsToUpdate(RestTemplate restTemplate) throws Exception {
 		String[] allSets = restTemplate.getForObject(SET_CODES_JSON, String[].class, Collections.EMPTY_MAP);
-		List<String> unknownSetsList = Arrays.asList(allSets);
-		
-		System.out.println(unknownSetsList);
+		List<String> unknownSetsList = removeSpecialSets(allSets);
 		
 		List<Set> knownSets = draftDao.getAvailableSets();
 		
@@ -49,6 +50,28 @@ public class MtgJsonService implements ApplicationListener<ContextRefreshedEvent
 			unknownSetsList.remove(aSet.getName());
 		}
 		
-		return unknownSetsList; 
+		List<Set> setsToAdd = new ArrayList<Set>(unknownSetsList.size());
+		
+		for(String unknownSet : unknownSetsList) {
+			Set newSet = new Set();
+			newSet.setName(unknownSet);
+			setsToAdd.add(newSet);
+		}
+		
+		return setsToAdd; 
 	}	
+	
+	private List<String> removeSpecialSets(String [] allSets) {
+		List<String> relevantSets = new ArrayList<String>();
+		
+		for(int i = 0; i < allSets.length; i++){
+			String aSet = allSets[i];
+			
+			if(aSet.length() < 4) {
+				relevantSets.add(aSet);
+			}
+		}
+		
+		return relevantSets;
+	}
 }

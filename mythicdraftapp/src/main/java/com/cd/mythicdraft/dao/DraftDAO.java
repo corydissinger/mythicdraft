@@ -14,4 +14,6 @@ public interface DraftDAO {
 	public Map<String, Card> getCardNameToCardMap(final Map<String, String> cardNameToCardSetCode);
 	
 	public List<Set> getAvailableSets();
+	
+	public void persistSets(final List<Set> sets);
 }
