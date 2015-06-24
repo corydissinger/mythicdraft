@@ -9,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
 import com.cd.mythicdraft.dao.DraftDAO;
+import com.cd.mythicdraft.json.MtgJsonCard;
+import com.cd.mythicdraft.json.MtgJsonSet;
+import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Set;
 
 @Service("mtgJsonService")
@@ -20,7 +24,8 @@ public class MtgJsonService implements ApplicationListener<ContextRefreshedEvent
 	private static final Logger logger = Logger.getLogger(MtgJsonService.class);	
 	
 	private static final String MTG_JSON_COM_ROOT = "http://mtgjson.com/json/";
-	private static final String SET_CODES_JSON = MTG_JSON_COM_ROOT + "SetCodes.json";
+	private static final String DOT_JSON = ".json";	
+	private static final String SET_CODES_JSON = MTG_JSON_COM_ROOT + "SetCodes" + DOT_JSON;
 	
 	@Autowired
 	private DraftDAO draftDao;
@@ -35,6 +40,18 @@ public class MtgJsonService implements ApplicationListener<ContextRefreshedEvent
 			logger.debug(unknownSets.toString());
 			
 			draftDao.persistSets(unknownSets);
+			
+			for(Set unknownSet : unknownSets) {
+				List<Card> cardsInSet = getAllCardsInSet(unknownSet, restTemplate);
+				
+				//Skips weird sets like RQS with no multiverse ID
+				if(CollectionUtils.isEmpty(cardsInSet)) {
+					continue;
+				}
+				
+				draftDao.persistCards(cardsInSet);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -73,5 +90,29 @@ public class MtgJsonService implements ApplicationListener<ContextRefreshedEvent
 		}
 		
 		return relevantSets;
+	}
+	
+	private List<Card> getAllCardsInSet(Set set, RestTemplate restTemplate) {
+		List<Card> cardsInSet = new ArrayList<Card>();
+		
+		MtgJsonSet setJson = restTemplate.getForObject(MTG_JSON_COM_ROOT + set.getName() + DOT_JSON, 
+													   MtgJsonSet.class, 
+													   Collections.EMPTY_MAP);
+		
+		for(MtgJsonCard aCard : setJson.getCards()) {
+			//Cards that don't have multiverse IDs aren't worth the effort
+			if(aCard.getMultiverseId() == null || aCard.getMultiverseId() < 1)
+				continue;
+			
+			Card newCard = new Card();
+			
+			newCard.setId(aCard.getMultiverseId());
+			newCard.setCardName(aCard.getName());
+			newCard.setSet(set);
+			
+			cardsInSet.add(newCard);
+		}
+		
+		return cardsInSet;
 	}
 }

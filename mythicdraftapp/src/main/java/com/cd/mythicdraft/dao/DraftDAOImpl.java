@@ -47,4 +47,14 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 		}
 	}
 
+	@Override
+	@Transactional	
+	public void persistCards(List<Card> cardsInSet) {
+		Session session = getCurrentSession();
+		
+		for(Card aCard : cardsInSet) {
+			session.save(aCard);
+		}
+	}
+
 }

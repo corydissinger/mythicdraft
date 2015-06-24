@@ -16,4 +16,6 @@ public interface DraftDAO {
 	public List<Set> getAvailableSets();
 	
 	public void persistSets(final List<Set> sets);
+
+	public void persistCards(final List<Card> cardsInSet);
 }

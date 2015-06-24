@@ -2,12 +2,11 @@ package com.cd.mythicdraft.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -31,8 +30,7 @@ public class Card implements Serializable {
 			updatable = false)
 	private Integer setId;
 	
-	@OneToOne(optional = false,
-			  cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "SET_ID")
 	private Set set;
 	
