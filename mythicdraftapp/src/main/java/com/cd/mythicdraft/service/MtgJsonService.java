@@ -37,8 +37,6 @@ public class MtgJsonService implements ApplicationListener<ContextRefreshedEvent
 		try {
 			List<Set> unknownSets = checkSetsToUpdate(restTemplate);
 			
-			logger.debug(unknownSets.toString());
-			
 			draftDao.persistSets(unknownSets);
 			
 			for(Set unknownSet : unknownSets) {
@@ -99,10 +97,19 @@ public class MtgJsonService implements ApplicationListener<ContextRefreshedEvent
 													   MtgJsonSet.class, 
 													   Collections.EMPTY_MAP);
 		
+		List<Integer> crappySplitCardsThatSouldNotBeDuplicated = new ArrayList<Integer>();
+		
 		for(MtgJsonCard aCard : setJson.getCards()) {
 			//Cards that don't have multiverse IDs aren't worth the effort
-			if(aCard.getMultiverseId() == null || aCard.getMultiverseId() < 1)
+			if(aCard.getMultiverseId() == null || aCard.getMultiverseId() < 1) {
 				continue;
+			} else if(aCard.getNames() != null && aCard.getNames().length > 1) {
+				
+				if(crappySplitCardsThatSouldNotBeDuplicated.contains(aCard.getMultiverseId()))
+					continue;
+				
+				crappySplitCardsThatSouldNotBeDuplicated.add(aCard.getMultiverseId());
+			}
 			
 			Card newCard = new Card();
 			

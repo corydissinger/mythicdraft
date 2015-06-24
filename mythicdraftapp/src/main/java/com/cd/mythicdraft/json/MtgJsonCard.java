@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class MtgJsonCard {
 
 	private String name;
+	private String[] names;
 	private String rarity;
 	
 	@JsonProperty("multiverseid")
@@ -34,6 +35,14 @@ public class MtgJsonCard {
 
 	public void setRarity(String rarity) {
 		this.rarity = rarity;
+	}
+
+	public String[] getNames() {
+		return names;
+	}
+
+	public void setNames(String[] names) {
+		this.names = names;
 	}
 	
 }
