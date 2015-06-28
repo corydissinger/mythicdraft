@@ -1,6 +1,7 @@
 package com.cd.mythicdraft.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -25,7 +26,7 @@ public class DraftPack implements Serializable {
 	
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
 	@Column(name = "DRAFT_ID",
@@ -41,17 +42,15 @@ public class DraftPack implements Serializable {
 	@Column(name = "SEQUENCE_ID")
 	private Integer sequenceId;
 	
-	@ManyToOne(optional = false,
-			   cascade = CascadeType.ALL)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "DRAFT_ID")
 	private Draft draft;
 	
-	@ManyToOne(optional = false,
-			   cascade = CascadeType.ALL)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "SET_ID")
 	private Set set;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "draftPack")
 	private List<DraftPackPick> draftPackPicks;	
 
 	public Integer getDraftId() {
@@ -91,6 +90,10 @@ public class DraftPack implements Serializable {
 	}
 
 	public void setDraft(Draft draft) {
+		if(!draft.getDraftPacks().contains(this)) {
+			draft.addDraftPack(this);
+		}
+		
 		this.draft = draft;
 	}
 
@@ -106,8 +109,13 @@ public class DraftPack implements Serializable {
 		return draftPackPicks;
 	}
 
-	public void setDraftPackPicks(List<DraftPackPick> draftPackPicks) {
-		this.draftPackPicks = draftPackPicks;
+	public void addDraftPackPick(DraftPackPick draftPackPick) {
+		if(draftPackPicks == null){
+			draftPackPicks = new ArrayList<DraftPackPick>();
+		}		
+
+		this.draftPackPicks.add(draftPackPick);		
+		draftPackPick.setDraftPack(this);
 	}
 
 	@Override

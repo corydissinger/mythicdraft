@@ -1,10 +1,10 @@
 package com.cd.mythicdraft.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +25,7 @@ public class Draft implements Serializable {
 	
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
 	@Column(name   = "NAME",
@@ -39,10 +39,10 @@ public class Draft implements Serializable {
 	@Type(type = "timestamp")
 	private Date eventDate;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "draft")
 	private List<DraftPlayer> draftPlayers;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "draft")
 	private List<DraftPack> draftPacks;
 	
 	public Integer getId() {
@@ -81,16 +81,26 @@ public class Draft implements Serializable {
 		return draftPlayers;
 	}
 
-	public void setDraftPlayers(List<DraftPlayer> draftPlayers) {
-		this.draftPlayers = draftPlayers;
+	public void addDraftPlayer(DraftPlayer draftPlayer) {
+		if(draftPlayers == null){
+			draftPlayers = new ArrayList<DraftPlayer>();
+		}
+
+		this.draftPlayers.add(draftPlayer);		
+		draftPlayer.setDraft(this);
 	}
 
 	public List<DraftPack> getDraftPacks() {
 		return draftPacks;
 	}
 
-	public void setDraftPacks(List<DraftPack> draftPacks) {
-		this.draftPacks = draftPacks;
+	public void addDraftPack(DraftPack draftPack) {
+		if(draftPacks == null){
+			draftPacks = new ArrayList<DraftPack>();
+		}		
+		
+		this.draftPacks.add(draftPack);
+		draftPack.setDraft(this);		
 	}
 
 	@Override

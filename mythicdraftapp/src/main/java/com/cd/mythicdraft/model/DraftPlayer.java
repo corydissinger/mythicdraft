@@ -2,7 +2,6 @@ package com.cd.mythicdraft.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -25,10 +24,12 @@ public class DraftPlayer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@SuppressWarnings(value = { "unused", "serial" })
-	class DraftPlayerId implements Serializable {
+	public static class DraftPlayerId implements Serializable {
 		private Integer playerId;
 		private Integer draftId;
-		private Boolean isActivePlayer;		
+		private Boolean isActivePlayer;
+		
+		public DraftPlayerId() {}
 	}
 	
 	@Id
@@ -47,14 +48,16 @@ public class DraftPlayer implements Serializable {
 	@Column(name = "IS_ACTIVE_PLAYER")
 	private Boolean isActivePlayer;
 
-	@ManyToOne(optional = false,
-			   cascade = CascadeType.ALL)
-	@JoinColumn(name = "DRAFT_ID")
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "DRAFT_ID",
+		    	insertable = false,
+		    	updatable = false)
 	private Draft draft;
 	
-	@OneToOne(optional = false,
-			  cascade = CascadeType.ALL)
-	@JoinColumn(name = "PLAYER_ID")
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "PLAYER_ID",
+		    	insertable = false,
+		    	updatable = false)
 	private Player player;
 	
 	public Integer getPlayerId() {
@@ -100,5 +103,26 @@ public class DraftPlayer implements Serializable {
 	@Override
 	public String toString() {
 		return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		
+		DraftPlayer other = (DraftPlayer) obj;
+		
+		if(other.getDraft() == draft &&
+		   other.getIsActivePlayer() == isActivePlayer &&
+		   other.getPlayer() == player) {
+			return true;
+		}
+		
+		return false;
 	}	
+	
 }

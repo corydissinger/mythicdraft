@@ -22,7 +22,7 @@ public class DraftPackAvailablePick implements Serializable {
 
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
 	@Column(name = "CARD_ID",
@@ -38,6 +38,10 @@ public class DraftPackAvailablePick implements Serializable {
 	@ManyToOne
     @JoinColumn(name = "DRAFT_PACK_PICK_ID")	                
 	private DraftPackPick draftPackPick;	
+	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "CARD_ID")
+	private Card card;	
 	
 	public Integer getCardId() {
 		return cardId;
@@ -69,6 +73,14 @@ public class DraftPackAvailablePick implements Serializable {
 
 	public void setDraftPackPick(DraftPackPick draftPackPick) {
 		this.draftPackPick = draftPackPick;
+	}
+
+	public Card getCard() {
+		return card;
+	}
+
+	public void setCard(Card card) {
+		this.card = card;
 	}
 
 	@Override

@@ -25,7 +25,7 @@ public class DraftPackPick implements Serializable {
 	
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
 	@Column(name = "DRAFT_PACK_ID",
@@ -46,12 +46,11 @@ public class DraftPackPick implements Serializable {
 	@JoinColumn(name = "DRAFT_PACK_ID")
 	private DraftPack draftPack;
 	
-	@ManyToOne(optional = false,
-			   cascade = CascadeType.ALL)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "CARD_ID")
 	private Card card;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "draftPackPick")
 	private List<DraftPackAvailablePick> draftPackAvailablePicks;	
 
 	public Integer getDraftPackId() {
@@ -83,6 +82,10 @@ public class DraftPackPick implements Serializable {
 	}
 
 	public void setDraftPack(DraftPack draftPack) {
+		if(!draftPack.getDraftPackPicks().contains(this)){
+			draftPack.addDraftPackPick(this);
+		}
+		
 		this.draftPack = draftPack;
 	}
 

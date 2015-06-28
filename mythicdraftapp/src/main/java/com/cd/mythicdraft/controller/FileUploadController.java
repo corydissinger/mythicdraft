@@ -28,7 +28,7 @@ public class FileUploadController {
 		
 		if(!file.isEmpty()) {
 			try {
-				draftService.addDraft(file.getInputStream());
+				draftService.addDraft(file.getInputStream(), name);
 				
 				return "File upload succeeded";
 			} catch (IOException e) {
