@@ -43,13 +43,14 @@ public class MtgoDraftParserService {
 		
 		RawDraftBuilder builder = new RawDraftBuilder();
 		
-		builder.setEventDate(createEventDate());
-		builder.setEventId(Integer.parseInt(mtgoDraftListener.getEventId()));
-		builder.setCardNameToRawCardMap(mtgoDraftListener.getCardNameToTempIdMap());
-		builder.setPackToListOfPickToAvailablePicksMap(mtgoDraftListener.getPackToListOfPickToAvailablePicksMap());
-		builder.setActivePlayer(mtgoDraftListener.getActivePlayer());
-		builder.setOtherPlayers(mtgoDraftListener.getOtherPlayers());
-		builder.setPackSets(mtgoDraftListener.getPackSets());
+		builder.setEventDate(createEventDate())
+			.setEventId(Integer.parseInt(mtgoDraftListener.getEventId()))
+			.setCardNameToRawCardMap(mtgoDraftListener.getCardNameToTempIdMap())
+			.setPackToListOfPickToAvailablePicksMap(mtgoDraftListener.getPackToListOfPickToAvailablePicksMap())
+			.setActivePlayer(mtgoDraftListener.getActivePlayer())
+			.setOtherPlayers(mtgoDraftListener.getOtherPlayers())
+			.setPackSets(mtgoDraftListener.getPackSets())
+			.setTempIdToCardNameMap(mtgoDraftListener.getTempIdToCardNameMap());
 		
 		mtgoDraftListener.cleanup();
 		

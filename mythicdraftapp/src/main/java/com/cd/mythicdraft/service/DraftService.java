@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ import com.cd.mythicdraft.domain.RawDraft;
 import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Draft;
 import com.cd.mythicdraft.model.DraftPack;
+import com.cd.mythicdraft.model.DraftPackAvailablePick;
+import com.cd.mythicdraft.model.DraftPackPick;
 import com.cd.mythicdraft.model.DraftPlayer;
 import com.cd.mythicdraft.model.Player;
 import com.cd.mythicdraft.model.Set;
@@ -120,12 +124,49 @@ public class DraftService {
 				}
 			}
 			
+			for(DraftPackPick draftPackPick : createDraftPackPicks(aRawDraft.getPackToListOfPickToAvailablePicksMap().get(i),
+																   cardNameToCardMap,
+																   aRawDraft.getTempIdToCardNameMap())) {
+				
+				draftPack.addDraftPackPick(draftPackPick);
+			}
+			
 			draftPack.setSequenceId(i);
 			
 			draftPacks.add(draftPack);
 		}
 		
 		return draftPacks;
+	}
+
+	private List<DraftPackPick> createDraftPackPicks(final List<MutablePair<Integer, List<Integer>>> listOfPicksToAvailablePicks,
+													 final Map<String, Card> cardNameToCardMap, 
+													 final Map<Integer, String> tempIdToCardNameMap) {
+		List<DraftPackPick> packPicks = new ArrayList<DraftPackPick>(listOfPicksToAvailablePicks.size());
+		
+		for(int i = 0; i < listOfPicksToAvailablePicks.size(); i++) {
+			Pair<Integer, List<Integer>> pickToAvailablePicks = listOfPicksToAvailablePicks.get(i);
+			DraftPackPick packPick = new DraftPackPick();
+			Card pick = cardNameToCardMap.get(tempIdToCardNameMap.get(pickToAvailablePicks.getLeft()));
+			
+			packPick.setCard(pick);
+			packPick.setCardId(pick.getId());
+			packPick.setSequenceId(i);
+			
+			for(Integer availablePickTempId : pickToAvailablePicks.getRight()) {
+				DraftPackAvailablePick availablePick = new DraftPackAvailablePick();
+				Card available = cardNameToCardMap.get(tempIdToCardNameMap.get(availablePickTempId));
+				availablePick.setCard(available);
+				availablePick.setDraftPackPick(packPick);
+				availablePick.setCardId(available.getId());
+				
+				packPick.addDraftPackAvailablePick(availablePick);
+			}
+
+			packPicks.add(packPick);
+		}
+		
+		return packPicks;
 	}
 
 	private Map<String, String> createCardNameToCardSetMap(RawDraft aRawDraft) {

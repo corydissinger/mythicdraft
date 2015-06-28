@@ -1,6 +1,7 @@
 package com.cd.mythicdraft.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -89,6 +90,15 @@ public class DraftPackPick implements Serializable {
 		this.draftPack = draftPack;
 	}
 
+	public void addDraftPackAvailablePick(final DraftPackAvailablePick availablePick) {
+		if(draftPackAvailablePicks == null){
+			draftPackAvailablePicks = new ArrayList<DraftPackAvailablePick>();
+		}		
+		
+		this.draftPackAvailablePicks.add(availablePick);
+		availablePick.setDraftPackPick(this);		
+	}
+	
 	public Card getCard() {
 		return card;
 	}

@@ -33,6 +33,7 @@ public class MTGODraftListenerImpl extends MTGODraftParserBaseListener {
 	private String eventId;
 	
 	private Map<String, RawCard> cardNameToRawCardMap;
+	private Map<Integer, String> tempIdToCardNameMap;
 	private int uniqueCardCount = 0;
 	private int currentPackNumber = 0;
 	
@@ -54,6 +55,7 @@ public class MTGODraftListenerImpl extends MTGODraftParserBaseListener {
 		currentPackNumber = 0;
 		
 		packToListOfPickToAvailablePicksMap = new HashMap<Integer, List<MutablePair<Integer, List<Integer>>>>(3);
+		tempIdToCardNameMap = new HashMap<Integer, String>();
 		
 		for(int i = 0; i < 3; i++) {
 			List<MutablePair<Integer, List<Integer>>> listOfPackPicks = new ArrayList<MutablePair<Integer, List<Integer>>>(15);
@@ -67,6 +69,7 @@ public class MTGODraftListenerImpl extends MTGODraftParserBaseListener {
 		currentListOfPicks = null;
 		currentPairOfPickToAvailablePicks = null;
 		currentAvailablePicks = null;
+		tempIdToCardNameMap = null;
 	}
 	
 	@Override
@@ -166,11 +169,16 @@ public class MTGODraftListenerImpl extends MTGODraftParserBaseListener {
 		RawCard rawCard = cardNameToRawCardMap.get(aCardName);
 		
 		if(rawCard == null) {
-			rawCard = new RawCard(uniqueCardCount++, packSets.get(currentPackNumber));
+			rawCard = new RawCard(uniqueCardCount, packSets.get(currentPackNumber));
 			cardNameToRawCardMap.put(aCardName, rawCard);
+			tempIdToCardNameMap.put(uniqueCardCount++, aCardName);
 		}
 		
 		return rawCard.getTempId();
+	}
+
+	public Map<Integer, String> getTempIdToCardNameMap() {
+		return tempIdToCardNameMap;
 	}
 
 }

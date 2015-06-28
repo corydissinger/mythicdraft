@@ -16,6 +16,7 @@ public class RawDraftBuilder {
 	private String activePlayer;
 	private List<String> otherPlayers;	
 	private List<String> packSets;
+	private Map<Integer, String> tempIdToCardNameMap;
 
 	public RawDraft build() {
 		return new RawDraft(packToListOfPickToAvailablePicksMap, 
@@ -24,33 +25,48 @@ public class RawDraftBuilder {
 							eventDate,
 							activePlayer,
 							otherPlayers,
-							packSets);
+							packSets,
+							tempIdToCardNameMap);
 	}
 	
-	public void setPackToListOfPickToAvailablePicksMap(
-			Map<Integer, List<MutablePair<Integer, List<Integer>>>> packToListOfPickToAvailablePicksMap) {
+	public RawDraftBuilder setPackToListOfPickToAvailablePicksMap(Map<Integer, List<MutablePair<Integer, List<Integer>>>> packToListOfPickToAvailablePicksMap) {
 		this.packToListOfPickToAvailablePicksMap = packToListOfPickToAvailablePicksMap;
+		return this;
 	}
-	public void setCardNameToRawCardMap(Map<String, RawCard> cardNameToTempIdMap) {
+	
+	public RawDraftBuilder setCardNameToRawCardMap(Map<String, RawCard> cardNameToTempIdMap) {
 		this.cardNameToTempIdMap = cardNameToTempIdMap;
+		return this;
 	}
-	public void setEventId(Integer eventId) {
+	
+	public RawDraftBuilder setEventId(Integer eventId) {
 		this.eventId = eventId;
+		return this;
 	}
-	public void setEventDate(Date eventDate) {
+	
+	public RawDraftBuilder setEventDate(Date eventDate) {
 		this.eventDate = eventDate;
+		return this;
 	}
 
-	public void setActivePlayer(String activePlayer) {
+	public RawDraftBuilder setActivePlayer(String activePlayer) {
 		this.activePlayer = activePlayer;
+		return this;
 	}
 
-	public void setOtherPlayers(List<String> otherPlayers) {
+	public RawDraftBuilder setOtherPlayers(List<String> otherPlayers) {
 		this.otherPlayers = otherPlayers;
+		return this;
 	}
 
-	public void setPackSets(List<String> packSets) {
+	public RawDraftBuilder setPackSets(List<String> packSets) {
 		this.packSets = packSets;
+		return this;
+	}
+
+	public RawDraftBuilder setTempIdToCardNameMap(Map<Integer, String> tempIdToCardNameMap) {
+		this.tempIdToCardNameMap = tempIdToCardNameMap;
+		return this;
 	}
 	
 }
