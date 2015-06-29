@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "DRAFT_PACK_AVAILABLE_PICK")
 public class DraftPackAvailablePick implements Serializable {
@@ -35,6 +37,7 @@ public class DraftPackAvailablePick implements Serializable {
 			updatable = false)
 	private Integer draftPackPickId;
 
+	@JsonIgnore
 	@ManyToOne
     @JoinColumn(name = "DRAFT_PACK_PICK_ID")	                
 	private DraftPackPick draftPackPick;	

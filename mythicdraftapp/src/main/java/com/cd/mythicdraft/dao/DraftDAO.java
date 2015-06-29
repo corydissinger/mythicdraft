@@ -26,4 +26,6 @@ public interface DraftDAO {
 	public Map<String, Player> getPlayersByName(final Collection<String> playerNames);
 
 	public boolean isDraftAlreadySaved(final Draft draft);
+
+	public Draft getDraftByActivePlayer(final Integer draftId, final Integer activePlayerId);
 }

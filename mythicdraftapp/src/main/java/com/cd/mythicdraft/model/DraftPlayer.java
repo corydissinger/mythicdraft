@@ -8,13 +8,13 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.cd.mythicdraft.model.DraftPlayer.DraftPlayerId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "DRAFT_PLAYER")
@@ -48,6 +48,7 @@ public class DraftPlayer implements Serializable {
 	@Column(name = "IS_ACTIVE_PLAYER")
 	private Boolean isActivePlayer;
 
+	@JsonIgnore
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "DRAFT_ID",
 		    	insertable = false,

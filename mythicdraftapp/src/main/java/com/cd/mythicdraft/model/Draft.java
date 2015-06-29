@@ -1,12 +1,12 @@
 package com.cd.mythicdraft.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,11 +39,11 @@ public class Draft implements Serializable {
 	@Type(type = "timestamp")
 	private Date eventDate;
 	
-	@OneToMany(mappedBy = "draft")
-	private List<DraftPlayer> draftPlayers;
+	@OneToMany(mappedBy = "draft", fetch = FetchType.EAGER)
+	private java.util.Set<DraftPlayer> draftPlayers;
 	
-	@OneToMany(mappedBy = "draft")
-	private List<DraftPack> draftPacks;
+	@OneToMany(mappedBy = "draft", fetch = FetchType.EAGER)
+	private java.util.Set<DraftPack> draftPacks;
 	
 	public Integer getId() {
 		return id;
@@ -77,26 +77,26 @@ public class Draft implements Serializable {
 		this.name = name;
 	}
 
-	public List<DraftPlayer> getDraftPlayers() {
+	public java.util.Set<DraftPlayer> getDraftPlayers() {
 		return draftPlayers;
 	}
 
 	public void addDraftPlayer(DraftPlayer draftPlayer) {
 		if(draftPlayers == null){
-			draftPlayers = new ArrayList<DraftPlayer>();
+			draftPlayers = new HashSet<DraftPlayer>();
 		}
 
 		this.draftPlayers.add(draftPlayer);		
 		draftPlayer.setDraft(this);
 	}
 
-	public List<DraftPack> getDraftPacks() {
+	public java.util.Set<DraftPack> getDraftPacks() {
 		return draftPacks;
 	}
 
 	public void addDraftPack(DraftPack draftPack) {
 		if(draftPacks == null){
-			draftPacks = new ArrayList<DraftPack>();
+			draftPacks = new HashSet<DraftPack>();
 		}		
 		
 		this.draftPacks.add(draftPack);

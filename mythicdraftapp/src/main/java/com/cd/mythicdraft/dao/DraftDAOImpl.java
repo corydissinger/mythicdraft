@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,6 +53,26 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 		for(DraftPack draftPack : draft.getDraftPacks()) {
 			session.persist(draftPack);
 		}
+	}
+	
+	@Override
+	@Transactional
+	public Draft getDraftByActivePlayer(final Integer draftId, final Integer activePlayerId) {
+		Criteria crit = getCurrentSession().createCriteria(Draft.class);
+
+		crit.createAlias("draftPlayers", "draftPlayers");
+		crit.createAlias("draftPacks", "draftPacks");
+		crit.createAlias("draftPacks.draftPackPicks", "draftPackPicks");
+		
+		crit.add(Restrictions.eq("id", draftId));
+		crit.add(Restrictions.eq("draftPlayers.playerId", activePlayerId));
+		
+		crit.addOrder(Order.asc("draftPacks.sequenceId"));
+		crit.addOrder(Order.asc("draftPackPicks.sequenceId"));
+		
+		final Draft draft = (Draft)crit.uniqueResult(); 
+		
+		return draft;
 	}
 
 	@Override

@@ -1,12 +1,12 @@
 package com.cd.mythicdraft.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +17,8 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "DRAFT_PACK")
@@ -42,6 +44,7 @@ public class DraftPack implements Serializable {
 	@Column(name = "SEQUENCE_ID")
 	private Integer sequenceId;
 	
+	@JsonIgnore
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "DRAFT_ID")
 	private Draft draft;
@@ -50,8 +53,10 @@ public class DraftPack implements Serializable {
 	@JoinColumn(name = "SET_ID")
 	private Set set;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "draftPack")
-	private List<DraftPackPick> draftPackPicks;	
+	@OneToMany(cascade = CascadeType.ALL, 
+			   mappedBy = "draftPack", 
+			   fetch = FetchType.EAGER)
+	private java.util.Set<DraftPackPick> draftPackPicks;	
 
 	public Integer getDraftId() {
 		return draftId;
@@ -105,13 +110,13 @@ public class DraftPack implements Serializable {
 		this.set = set;
 	}	
 
-	public List<DraftPackPick> getDraftPackPicks() {
+	public java.util.Set<DraftPackPick> getDraftPackPicks() {
 		return draftPackPicks;
 	}
 
 	public void addDraftPackPick(DraftPackPick draftPackPick) {
 		if(draftPackPicks == null){
-			draftPackPicks = new ArrayList<DraftPackPick>();
+			draftPackPicks = new HashSet<DraftPackPick>();
 		}		
 
 		this.draftPackPicks.add(draftPackPick);		

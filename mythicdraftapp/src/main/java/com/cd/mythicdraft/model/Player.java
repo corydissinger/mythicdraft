@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "PLAYER")
 public class Player implements Serializable {
@@ -29,9 +31,6 @@ public class Player implements Serializable {
 			unique = true,
 			length = 30)
 	private String name;
-
-	@OneToMany(mappedBy = "player")
-	private List<DraftPlayer> draftPlayers;
 	
 	public Integer getId() {
 		return id;
@@ -48,14 +47,6 @@ public class Player implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public List<DraftPlayer> getDraftPlayers() {
-		return draftPlayers;
-	}
-
-	public void setDraftPlayers(List<DraftPlayer> draftPlayers) {
-		this.draftPlayers = draftPlayers;
-	}
 
 	@Override
 	public String toString() {
@@ -66,8 +57,6 @@ public class Player implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((draftPlayers == null) ? 0 : draftPlayers.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;

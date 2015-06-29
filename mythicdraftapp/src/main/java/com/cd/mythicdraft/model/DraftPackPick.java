@@ -1,12 +1,12 @@
 package com.cd.mythicdraft.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +17,8 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "DRAFT_PACK_PICK")
@@ -42,6 +44,7 @@ public class DraftPackPick implements Serializable {
 	@Column(name = "SEQUENCE_ID")	
 	private Integer sequenceId;
 	
+	@JsonIgnore
 	@ManyToOne(optional = false,
 			   cascade = CascadeType.ALL)
 	@JoinColumn(name = "DRAFT_PACK_ID")
@@ -51,8 +54,10 @@ public class DraftPackPick implements Serializable {
 	@JoinColumn(name = "CARD_ID")
 	private Card card;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "draftPackPick")
-	private List<DraftPackAvailablePick> draftPackAvailablePicks;	
+	@OneToMany(cascade = CascadeType.ALL, 
+			   mappedBy = "draftPackPick",
+			   fetch = FetchType.EAGER)
+	private java.util.Set<DraftPackAvailablePick> draftPackAvailablePicks;	
 
 	public Integer getDraftPackId() {
 		return draftPackId;
@@ -92,7 +97,7 @@ public class DraftPackPick implements Serializable {
 
 	public void addDraftPackAvailablePick(final DraftPackAvailablePick availablePick) {
 		if(draftPackAvailablePicks == null){
-			draftPackAvailablePicks = new ArrayList<DraftPackAvailablePick>();
+			draftPackAvailablePicks = new HashSet<DraftPackAvailablePick>();
 		}		
 		
 		this.draftPackAvailablePicks.add(availablePick);
