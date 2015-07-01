@@ -7,22 +7,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cd.mythicdraft.dao.DraftDAO;
-import com.cd.mythicdraft.model.Draft;
+import com.cd.mythicdraft.json.JsonDraft;
+import com.cd.mythicdraft.service.DraftService;
 
 @Controller
 @RequestMapping("/draft")
 public class DraftController {
 
 	@Autowired
-	private DraftDAO draftDao;
+	private DraftService draftService;
 	
 	@RequestMapping(value = "/{draftId}/player/{playerId}",
 					method = RequestMethod.GET)
-	public @ResponseBody Draft getDraftForActivePlayer(@PathVariable Integer draftId,
+	public @ResponseBody JsonDraft getDraftForActivePlayer(@PathVariable Integer draftId,
 													   @PathVariable Integer playerId) {
 		
-		return draftDao.getDraftByActivePlayer(draftId, playerId);
+		return draftService.getDraftByActivePlayer(draftId, playerId);
 	}
 	
 }

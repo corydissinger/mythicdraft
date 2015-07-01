@@ -62,13 +62,11 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 
 		crit.createAlias("draftPlayers", "draftPlayers");
 		crit.createAlias("draftPacks", "draftPacks");
-		crit.createAlias("draftPacks.draftPackPicks", "draftPackPicks");
 		
 		crit.add(Restrictions.eq("id", draftId));
 		crit.add(Restrictions.eq("draftPlayers.playerId", activePlayerId));
 		
 		crit.addOrder(Order.asc("draftPacks.sequenceId"));
-		crit.addOrder(Order.asc("draftPackPicks.sequenceId"));
 		
 		final Draft draft = (Draft)crit.uniqueResult(); 
 		

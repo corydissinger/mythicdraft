@@ -44,7 +44,6 @@ public class DraftPack implements Serializable {
 	@Column(name = "SEQUENCE_ID")
 	private Integer sequenceId;
 	
-	@JsonIgnore
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "DRAFT_ID")
 	private Draft draft;
@@ -54,8 +53,7 @@ public class DraftPack implements Serializable {
 	private Set set;
 	
 	@OneToMany(cascade = CascadeType.ALL, 
-			   mappedBy = "draftPack", 
-			   fetch = FetchType.EAGER)
+			   mappedBy = "draftPack")
 	private java.util.Set<DraftPackPick> draftPackPicks;	
 
 	public Integer getDraftId() {

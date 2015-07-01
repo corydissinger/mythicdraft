@@ -17,6 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cd.mythicdraft.dao.DraftDAO;
 import com.cd.mythicdraft.domain.RawCard;
 import com.cd.mythicdraft.domain.RawDraft;
+import com.cd.mythicdraft.json.JsonDraft;
+import com.cd.mythicdraft.json.JsonPack;
+import com.cd.mythicdraft.json.JsonPlayer;
 import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Draft;
 import com.cd.mythicdraft.model.DraftPack;
@@ -177,5 +180,45 @@ public class DraftService {
 		}
 		
 		return cardNameToCardSetMap;
+	}
+
+	public JsonDraft getDraftByActivePlayer(final Integer draftId, final Integer playerId) {
+		final Draft draft = draftDao.getDraftByActivePlayer(draftId, playerId);
+		final JsonDraft jsonDraft = new JsonDraft();
+		final List<JsonPlayer> otherPlayers = new ArrayList<JsonPlayer>();
+		final List<JsonPack> jsonPacks = new ArrayList<JsonPack>();
+		
+		jsonDraft.setEventDate(draft.getEventDate());
+		jsonDraft.setEventId(draft.getEventId());
+		jsonDraft.setId(draft.getId());
+		
+		for(DraftPlayer draftPlayer : draft.getDraftPlayers()) {
+			Player player = draftPlayer.getPlayer();
+			JsonPlayer jsonPlayer = new JsonPlayer();
+
+			jsonPlayer.setId(player.getId());
+			jsonPlayer.setName(player.getName());			
+			
+			if(draftPlayer.getIsActivePlayer()) {
+				jsonDraft.setActivePlayer(jsonPlayer);
+			} else {
+				otherPlayers.add(jsonPlayer);
+			}
+		}
+		
+		jsonDraft.setPlayers(otherPlayers);
+		
+		for(DraftPack pack : draft.getDraftPacks()) {
+			JsonPack jsonPack = new JsonPack();
+			
+			jsonPack.setId(pack.getId());
+			jsonPack.setSetCode(pack.getSet().getName());
+			
+			jsonPacks.add(jsonPack);
+		}
+		
+		jsonDraft.setPacks(jsonPacks);
+		
+		return jsonDraft;
 	}	
 }
