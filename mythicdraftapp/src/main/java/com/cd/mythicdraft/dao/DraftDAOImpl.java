@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Draft;
 import com.cd.mythicdraft.model.DraftPack;
+import com.cd.mythicdraft.model.DraftPackPick;
 import com.cd.mythicdraft.model.DraftPlayer;
 import com.cd.mythicdraft.model.Player;
 import com.cd.mythicdraft.model.Set;
@@ -56,7 +57,7 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 	}
 	
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public Draft getDraftByActivePlayer(final Integer draftId, final Integer activePlayerId) {
 		Criteria crit = getCurrentSession().createCriteria(Draft.class);
 
@@ -72,6 +73,19 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 		
 		return draft;
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public DraftPackPick getPackByIdAndPick(final Integer draftPackId, final Integer pickId) {
+		Criteria crit = getCurrentSession().createCriteria(DraftPackPick.class);
+
+		crit.add(Restrictions.eq("draftPackId", draftPackId));
+		crit.add(Restrictions.eq("sequenceId", pickId));
+		
+		final DraftPackPick draftPackPick = (DraftPackPick)crit.uniqueResult(); 
+		
+		return draftPackPick;
+	}	
 
 	@Override
 	@Transactional(readOnly = true)

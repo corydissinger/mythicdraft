@@ -17,8 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cd.mythicdraft.dao.DraftDAO;
 import com.cd.mythicdraft.domain.RawCard;
 import com.cd.mythicdraft.domain.RawDraft;
+import com.cd.mythicdraft.json.JsonCard;
 import com.cd.mythicdraft.json.JsonDraft;
 import com.cd.mythicdraft.json.JsonPack;
+import com.cd.mythicdraft.json.JsonPackPick;
 import com.cd.mythicdraft.json.JsonPlayer;
 import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Draft;
@@ -221,4 +223,27 @@ public class DraftService {
 		
 		return jsonDraft;
 	}	
+	
+	public JsonPackPick getPackByIdAndPick(final Integer draftPackId, final Integer pickId) {
+		final JsonPackPick jsonPackPick = new JsonPackPick();
+		final List<JsonCard> availablePicks = new ArrayList<JsonCard>();
+		final JsonCard pick = new JsonCard();
+		
+		DraftPackPick packPick = draftDao.getPackByIdAndPick(draftPackId, pickId);
+		
+		for(DraftPackAvailablePick available : packPick.getDraftPackAvailablePicks()) {
+			final JsonCard card = new JsonCard();
+			
+			card.setMultiverseId(available.getCardId());
+			
+			availablePicks.add(card);
+		}
+		
+		jsonPackPick.setAvailable(availablePicks);
+		
+		pick.setMultiverseId(packPick.getCardId());
+		jsonPackPick.setPick(pick);
+		
+		return jsonPackPick;
+	}
 }

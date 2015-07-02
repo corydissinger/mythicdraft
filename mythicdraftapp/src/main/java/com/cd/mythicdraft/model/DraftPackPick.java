@@ -104,6 +104,10 @@ public class DraftPackPick implements Serializable {
 		availablePick.setDraftPackPick(this);		
 	}
 	
+	public java.util.Set<DraftPackAvailablePick> getDraftPackAvailablePicks() {
+		return draftPackAvailablePicks;
+	}
+
 	public Card getCard() {
 		return card;
 	}

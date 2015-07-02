@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Draft;
+import com.cd.mythicdraft.model.DraftPackPick;
 import com.cd.mythicdraft.model.Player;
 import com.cd.mythicdraft.model.Set;
 
@@ -28,4 +29,6 @@ public interface DraftDAO {
 	public boolean isDraftAlreadySaved(final Draft draft);
 
 	public Draft getDraftByActivePlayer(final Integer draftId, final Integer activePlayerId);
+
+	public DraftPackPick getPackByIdAndPick(final Integer draftPackId, final Integer pickId);
 }
