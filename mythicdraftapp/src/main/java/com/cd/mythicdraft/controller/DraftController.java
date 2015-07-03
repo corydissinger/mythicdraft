@@ -1,5 +1,7 @@
 package com.cd.mythicdraft.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +18,11 @@ public class DraftController {
 
 	@Autowired
 	private DraftService draftService;
+	
+	@RequestMapping(value = "/draft/recent")
+	public @ResponseBody List<JsonDraft> getRecentDrafts() {
+		return draftService.getRecentDrafts();
+	}
 	
 	@RequestMapping(value = "/draft/{draftId}/player/{playerId}",
 					method = RequestMethod.GET)

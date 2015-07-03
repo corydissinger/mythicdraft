@@ -31,4 +31,6 @@ public interface DraftDAO {
 	public Draft getDraftByActivePlayer(final Integer draftId, final Integer activePlayerId);
 
 	public DraftPackPick getPackByIdAndPick(final Integer draftPackId, final Integer pickId);
+
+	public Collection<Draft> getRecentDrafts();
 }

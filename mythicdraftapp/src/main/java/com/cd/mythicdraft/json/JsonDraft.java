@@ -11,7 +11,8 @@ public class JsonDraft implements Serializable {
 	private Integer id;
 	private String name;
 	private Integer eventId;	
-	private Date eventDate;
+	private String eventDate;
+	private String created;
 	
 	private JsonPlayer activePlayer;
 	private List<JsonPlayer> players;
@@ -34,11 +35,17 @@ public class JsonDraft implements Serializable {
 	public void setEventId(Integer eventId) {
 		this.eventId = eventId;
 	}
-	public Date getEventDate() {
+	public String getEventDate() {
 		return eventDate;
 	}
-	public void setEventDate(Date eventDate) {
+	public void setEventDate(String eventDate) {
 		this.eventDate = eventDate;
+	}
+	public String getCreated() {
+		return created;
+	}
+	public void setCreated(String created) {
+		this.created = created;
 	}
 	public JsonPlayer getActivePlayer() {
 		return activePlayer;

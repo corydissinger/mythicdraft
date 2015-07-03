@@ -1,12 +1,16 @@
 package com.cd.mythicdraft.dao;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -34,6 +38,7 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 		
 		Session session = getCurrentSession();
 
+		draft.setCreated(new Date());
 		session.persist(draft);		
 		
 		for(DraftPlayer draftPlayer : draft.getDraftPlayers()) {
@@ -63,6 +68,9 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 
 		crit.createAlias("draftPlayers", "draftPlayers");
 		crit.createAlias("draftPacks", "draftPacks");
+
+		crit.setFetchMode("draftPlayers", FetchMode.JOIN);
+		crit.setFetchMode("draftPacks", FetchMode.JOIN);		
 		
 		crit.add(Restrictions.eq("id", draftId));
 		crit.add(Restrictions.eq("draftPlayers.playerId", activePlayerId));
@@ -73,6 +81,18 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 		
 		return draft;
 	}
+
+	@Override
+	@Transactional(readOnly = true)	
+	public Collection<Draft> getRecentDrafts() {
+		Query query = getCurrentSession().createSQLQuery("SELECT ID, NAME, CREATED, EVENT_ID, EVENT_DATE FROM DRAFT ORDER BY CREATED DESC").addEntity(Draft.class);
+		
+		query.setMaxResults(10);
+		
+		final Collection<Draft> drafts = new ArrayList<Draft>(query.list());
+		
+		return drafts;
+	}	
 	
 	@Override
 	@Transactional(readOnly = true)

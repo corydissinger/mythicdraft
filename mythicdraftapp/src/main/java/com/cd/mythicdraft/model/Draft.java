@@ -12,9 +12,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
 
 @Entity
@@ -39,10 +43,16 @@ public class Draft implements Serializable {
 	@Type(type = "timestamp")
 	private Date eventDate;
 	
-	@OneToMany(mappedBy = "draft", fetch = FetchType.EAGER)
+	@Column(name = "CREATED")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date created;	
+	
+	@OneToMany(mappedBy = "draft", fetch = FetchType.LAZY)
+	@Fetch(FetchMode.JOIN)	
 	private java.util.Set<DraftPlayer> draftPlayers;
 	
-	@OneToMany(mappedBy = "draft", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "draft", fetch = FetchType.LAZY)
+	@Fetch(FetchMode.JOIN)
 	private java.util.Set<DraftPack> draftPacks;
 	
 	public Integer getId() {
@@ -101,6 +111,14 @@ public class Draft implements Serializable {
 		
 		this.draftPacks.add(draftPack);
 		draftPack.setDraft(this);		
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
 	}
 
 	@Override

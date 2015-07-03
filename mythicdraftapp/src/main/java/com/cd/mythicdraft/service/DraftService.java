@@ -10,6 +10,9 @@ import java.util.Map;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,6 +57,46 @@ public class DraftService {
 
 		draftDao.addDraft(convertRawDraft(aDraft, name));
 	}
+
+	public JsonDraft getDraftByActivePlayer(final Integer draftId, final Integer playerId) {
+		final Draft draft = draftDao.getDraftByActivePlayer(draftId, playerId);
+		final JsonDraft jsonDraft = getJsonDraftFromDraft(draft);
+		
+		return jsonDraft;
+	}
+	
+	public JsonPackPick getPackByIdAndPick(final Integer draftPackId, final Integer pickId) {
+		final JsonPackPick jsonPackPick = new JsonPackPick();
+		final List<JsonCard> availablePicks = new ArrayList<JsonCard>();
+		final JsonCard pick = new JsonCard();
+		
+		DraftPackPick packPick = draftDao.getPackByIdAndPick(draftPackId, pickId);
+		
+		for(DraftPackAvailablePick available : packPick.getDraftPackAvailablePicks()) {
+			final JsonCard card = new JsonCard();
+			
+			card.setMultiverseId(available.getCardId());
+			
+			availablePicks.add(card);
+		}
+		
+		jsonPackPick.setAvailable(availablePicks);
+		
+		pick.setMultiverseId(packPick.getCardId());
+		jsonPackPick.setPick(pick);
+		
+		return jsonPackPick;
+	}
+	
+	public List<JsonDraft> getRecentDrafts() {
+		final List<JsonDraft> recentDrafts = new ArrayList<JsonDraft>(10);
+		
+		for(Draft aRecentDraft : draftDao.getRecentDrafts()) {
+			recentDrafts.add(getJsonDraftFromDraft(aRecentDraft));
+		}
+		
+		return recentDrafts;
+	}	
 	
 	private Draft convertRawDraft(RawDraft aRawDraft, String name) {
 		Draft draft = new Draft();
@@ -184,13 +227,14 @@ public class DraftService {
 		return cardNameToCardSetMap;
 	}
 
-	public JsonDraft getDraftByActivePlayer(final Integer draftId, final Integer playerId) {
-		final Draft draft = draftDao.getDraftByActivePlayer(draftId, playerId);
+	private JsonDraft getJsonDraftFromDraft(final Draft draft) {
 		final JsonDraft jsonDraft = new JsonDraft();
 		final List<JsonPlayer> otherPlayers = new ArrayList<JsonPlayer>();
-		final List<JsonPack> jsonPacks = new ArrayList<JsonPack>();
+		final List<JsonPack> jsonPacks = new ArrayList<JsonPack>();		
+		final DateTimeFormatter fmt = DateTimeFormat.forPattern("MM/dd/yyyy h:mm:ss aa");
 		
-		jsonDraft.setEventDate(draft.getEventDate());
+		jsonDraft.setEventDate(fmt.print(new DateTime(draft.getEventDate())));
+		jsonDraft.setCreated(fmt.print(new DateTime(draft.getCreated())));
 		jsonDraft.setEventId(draft.getEventId());
 		jsonDraft.setId(draft.getId());
 		
@@ -224,26 +268,4 @@ public class DraftService {
 		return jsonDraft;
 	}	
 	
-	public JsonPackPick getPackByIdAndPick(final Integer draftPackId, final Integer pickId) {
-		final JsonPackPick jsonPackPick = new JsonPackPick();
-		final List<JsonCard> availablePicks = new ArrayList<JsonCard>();
-		final JsonCard pick = new JsonCard();
-		
-		DraftPackPick packPick = draftDao.getPackByIdAndPick(draftPackId, pickId);
-		
-		for(DraftPackAvailablePick available : packPick.getDraftPackAvailablePicks()) {
-			final JsonCard card = new JsonCard();
-			
-			card.setMultiverseId(available.getCardId());
-			
-			availablePicks.add(card);
-		}
-		
-		jsonPackPick.setAvailable(availablePicks);
-		
-		pick.setMultiverseId(packPick.getCardId());
-		jsonPackPick.setPick(pick);
-		
-		return jsonPackPick;
-	}
 }
