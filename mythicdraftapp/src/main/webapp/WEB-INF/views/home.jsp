@@ -1,18 +1,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<title>spring-mvc-showcase</title>
-	<link href="<c:url value="/resources/form.css" />" rel="stylesheet"  type="text/css" />		
-	<link href="<c:url value="/resources/jqueryui/1.8/themes/base/jquery.ui.core.css" />" rel="stylesheet" type="text/css"/>
-	<link href="<c:url value="/resources/jqueryui/1.8/themes/base/jquery.ui.theme.css" />" rel="stylesheet" type="text/css"/>
-	<link href="<c:url value="/resources/jqueryui/1.8/themes/base/jquery.ui.tabs.css" />" rel="stylesheet" type="text/css"/>
+	<title>Mythic Draft</title>
+	
+	<%-- Metas - down with raredraft --%>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<%-- Static assets --%>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/darkly/bootstrap.min.css"></link>
+	
+	<script src="https://fb.me/react-with-addons-0.13.3.min.js"></script>
+	<script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
 </head>
 <body>
-	<form action="upload" method="post" enctype="multipart/form-data">
-		<input type="file" name="file" required>
-		<input type="text" name="name" maxlength="20" required>
-		<input type="submit">
-	</form>
+	<div id="container"></div>
+	<script type="text/jsx" src="resources/js/mythicdraft.js"></script>
 </body>
 </html>
