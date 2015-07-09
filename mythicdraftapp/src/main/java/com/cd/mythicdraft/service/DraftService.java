@@ -237,6 +237,7 @@ public class DraftService {
 		jsonDraft.setCreated(fmt.print(new DateTime(draft.getCreated())));
 		jsonDraft.setEventId(draft.getEventId());
 		jsonDraft.setId(draft.getId());
+		jsonDraft.setName(draft.getName());
 		
 		for(DraftPlayer draftPlayer : draft.getDraftPlayers()) {
 			Player player = draftPlayer.getPlayer();
