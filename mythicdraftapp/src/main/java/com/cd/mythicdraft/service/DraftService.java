@@ -92,9 +92,10 @@ public class DraftService {
 	}
 	
 	public List<JsonDraft> getRecentDrafts(final Integer numberOfDrafts) {
-		return draftDao.getRecentDrafts(numberOfDrafts).stream()
-														.map(this::getJsonDraftFromDraft)
-														.collect(Collectors.toList());
+		return draftDao.getRecentDrafts(numberOfDrafts)
+				.stream()
+				.map(this::getJsonDraftFromDraft)
+				.collect(Collectors.toList());
 	}
 
 	private Draft convertRawDraft(RawDraft aRawDraft, String name) {
