@@ -21,7 +21,7 @@ public class DraftController {
 	
 	@RequestMapping(value = "/draft/recent")
 	public @ResponseBody List<JsonDraft> getRecentDrafts() {
-		return draftService.getRecentDrafts();
+		return draftService.getRecentDrafts(10);
 	}
 	
 	@RequestMapping(value = "/draft/{draftId}/player/{playerId}",

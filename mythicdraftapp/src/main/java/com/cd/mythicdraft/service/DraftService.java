@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -36,13 +37,15 @@ import com.cd.mythicdraft.model.Set;
 
 @Service(value = "draftService")
 public class DraftService {
-
-	private static final Logger logger = Logger.getLogger(DraftService.class);	
 	
-	@Autowired
 	private DraftDAO draftDao;
-	
-	@Autowired
+
+    @Autowired
+    public void setDraftDao(final DraftDAO draftDao) {
+        this.draftDao = draftDao;
+    }
+
+    @Autowired
 	private MtgoDraftParserService mtgoDraftParserService;
 	
 	@Transactional
@@ -88,16 +91,12 @@ public class DraftService {
 		return jsonPackPick;
 	}
 	
-	public List<JsonDraft> getRecentDrafts() {
-		final List<JsonDraft> recentDrafts = new ArrayList<JsonDraft>(10);
-		
-		for(Draft aRecentDraft : draftDao.getRecentDrafts()) {
-			recentDrafts.add(getJsonDraftFromDraft(aRecentDraft));
-		}
-		
-		return recentDrafts;
-	}	
-	
+	public List<JsonDraft> getRecentDrafts(final Integer numberOfDrafts) {
+		return draftDao.getRecentDrafts(numberOfDrafts).stream()
+														.map(this::getJsonDraftFromDraft)
+														.collect(Collectors.toList());
+	}
+
 	private Draft convertRawDraft(RawDraft aRawDraft, String name) {
 		Draft draft = new Draft();
 		
