@@ -1,0 +1,468 @@
+Event #: 8492316
+Time:    7/18/2015 2:56:30 PM
+Players:
+    MagicDeckbuilder16
+    sledys
+    Ottoclieder
+    RSWander
+    H4WKEYES
+--> baronvonfonz
+    markusmint
+    davidkantro0666
+
+------ C03 ------ 
+
+Pack 1 pick 1:
+    Fiend Hunter
+    Land Tax
+    Thada Adel, Acquisitor
+--> Cryptic Command
+    Geralf's Messenger
+    Putrid Imp
+    Greater Gargadon
+    Sarkhan, the Dragonspeaker
+    Lotus Cobra
+    Deranged Hermit
+    Terminate
+    Winter Orb
+    Sin Collector
+    Polluted Delta
+    Blightsteel Colossus
+
+Pack 1 pick 2:
+    Hallowed Spiritkeeper
+    Enlightened Tutor
+    Treachery
+    Frantic Search
+    Mesmeric Fiend
+    Alesha, Who Smiles at Death
+--> Zurgo Bellstriker
+    Fyndhorn Elves
+    Polukranos, World Eater
+    Geist of Saint Traft
+    Crucible of Worlds
+    Wooded Foothills
+    Drowned Catacomb
+    Abrupt Decay
+
+Pack 1 pick 3:
+    Restoration Angel
+--> Zealous Conscripts
+    Daze
+    Turnabout
+    Duress
+    Wheel of Fortune
+    Firedrinker Satyr
+    Yavimaya Elder
+    Mox Diamond
+    Edric, Spymaster of Trest
+    Grove of the Burnwillows
+    Underground River
+    Woodland Cemetery
+
+Pack 1 pick 4:
+    Monastery Mentor
+    Council's Judgment
+    Man-o'-War
+    Braids, Cabal Minion
+    Brimstone Volley
+    Flametongue Kavu
+    Avacyn's Pilgrim
+    Wall of Blossoms
+--> Ugin, the Spirit Dragon
+    Stomping Ground
+    Dragonlord Silumgar
+    Verdant Catacombs
+
+Pack 1 pick 5:
+    Soldier of the Pantheon
+    Baneslayer Angel
+    Mind's Desire
+    Nezumi Shortfang
+    Magma Jet
+--> Hero of Oxid Ridge
+    Archangel of Thune
+    Rakdos Cackler
+    Shardless Agent
+    Voice of Resurgence
+    Shivan Reef
+
+Pack 1 pick 6:
+    Secure the Wastes
+    Moat
+    Lightning Strike
+--> Magus of the Moon
+    Harmonize
+    Wolfir Silverheart
+    Glacial Fortress
+    Simic Signet
+    Kitchen Finks
+    Thran Dynamo
+
+Pack 1 pick 7:
+    Seeker of the Way
+    Wrath of God
+    Ancient Grudge
+--> Chandra's Phoenix
+    Regrowth
+    Gaea's Cradle
+    Breeding Pool
+    Caves of Koilos
+    Pernicious Deed
+
+Pack 1 pick 8:
+    Force Spike
+    Bonfire of the Damned
+    Wildfire
+    Life from the Loam
+    Treetop Village
+    Mana Confluence
+--> Lightning Helix
+    Utter End
+
+Pack 1 pick 9:
+    Fiend Hunter
+    Geralf's Messenger
+--> Greater Gargadon
+    Sarkhan, the Dragonspeaker
+    Lotus Cobra
+    Winter Orb
+    Sin Collector
+
+Pack 1 pick 10:
+    Hallowed Spiritkeeper
+    Frantic Search
+    Mesmeric Fiend
+    Polukranos, World Eater
+    Crucible of Worlds
+--> Wooded Foothills
+
+Pack 1 pick 11:
+    Daze
+--> Firedrinker Satyr
+    Edric, Spymaster of Trest
+    Grove of the Burnwillows
+    Underground River
+
+Pack 1 pick 12:
+    Council's Judgment
+    Braids, Cabal Minion
+--> Brimstone Volley
+    Stomping Ground
+
+Pack 1 pick 13:
+    Soldier of the Pantheon
+--> Rakdos Cackler
+    Shardless Agent
+
+Pack 1 pick 14:
+--> Moat
+    Harmonize
+
+Pack 1 pick 15:
+--> Regrowth
+
+------ C03 ------ 
+
+Pack 2 pick 1:
+    Flickerwisp
+    Reveillark
+    Snapcaster Mage
+    Dig Through Time
+    Gatekeeper of Malakir
+    Bloodghast
+--> Sulfuric Vortex
+    Stromkirk Noble
+    Stunted Growth
+    Tarmogoyf
+    Tundra
+    Clifftop Retreat
+    Marsh Flats
+    Duplicant
+    Pentad Prism
+
+Pack 2 pick 2:
+--> Thalia, Guardian of Thraben
+    Angel of Serenity
+    Vedalken Shackles
+    Compulsive Research
+    Murderous Cut
+    Liliana of the Veil
+    Guttersnipe
+    Spirit of the Labyrinth
+    Rofellos, Llanowar Emissary
+    Fauna Shaman
+    Karn Liberated
+    Sword of Feast and Famine
+    Savannah
+    Electrolyze
+
+Pack 2 pick 3:
+    Soulfire Grand Master
+    Path to Exile
+    Go for the Throat
+    Recurring Nightmare
+    Seething Song
+--> Koth of the Hammer
+    Eureka
+    Troll Ascetic
+    Maze of Ith
+    Kozilek, Butcher of Truth
+    Taiga
+    Sensei's Divining Top
+    Steam Vents
+
+Pack 2 pick 4:
+    Wall of Omens
+    Frost Titan
+    Hero's Downfall
+    Bazaar of Baghdad
+    Mizzium Mortars
+    Manic Vandal
+    Sakura-Tribe Elder
+--> Garruk Relentless
+    Misty Rainforest
+    Lotus Bloom
+    Gaddock Teeg
+    Bayou
+
+Pack 2 pick 5:
+    Brimaz, King of Oreskos
+    Gitaxian Probe
+    Lifebane Zombie
+    Pack Rat
+--> Shrine of Burning Rage
+    Dismember
+    Primeval Titan
+    Chrome Mox
+    Siege Rhino
+    Shadowmage Infiltrator
+    Fire/Ice
+
+Pack 2 pick 6:
+    Hero of Bladehold
+    Disenchant
+    Tamiyo, the Moon Sage
+    Disfigure
+    Imperial Seal
+    Young Pyromancer
+    Joraga Treespeaker
+    Master of the Wild Hunt
+--> Tangle Wire
+    Huntmaster of the Fells
+
+Pack 2 pick 7:
+    Porcelain Legionnaire
+    Bone Shredder
+    Dualcaster Mage
+--> Grim Lavamancer
+    Genesis Wave
+    Beast Within
+    Olivia Voldaren
+    Hinterland Harbor
+    Phyrexian Revoker
+
+Pack 2 pick 8:
+    Exalted Angel
+    The Abyss
+--> Smash to Smithereens
+    Torch Fiend
+    Sylvan Library
+    Craterhoof Behemoth
+    Pithing Needle
+    Garruk, Apex Predator
+
+Pack 2 pick 9:
+    Flickerwisp
+    Reveillark
+    Dig Through Time
+    Bloodghast
+--> Stromkirk Noble
+    Stunted Growth
+    Tarmogoyf
+
+Pack 2 pick 10:
+    Murderous Cut
+    Guttersnipe
+    Spirit of the Labyrinth
+    Fauna Shaman
+    Sword of Feast and Famine
+--> Savannah
+
+Pack 2 pick 11:
+--> Soulfire Grand Master
+    Eureka
+    Troll Ascetic
+    Maze of Ith
+    Sensei's Divining Top
+
+Pack 2 pick 12:
+    Bazaar of Baghdad
+    Mizzium Mortars
+--> Manic Vandal
+    Gaddock Teeg
+
+Pack 2 pick 13:
+    Lifebane Zombie
+--> Dismember
+    Shadowmage Infiltrator
+
+Pack 2 pick 14:
+    Disfigure
+--> Master of the Wild Hunt
+
+Pack 2 pick 15:
+--> Beast Within
+
+------ C03 ------ 
+
+Pack 3 pick 1:
+    Weathered Wayfarer
+    Karakas
+    Counterspell
+    Tasigur, the Golden Fang
+    Gurmag Angler
+    Sheoldred, Whispering One
+--> Lightning Bolt
+    Inferno Titan
+    Wall of Roots
+    Whisperwood Elemental
+    Flooded Strand
+    Ulamog, the Infinite Gyre
+    Rootbound Crag
+    Masticore
+    Myr Battlesphere
+
+Pack 3 pick 2:
+    Dragon Hunter
+    Faith's Fetters
+    Mental Misstep
+    Preordain
+    Yawgmoth's Will
+    Firestorm
+--> Outpost Siege
+    Survival of the Fittest
+    Garruk Wildspeaker
+    Azorius Signet
+    Ajani Vengeant
+    Lion's Eye Diamond
+    Spellskite
+    Llanowar Wastes
+
+Pack 3 pick 3:
+    Ajani, Caller of the Pride
+    Mana Tithe
+--> True-Name Nemesis
+    Empty the Warrens
+    Inquisition of Kozilek
+    Necromancy
+    Goblin Welder
+    Monastery Swiftspear
+    Sidisi, Undead Vizier
+    Mishra's Factory
+    Lightning Greaves
+    Nevinyrral's Disk
+    Izzet Signet
+
+Pack 3 pick 4:
+    Awakening Zone
+    Jace, the Mind Sculptor
+    Impulse
+    Tendrils of Agony
+--> Char
+    Jackal Pup
+    Oracle of Mul Daya
+    Supreme Verdict
+    Lodestone Golem
+    Tidehollow Sculler
+    Solemn Simulacrum
+    Kuldotha Forgemaster
+
+Pack 3 pick 5:
+    Isamaru, Hound of Konda
+    Parallax Wave
+    Spell Pierce
+    Fact or Fiction
+    Brain Maggot
+    Splinter Twin
+    Gore-House Chainwalker
+    Fastbond
+    Vengevine
+--> Plateau
+    Izzet Charm
+
+Pack 3 pick 6:
+    Student of Warfare
+    Mana Leak
+    Corpse Dance
+--> Incinerate
+    Avalanche Riders
+    Arbor Elf
+    Garruk, Primal Hunter
+    Ancient Tomb
+    Progenitus
+    Dack Fayden
+
+Pack 3 pick 7:
+    Mirran Crusader
+    Honor of the Pure
+    Gifts Ungiven
+    Yawgmoth's Bargain
+--> Burst Lightning
+    Song of the Dryads
+    Nature's Claim
+    Domri Rade
+    Qasali Pridemage
+
+Pack 3 pick 8:
+    Academy Ruins
+    Volrath's Stronghold
+    Daretti, Scrap Savant
+--> Stormbreath Dragon
+    Krosan Grip
+    Villainous Wealth
+    Nicol Bolas, Planeswalker
+    Deathrite Shaman
+
+Pack 3 pick 9:
+    Weathered Wayfarer
+    Counterspell
+--> Tasigur, the Golden Fang
+    Wall of Roots
+    Whisperwood Elemental
+    Rootbound Crag
+    Masticore
+
+Pack 3 pick 10:
+    Dragon Hunter
+    Mental Misstep
+--> Firestorm
+    Garruk Wildspeaker
+    Lion's Eye Diamond
+    Llanowar Wastes
+
+Pack 3 pick 11:
+    Mana Tithe
+    Empty the Warrens
+    Goblin Welder
+--> Monastery Swiftspear
+    Mishra's Factory
+
+Pack 3 pick 12:
+    Tendrils of Agony
+--> Jackal Pup
+    Oracle of Mul Daya
+    Kuldotha Forgemaster
+
+Pack 3 pick 13:
+    Isamaru, Hound of Konda
+--> Gore-House Chainwalker
+    Fastbond
+
+Pack 3 pick 14:
+    Student of Warfare
+--> Garruk, Primal Hunter
+
+Pack 3 pick 15:
+--> Domri Rade
+

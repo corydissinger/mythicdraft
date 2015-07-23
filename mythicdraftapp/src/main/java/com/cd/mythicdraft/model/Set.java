@@ -26,6 +26,9 @@ public class Set implements Serializable {
 	@Column(name = "NAME")
 	private String name;
 
+	@Column(name = "IS_PROMO")
+	private Boolean isPromo;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -42,6 +45,14 @@ public class Set implements Serializable {
 		this.name = name;
 	}
 	
+	public Boolean isPromo() {
+		return isPromo;
+	}
+
+	public void setIsPromo(Boolean isPromo) {
+		this.isPromo = isPromo;
+	}
+
 	@Override
 	public String toString() {
 		return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);

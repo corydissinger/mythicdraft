@@ -99,6 +99,21 @@ public class MtgoDraftParserServiceTest {
 		
 		System.out.println(aDraft.toString());		
 	}	
+
+	@Test	
+	public void testHolidayCube() throws Exception{
+		InputStream holidayCubeDraftStream = loadResource("2015holidaycube.txt");
+		
+		RawDraft aDraft = mtgoDraftParserService.parse(holidayCubeDraftStream);
+		
+		assertTrue(aDraft.getOtherPlayers().size() == 7);
+		assertTrue(!aDraft.getActivePlayer().isEmpty());
+		assertTrue(aDraft.getPackSets().size() == 3);
+		assertTrue(aDraft.getEventId() == 8492316);		
+		assertTrue(aDraft.getCardNameToRawCardMap().containsKey("Fire"));
+		
+		System.out.println(aDraft.toString());		
+	}	
 	
 	private InputStream loadResource(String resourceName) throws IOException {
 		return this.getClass().getResourceAsStream(resourceName);

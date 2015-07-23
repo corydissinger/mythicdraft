@@ -16,6 +16,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Draft;
@@ -138,17 +139,22 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 	}
 	
 	@Override
-	@Transactional(readOnly = true)	
+	@Transactional	
 	public Map<String, Card> getCardNameToCardMap(final Map<String, String> cardNameToCardSetCode) {
 		Map<String, Card> cardNameToCardMap = new HashMap<String, Card>(cardNameToCardSetCode.size());
 		java.util.Set<String> setCodes = new HashSet<String>();
 
 		setCodes.addAll(cardNameToCardSetCode.values());		
 		
-		Criteria crit = getCurrentSession().createCriteria(Card.class);
+		Criteria crit = getCurrentSession().createCriteria(Card.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);;
 		
 		crit.add(Restrictions.in("cardName", cardNameToCardSetCode.keySet()));
-		crit.add(Restrictions.in("set", getSetsByName(setCodes)));
+		
+		List<Set> sets = getSetsByName(setCodes);
+		
+		if(null == sets.get(0).isPromo() || !sets.get(0).isPromo()) {
+			crit.add(Restrictions.in("set", sets));			
+		} 
 		
 		List<Card> results = crit.list();
 		
@@ -160,13 +166,19 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional
 	public List<Set> getSetsByName(Collection<String> setNames) {
 		Criteria crit = getCurrentSession().createCriteria(Set.class);
 		
 		crit.add(Restrictions.in("name", setNames));
 		
-		return crit.list();
+		List<Set> sets = crit.list();
+		
+		if(CollectionUtils.isEmpty(sets)){
+			sets = addPromoSets(setNames);
+		}
+		
+		return sets;
 	}
 	
 	@Override
@@ -215,4 +227,24 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 		}
 	}
 
+	@Transactional
+	private List<Set> addPromoSets(Collection<String> setNames) {
+		Session session = getCurrentSession();
+		
+		List<Set> sets = new ArrayList<Set>(setNames.size());
+		
+		for(String aSetName : setNames) {
+			Set set = new Set();
+			
+			set.setName(aSetName);
+			set.setIsPromo(true);
+			
+			session.persist(set);			
+			
+			sets.add(set);
+		}
+		
+		return sets;
+	}	
+	
 }

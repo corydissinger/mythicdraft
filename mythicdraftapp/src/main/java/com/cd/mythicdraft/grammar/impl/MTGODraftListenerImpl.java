@@ -165,13 +165,15 @@ public class MTGODraftListenerImpl extends MTGODraftParserBaseListener {
 		return packToListOfPickToAvailablePicksMap;
 	}	
 	
-	private Integer getCardIdAndAddCardName(String aCardName) {
-		RawCard rawCard = cardNameToRawCardMap.get(aCardName);
+	private Integer getCardIdAndAddCardName(String aRawCardName) {
+		String cardName = aRawCardName.split("/")[0];
+		
+		RawCard rawCard = cardNameToRawCardMap.get(cardName);
 		
 		if(rawCard == null) {
 			rawCard = new RawCard(uniqueCardCount, packSets.get(currentPackNumber));
-			cardNameToRawCardMap.put(aCardName, rawCard);
-			tempIdToCardNameMap.put(uniqueCardCount++, aCardName);
+			cardNameToRawCardMap.put(cardName, rawCard);
+			tempIdToCardNameMap.put(uniqueCardCount++, cardName);
 		}
 		
 		return rawCard.getTempId();
