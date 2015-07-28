@@ -48,6 +48,12 @@ public class Draft implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;	
 	
+	@Column(name = "WINS")
+	private Integer wins;
+
+	@Column(name = "LOSSES")	
+	private Integer losses;
+	
 	@OneToMany(mappedBy = "draft", fetch = FetchType.LAZY)
 	@Fetch(FetchMode.JOIN)	
 	private java.util.Set<DraftPlayer> draftPlayers;
@@ -121,6 +127,22 @@ public class Draft implements Serializable {
 
 	public void setCreated(Date created) {
 		this.created = created;
+	}
+
+	public Integer getWins() {
+		return wins;
+	}
+
+	public void setWins(Integer wins) {
+		this.wins = wins;
+	}
+
+	public Integer getLosses() {
+		return losses;
+	}
+
+	public void setLosses(Integer losses) {
+		this.losses = losses;
 	}
 
 	@Override

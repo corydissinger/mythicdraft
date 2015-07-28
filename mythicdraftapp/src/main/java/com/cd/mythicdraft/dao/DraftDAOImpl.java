@@ -86,7 +86,7 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 	@Override
 	@Transactional(readOnly = true)	
 	public Collection<Draft> getRecentDrafts(final Integer numberOfDrafts) {
-		Query query = getCurrentSession().createSQLQuery("SELECT ID, NAME, CREATED, EVENT_ID, EVENT_DATE FROM DRAFT ORDER BY CREATED DESC").addEntity(Draft.class);
+		Query query = getCurrentSession().createSQLQuery("SELECT ID, NAME, CREATED, EVENT_ID, EVENT_DATE, WINS, LOSSES FROM DRAFT ORDER BY CREATED DESC").addEntity(Draft.class);
 		
 		query.setMaxResults(numberOfDrafts);
 		

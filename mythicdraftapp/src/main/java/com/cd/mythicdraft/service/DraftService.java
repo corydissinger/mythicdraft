@@ -49,7 +49,10 @@ public class DraftService {
 	private MtgoDraftParserService mtgoDraftParserService;
 	
 	@Transactional
-	public void addDraft(final InputStream mtgoDraftStream, final String name) {
+	public void addDraft(final InputStream mtgoDraftStream, 
+						 final String name, 
+						 final Integer wins, 
+						 final Integer losses) {
 		RawDraft aDraft;
 		
 		try {
@@ -58,7 +61,7 @@ public class DraftService {
 			throw new RuntimeException(e);
 		}
 
-		draftDao.addDraft(convertRawDraft(aDraft, name));
+		draftDao.addDraft(convertRawDraft(aDraft, name, wins, losses));
 	}
 
 	public JsonDraft getDraftByActivePlayer(final Integer draftId, final Integer playerId) {
@@ -98,7 +101,7 @@ public class DraftService {
 				.collect(Collectors.toList());
 	}
 
-	private Draft convertRawDraft(RawDraft aRawDraft, String name) {
+	private Draft convertRawDraft(RawDraft aRawDraft, String name, Integer wins, Integer losses) {
 		Draft draft = new Draft();
 		
 		draft.setName(name);
@@ -113,6 +116,8 @@ public class DraftService {
 		
 		draft.setEventDate(aRawDraft.getEventDate());
 		draft.setEventId(aRawDraft.getEventId());
+		draft.setWins(wins);
+		draft.setLosses(losses);
 		
 		return draft;
 	}

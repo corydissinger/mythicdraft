@@ -24,11 +24,16 @@ public class FileUploadController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public @ResponseBody String processUpload(@RequestParam String name,
+											  @RequestParam Integer wins,
+											  @RequestParam Integer losses,
 							  				  @RequestParam MultipartFile file) {
 		
 		if(!file.isEmpty()) {
 			try {
-				draftService.addDraft(file.getInputStream(), name);
+				draftService.addDraft(file.getInputStream(), 
+									  name,
+									  wins,
+									  losses);
 				
 				return "File upload succeeded";
 			} catch (IOException e) {
