@@ -64,7 +64,7 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Draft getDraftByActivePlayer(final Integer draftId, final Integer activePlayerId) {
+	public Draft getDraftByActivePlayer(final Integer draftId) {
 		Criteria crit = getCurrentSession().createCriteria(Draft.class);
 
 		crit.createAlias("draftPlayers", "draftPlayers");
@@ -74,7 +74,6 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 		crit.setFetchMode("draftPacks", FetchMode.JOIN);		
 		
 		crit.add(Restrictions.eq("id", draftId));
-		crit.add(Restrictions.eq("draftPlayers.playerId", activePlayerId));
 		
 		crit.addOrder(Order.asc("draftPacks.sequenceId"));
 		

@@ -13,6 +13,8 @@ public class JsonDraft implements Serializable {
 	private Integer eventId;	
 	private String eventDate;
 	private String created;
+	private Integer wins;
+	private Integer losses;
 	
 	private JsonPlayer activePlayer;
 	private List<JsonPlayer> players;
@@ -46,6 +48,18 @@ public class JsonDraft implements Serializable {
 	}
 	public void setCreated(String created) {
 		this.created = created;
+	}
+	public Integer getWins() {
+		return wins;
+	}
+	public void setWins(Integer wins) {
+		this.wins = wins;
+	}
+	public Integer getLosses() {
+		return losses;
+	}
+	public void setLosses(Integer losses) {
+		this.losses = losses;
 	}
 	public JsonPlayer getActivePlayer() {
 		return activePlayer;

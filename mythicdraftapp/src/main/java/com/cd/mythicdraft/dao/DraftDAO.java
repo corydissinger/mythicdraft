@@ -28,7 +28,7 @@ public interface DraftDAO {
 
 	public boolean isDraftAlreadySaved(final Draft draft);
 
-	public Draft getDraftByActivePlayer(final Integer draftId, final Integer activePlayerId);
+	public Draft getDraftByActivePlayer(final Integer draftId);
 
 	public DraftPackPick getPackByIdAndPick(final Integer draftPackId, final Integer pickId);
 

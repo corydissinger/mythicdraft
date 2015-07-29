@@ -18,7 +18,6 @@
 			<script type="text/javascript" src="http://form-serialize.googlecode.com/svn/trunk/serialize-0.2.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/1.2.0/superagent.js"></script>		
 			<script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
-			<script type="text/jsx" src="resources/js/mythicdraft.js"></script>
 			
 			<link rel="stylesheet" href="resources/css/mythicdraft.css"/>
 		</c:when>
@@ -28,9 +27,7 @@
 			
 			<script type="text/javascript" src="http://form-serialize.googlecode.com/svn/trunk/serialize-0.2.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/1.2.0/superagent.min.js"></script>					
-			
-			<script src="resources/js/app.js"></script>		
-			
+					
 			<link rel="stylesheet" href="resources/css/app.css"/>			
 		</c:otherwise>
 	</c:choose>

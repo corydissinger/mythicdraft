@@ -1,5 +1,6 @@
 var request = window.superagent;
 var navElement = document.getElementById("navContainer");
+var content = document.getElementById("container");
 
 ReactModal.setAppElement(navElement);
 ReactModal.injectCSS();
@@ -29,7 +30,7 @@ var UploadForm = React.createClass({
 		return (
 			<div className="modal-content">
 				<div className="modal-header">
-					<button type="button" className="close" onClick={this.handleModalCloseRequest}>
+					<button type="button" className="close" onClick={this.props.navbar.closeUploadModal}>
 						<span aria-hidden="true">&times;</span>
 						<span className="sr-only">Close</span>
 					</button>
@@ -85,11 +86,30 @@ var RecentDrafts = React.createClass({
 		var drafts = this.state.data || [];		
 		
 		return (
-			<div className="recentDrafts">
+			<table className="table table-hover">
+				<thead>
+					<tr>
+						<td>
+							Draft Name
+						</td>
+						<td>
+							Active Drafter
+						</td>
+						<td>
+							Format
+						</td>
+						<td>
+							Wins
+						</td>
+						<td>
+							Losses
+						</td>						
+					</tr>				
+				</thead>
 				{drafts.map(function(draft) {
 					return <RecentDraft data={draft} />;
 				})}
-			</div>
+			</table>
 		);
 	}
 });
@@ -103,19 +123,35 @@ var RecentDraft = React.createClass({
 		});
 	
 		return (
-			<div className="recentDraft">
-				<h2 className="recentDraftName">
-					{this.props.data.name}
-				</h2>
-				<p>
+			<tr className="recentDraft">
+				<td>
+					<a data-draftid={this.props.data.id} 
+					   data-packid={this.props.data.packs[0].id} 
+					   href={"#/draft/" + this.props.data.id + "/pack/" + this.props.data.packs[0].id} 
+					   onClick={showDraft}>
+						{this.props.data.name}
+					</a>					
+				</td>
+				<td>
+					<a href={"#/player" + this.props.data.activePlayer.id}>
+						{this.props.data.activePlayer.name}
+					</a>
+				</td>				
+				<td>
 					<span>
 						{packsString}
 					</span>
 					<a href={'#/draft/' + this.props.data.eventId}>
 						View Draft
 					</a>
-				</p>
-			</div>
+				</td>
+				<td>
+					{this.props.data.wins}
+				</td>
+				<td>
+					{this.props.data.wins}
+				</td>				
+			</tr>
 		);
 	}
 });
@@ -137,8 +173,8 @@ var NavBar = React.createClass({
 		return (
 			<nav className="navbar navbar-default">
 				<div className="container-fluid">
-					<div className="navbar-brand navbar-right">
-						<img src="http://placehold.it/728x90" alt="Leaderboard Ad" class="img-responsive center-block" />					
+					<div className="navbar-ad navbar-brand navbar-right">
+						<img src="http://placehold.it/728x90" alt="Leaderboard Ad" className="img-responsive center-block leader-banner-ad" />					
 					</div>
 					<div className="navbar-header">
 						<a className="navbar-brand" href="#">Mythic Draft</a>
@@ -153,7 +189,7 @@ var NavBar = React.createClass({
 							<ReactModal className="Modal__Bootstrap modal-dialog" 
 										isOpen={this.state.uploadModalIsOpen}
 										onRequestClose={this.closeUploadModal}>
-								<UploadForm/>
+								<UploadForm navbar={this} />
 						    </ReactModal>								   
 						</ul>
 					</div>									
@@ -163,5 +199,133 @@ var NavBar = React.createClass({
 	}
 });
 
-React.render(<NavBar/>, navElement);
-React.render(<RecentDrafts url="/draft/recent"/>, document.getElementById("container"));
+var Draft = React.createClass({
+	getInitialState: function() {
+		return {data: []};
+	},
+	
+	componentDidMount: function() {
+		var comp = this;
+		
+		request.get('/draft/' + this.props.draftId + '/pack/' + this.props.packId + '/pick/' + this.props.pickNumber)
+			.end(function(err, resp) {
+				comp.setState({data: resp.body});
+			});
+	},
+	
+	render: function() {
+		if(!this.state.data.pick) {
+			return <div></div>;
+		}
+	
+		var pick = this.state.data.pick || {};	
+		var available = this.state.data.available || [];
+		available.push(pick);
+		var cardsRowOne = available.slice(0, 5);
+		var cardsRowTwo = available.slice(5, 10);
+		var cardsRowThree = available.slice(10, 15);
+		
+		return (
+			<div className="container-fluid">
+				<DraftControls draft={this} />
+				<CardRow cards={cardsRowOne} />
+				<CardRow cards={cardsRowTwo} />
+				<CardRow cards={cardsRowThree} />
+				<DraftControls draft={this} />
+			</div>
+		);
+	}
+});	
+
+var DraftControls = React.createClass({
+	updatePick: function(direction) {
+		var comp = this.props.draft;
+		var nextPickNumber = this.props.draft.props.pickNumber + direction;
+	
+		request.get('/draft/' + this.props.draft.props.draftId + '/pack/' + this.props.draft.props.packId + '/pick/' + nextPickNumber)
+			.end(function(err, resp) {
+				comp.setProps({pickNumber: nextPickNumber});
+				comp.setState({data: resp.body});
+			});	
+	},
+
+	render: function() {
+		return (
+			<div className="row">
+				<div className="col-md-3"></div>
+				<div className="col-md-6">
+					<div className="row">
+						<div className="col-md-4">
+							<button type="button" 
+									className="btn btn-warning" 
+									disabled={ this.props.draft.props.pickNumber == 0 ? 'disabled' : ''} 
+									onClick={this.updatePick.bind(this, -1)} >
+								Previous Pick
+							</button>
+						</div>
+						<div className="col-md-4">						
+							<button type="button" 
+									className="btn btn-info">
+								Show Current Pick
+							</button>			
+						</div>							
+						<div className="col-md-4">							
+							<button type="button" 
+									className="btn btn-success" 
+									onClick={this.updatePick.bind(this, 1)} >
+								Next Pick
+							</button>										
+						</div>
+					</div>
+				</div>
+				<div className="col-md-3"></div>
+			</div>
+		);
+	}
+});
+
+var CardRow = React.createClass({
+	render: function() {
+		var cards = this.props.cards;		
+		
+		return (
+			<div className="row">
+				<div className="col-md-1">
+			    </div>
+				{cards.map(function(aCard) {
+					
+					return <div className="col-md-2">
+						       <Card data={aCard} key={aCard.multiverseId} />
+						   </div>;
+				})}				
+				<div className="col-md-1">
+			    </div>				
+			</div>			
+		);
+	}
+});
+
+var Card = React.createClass({
+	render: function() {
+		return (
+			<img src={"http://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" + this.props.data.multiverseId} />
+		);
+	}
+});
+
+function showMain() {
+	React.render(<NavBar/>, navElement);
+	React.render(<RecentDrafts url="/draft/recent"/>, content);
+}
+
+function showDraft(event) {
+	var draftId = event.currentTarget.dataset.draftid;
+	var firstPackId = event.currentTarget.dataset.packid;
+	var pickNumber = event.currentTarget.dataset.pickid || 0;
+	
+	React.render(<Draft draftId={draftId} 
+						packId={firstPackId}
+						pickNumber={pickNumber} />, content);
+}
+
+showMain();

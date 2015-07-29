@@ -24,17 +24,17 @@ public class DraftController {
 		return draftService.getRecentDrafts(10);
 	}
 	
-	@RequestMapping(value = "/draft/{draftId}/player/{playerId}",
+	@RequestMapping(value = "/draft/{draftId}",
 					method = RequestMethod.GET)
-	public @ResponseBody JsonDraft getDraftForActivePlayer(@PathVariable final Integer draftId,
-													   	   @PathVariable final Integer playerId) {
+	public @ResponseBody JsonDraft getDraftForActivePlayer(@PathVariable final Integer draftId) {
 		
-		return draftService.getDraftByActivePlayer(draftId, playerId);
+		return draftService.getDraftByActivePlayer(draftId);
 	}
 	
-	@RequestMapping(value = "/pack/{packId}/pick/{pickId}",
+	@RequestMapping(value = "/draft/{draftId}/pack/{packId}/pick/{pickId}",
 					method = RequestMethod.GET)	
-	public @ResponseBody JsonPackPick getPackByIdAndPick(@PathVariable final Integer packId,
+	public @ResponseBody JsonPackPick getPackByIdAndPick(@PathVariable final Integer draftId,
+														 @PathVariable final Integer packId,
 		   	   											 @PathVariable final Integer pickId) {
 		
 		return draftService.getPackByIdAndPick(packId, pickId);

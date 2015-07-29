@@ -34,3 +34,15 @@
   border: none;
   background-color: transparent;
 }
+
+//Bootstrap overrides etc.
+
+div.navbar-ad {
+  padding: 5px 15px;
+  height: auto;
+}
+
+.leader-banner-ad {
+  width: 728px;
+  height: 90px;
+}

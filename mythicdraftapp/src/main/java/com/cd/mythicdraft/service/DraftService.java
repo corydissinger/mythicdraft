@@ -64,8 +64,8 @@ public class DraftService {
 		draftDao.addDraft(convertRawDraft(aDraft, name, wins, losses));
 	}
 
-	public JsonDraft getDraftByActivePlayer(final Integer draftId, final Integer playerId) {
-		final Draft draft = draftDao.getDraftByActivePlayer(draftId, playerId);
+	public JsonDraft getDraftByActivePlayer(final Integer draftId) {
+		final Draft draft = draftDao.getDraftByActivePlayer(draftId);
 		final JsonDraft jsonDraft = getJsonDraftFromDraft(draft);
 		
 		return jsonDraft;
@@ -243,6 +243,8 @@ public class DraftService {
 		jsonDraft.setEventId(draft.getEventId());
 		jsonDraft.setId(draft.getId());
 		jsonDraft.setName(draft.getName());
+		jsonDraft.setWins(draft.getWins());
+		jsonDraft.setLosses(draft.getLosses());
 		
 		for(DraftPlayer draftPlayer : draft.getDraftPlayers()) {
 			Player player = draftPlayer.getPlayer();
