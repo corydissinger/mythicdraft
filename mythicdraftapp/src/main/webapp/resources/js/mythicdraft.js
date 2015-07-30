@@ -106,9 +106,11 @@ var RecentDrafts = React.createClass({
 						</td>						
 					</tr>				
 				</thead>
-				{drafts.map(function(draft) {
-					return <RecentDraft data={draft} />;
-				})}
+				<tbody>
+					{drafts.map(function(draft) {
+						return <RecentDraft data={draft} />;
+					})}
+				</tbody>
 			</table>
 		);
 	}
@@ -123,7 +125,7 @@ var RecentDraft = React.createClass({
 		});
 	
 		return (
-			<tr className="recentDraft">
+			<tr>
 				<td>
 					<a data-draftid={this.props.data.id} 
 					   data-packid={this.props.data.packs[0].id} 
@@ -173,9 +175,6 @@ var NavBar = React.createClass({
 		return (
 			<nav className="navbar navbar-default">
 				<div className="container-fluid">
-					<div className="navbar-ad navbar-brand navbar-right">
-						<img src="http://placehold.it/728x90" alt="Leaderboard Ad" className="img-responsive center-block leader-banner-ad" />					
-					</div>
 					<div className="navbar-header">
 						<a className="navbar-brand" href="#">Mythic Draft</a>
 					</div>
@@ -192,8 +191,11 @@ var NavBar = React.createClass({
 								<UploadForm navbar={this} />
 						    </ReactModal>								   
 						</ul>
+						<ul className="nav navbar-nav navbar-right">
+							<img className="navbar-ad" src="http://placehold.it/728x90" alt="Leaderboard Ad" />											
+						</ul>
 					</div>									
-				</div>
+				</div>								
 			</nav>
 		);
 	}
@@ -216,10 +218,12 @@ var Draft = React.createClass({
 	render: function() {
 		if(!this.state.data.pick) {
 			return <div></div>;
+		} else if(this.state.data.pick == 0) {
+			this.setProps({packSize: this.state.data.available.length + 1});
 		}
 	
-		var pick = this.state.data.pick || {};	
-		var available = this.state.data.available || [];
+		var pick = this.state.data.pick;	
+		var available = this.state.data.available;
 		available.push(pick);
 		var cardsRowOne = available.slice(0, 5);
 		var cardsRowTwo = available.slice(5, 10);
@@ -295,7 +299,7 @@ var CardRow = React.createClass({
 				{cards.map(function(aCard) {
 					
 					return <div className="col-md-2">
-						       <Card data={aCard} key={aCard.multiverseId} />
+						       <Card data={aCard} key={aCard.id} />
 						   </div>;
 				})}				
 				<div className="col-md-1">

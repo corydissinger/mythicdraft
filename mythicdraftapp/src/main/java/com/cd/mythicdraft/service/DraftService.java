@@ -75,13 +75,16 @@ public class DraftService {
 		final JsonPackPick jsonPackPick = new JsonPackPick();
 		final List<JsonCard> availablePicks = new ArrayList<JsonCard>();
 		final JsonCard pick = new JsonCard();
+		int cardCount = 0;
 		
 		DraftPackPick packPick = draftDao.getPackByIdAndPick(draftPackId, pickId);
 		
 		for(DraftPackAvailablePick available : packPick.getDraftPackAvailablePicks()) {
+			final String id = available.getCardId() + "_" + cardCount++; 
 			final JsonCard card = new JsonCard();
 			
 			card.setMultiverseId(available.getCardId());
+			card.setId(id);
 			
 			availablePicks.add(card);
 		}
@@ -89,6 +92,8 @@ public class DraftService {
 		jsonPackPick.setAvailable(availablePicks);
 		
 		pick.setMultiverseId(packPick.getCardId());
+		pick.setId(packPick.getCardId()  + "_" + cardCount);
+		
 		jsonPackPick.setPick(pick);
 		
 		return jsonPackPick;

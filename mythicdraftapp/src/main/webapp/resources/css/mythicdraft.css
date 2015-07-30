@@ -37,12 +37,6 @@
 
 //Bootstrap overrides etc.
 
-div.navbar-ad {
-  padding: 5px 15px;
-  height: auto;
-}
-
-.leader-banner-ad {
-  width: 728px;
-  height: 90px;
+.navbar-right {
+  padding: 5px;
 }
