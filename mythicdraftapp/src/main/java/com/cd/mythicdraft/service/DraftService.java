@@ -89,12 +89,17 @@ public class DraftService {
 			availablePicks.add(card);
 		}
 		
-		jsonPackPick.setAvailable(availablePicks);
+		final String pickKey = packPick.getCardId()  + "_" + cardCount;
+		final JsonCard pickedCard = new JsonCard();
 		
-		pick.setMultiverseId(packPick.getCardId());
-		pick.setId(packPick.getCardId()  + "_" + cardCount);
+		pickedCard.setMultiverseId(packPick.getCardId());
+		pickedCard.setId(packPick.getCardId()  + "_" + cardCount);
 		
-		jsonPackPick.setPick(pick);
+		availablePicks.add(pickedCard);
+		
+		jsonPackPick.setPick(pickKey);
+
+		jsonPackPick.setAvailable(availablePicks);		
 		
 		return jsonPackPick;
 	}

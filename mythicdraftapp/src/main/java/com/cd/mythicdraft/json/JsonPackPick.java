@@ -7,13 +7,13 @@ public class JsonPackPick implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private JsonCard pick;
+	private String pick;
 	private List<JsonCard> available;
 	
-	public JsonCard getPick() {
+	public String getPick() {
 		return pick;
 	}
-	public void setPick(JsonCard pick) {
+	public void setPick(String pick) {
 		this.pick = pick;
 	}
 	public List<JsonCard> getAvailable() {

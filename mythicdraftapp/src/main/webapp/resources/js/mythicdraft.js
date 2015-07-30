@@ -119,6 +119,7 @@ var RecentDrafts = React.createClass({
 var RecentDraft = React.createClass({
 	render: function() {
 		var packsString = "";
+		var packsJson = JSON.stringify(this.props.data.packs);
 		
 		this.props.data.packs.map(function(aPack) {
 			packsString += aPack.setCode + " ";
@@ -128,7 +129,7 @@ var RecentDraft = React.createClass({
 			<tr>
 				<td>
 					<a data-draftid={this.props.data.id} 
-					   data-packid={this.props.data.packs[0].id} 
+					   data-packs={packsJson} 
 					   href={"#/draft/" + this.props.data.id + "/pack/" + this.props.data.packs[0].id} 
 					   onClick={showDraft}>
 						{this.props.data.name}
@@ -151,7 +152,7 @@ var RecentDraft = React.createClass({
 					{this.props.data.wins}
 				</td>
 				<td>
-					{this.props.data.wins}
+					{this.props.data.losses}
 				</td>				
 			</tr>
 		);
@@ -208,9 +209,18 @@ var Draft = React.createClass({
 	
 	componentDidMount: function() {
 		var comp = this;
+		var pickNumber = this.props.pickNumber;
+		var packId = this.props.packs[this.props.currentPack].id;
 		
-		request.get('/draft/' + this.props.draftId + '/pack/' + this.props.packId + '/pick/' + this.props.pickNumber)
+		request.get('/draft/' + this.props.draftId + '/pack/' + packId + '/pick/' + pickNumber)
 			.end(function(err, resp) {
+				if(pickNumber == 0) {
+					var packs = comp.props.packs;
+					packs[comp.props.currentPack].packSize = resp.body.available.length;
+					
+					comp.setProps({packs: packs});
+				}
+				
 				comp.setState({data: resp.body});
 			});
 	},
@@ -218,13 +228,11 @@ var Draft = React.createClass({
 	render: function() {
 		if(!this.state.data.pick) {
 			return <div></div>;
-		} else if(this.state.data.pick == 0) {
-			this.setProps({packSize: this.state.data.available.length + 1});
-		}
+		} 
 	
 		var pick = this.state.data.pick;	
+		var isPickShown = this.state.isPickShown;
 		var available = this.state.data.available;
-		available.push(pick);
 		var cardsRowOne = available.slice(0, 5);
 		var cardsRowTwo = available.slice(5, 10);
 		var cardsRowThree = available.slice(10, 15);
@@ -232,9 +240,9 @@ var Draft = React.createClass({
 		return (
 			<div className="container-fluid">
 				<DraftControls draft={this} />
-				<CardRow cards={cardsRowOne} />
-				<CardRow cards={cardsRowTwo} />
-				<CardRow cards={cardsRowThree} />
+				<CardRow ref="cardRow" cards={cardsRowOne} pick={pick} isPickShown={isPickShown} />
+				<CardRow ref="cardRow" cards={cardsRowTwo} pick={pick} isPickShown={isPickShown} />
+				<CardRow ref="cardRow" cards={cardsRowThree} pick={pick} isPickShown={isPickShown} />
 				<DraftControls draft={this} />
 			</div>
 		);
@@ -244,16 +252,38 @@ var Draft = React.createClass({
 var DraftControls = React.createClass({
 	updatePick: function(direction) {
 		var comp = this.props.draft;
-		var nextPickNumber = this.props.draft.props.pickNumber + direction;
+		var nextPickNumber = this.props.draft.props.pickNumber + direction;;
+		var packs = this.props.draft.props.packs;
+		var currentPack = this.props.draft.props.currentPack;
+			
+		if(nextPickNumber == packs[currentPack].packSize) {
+			currentPack++;
+			nextPickNumber = 0;
+		} else if(nextPickNumber == -1) {
+			currentPack--;
+			nextPickNumber = packs[currentPack].packSize - 1;
+		} 
 	
-		request.get('/draft/' + this.props.draft.props.draftId + '/pack/' + this.props.draft.props.packId + '/pick/' + nextPickNumber)
+		var packId = packs[currentPack].id;
+	
+		request.get('/draft/' + this.props.draft.props.draftId + '/pack/' + packId + '/pick/' + nextPickNumber)
 			.end(function(err, resp) {
-				comp.setProps({pickNumber: nextPickNumber});
-				comp.setState({data: resp.body});
+				if(nextPickNumber == 0) {
+					packs[currentPack].packSize = resp.body.available.length;					
+				}
+				
+				comp.setProps({pickNumber: nextPickNumber, currentPack: currentPack, packs: packs});
+				comp.setState({data: resp.body, isPickShown: false});
 			});	
 	},
 
+	showPick: function() {
+		this.props.draft.setState({isPickShown: true});
+	},
+	
 	render: function() {
+		var currentPackSize = this.props.draft.props.packs[this.props.draft.props.currentPack].packSize;
+	
 		return (
 			<div className="row">
 				<div className="col-md-3"></div>
@@ -262,13 +292,14 @@ var DraftControls = React.createClass({
 						<div className="col-md-4">
 							<button type="button" 
 									className="btn btn-warning" 
-									disabled={ this.props.draft.props.pickNumber == 0 ? 'disabled' : ''} 
+									disabled={ this.props.draft.props.pickNumber == 0 && this.props.draft.props.currentPack == 0 ? 'disabled' : ''} 
 									onClick={this.updatePick.bind(this, -1)} >
 								Previous Pick
 							</button>
 						</div>
 						<div className="col-md-4">						
 							<button type="button" 
+									onClick={this.showPick}
 									className="btn btn-info">
 								Show Current Pick
 							</button>			
@@ -276,6 +307,7 @@ var DraftControls = React.createClass({
 						<div className="col-md-4">							
 							<button type="button" 
 									className="btn btn-success" 
+									disabled={ this.props.draft.props.pickNumber == currentPackSize - 1 && this.props.draft.props.currentPack == 2 ? 'disabled' : ''} 
 									onClick={this.updatePick.bind(this, 1)} >
 								Next Pick
 							</button>										
@@ -291,6 +323,8 @@ var DraftControls = React.createClass({
 var CardRow = React.createClass({
 	render: function() {
 		var cards = this.props.cards;		
+		var pick = this.props.pick;
+		var isPickShown = this.props.isPickShown;
 		
 		return (
 			<div className="row">
@@ -299,7 +333,10 @@ var CardRow = React.createClass({
 				{cards.map(function(aCard) {
 					
 					return <div className="col-md-2">
-						       <Card data={aCard} key={aCard.id} />
+						       <Card data={aCard} 
+									 key={aCard.id} 
+									 isPick={aCard.id == pick ? true : false} 
+									 isPickShown={isPickShown} />
 						   </div>;
 				})}				
 				<div className="col-md-1">
@@ -311,8 +348,21 @@ var CardRow = React.createClass({
 
 var Card = React.createClass({
 	render: function() {
+		var classString;
+	
+		if(this.props.isPickShown) {
+			if(this.props.isPick) {
+				classString = '';
+			} else {
+				classString = 'card-not-picked-animation';
+			}
+		} else {
+			classString = '';
+		}
+	
 		return (
-			<img src={"http://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" + this.props.data.multiverseId} />
+			<img className={classString}
+				 src={"http://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" + this.props.data.multiverseId} />
 		);
 	}
 });
@@ -324,11 +374,12 @@ function showMain() {
 
 function showDraft(event) {
 	var draftId = event.currentTarget.dataset.draftid;
-	var firstPackId = event.currentTarget.dataset.packid;
+	var packs = JSON.parse(event.currentTarget.dataset.packs);
 	var pickNumber = event.currentTarget.dataset.pickid || 0;
 	
 	React.render(<Draft draftId={draftId} 
-						packId={firstPackId}
+						packs={packs}
+						currentPack={0}
 						pickNumber={pickNumber} />, content);
 }
 

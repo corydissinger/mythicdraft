@@ -40,3 +40,11 @@
 .navbar-right {
   padding: 5px;
 }
+
+.card-not-picked-animation {
+    opacity: .2;
+    transition: opacity .5s ease-out;
+    -moz-transition: opacity .5s ease-out;
+    -webkit-transition: opacity .5s ease-out;
+    -o-transition: opacity .5s ease-out;
+}
