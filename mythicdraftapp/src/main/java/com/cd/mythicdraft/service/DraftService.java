@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -21,11 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cd.mythicdraft.dao.DraftDAO;
 import com.cd.mythicdraft.domain.RawCard;
 import com.cd.mythicdraft.domain.RawDraft;
+import com.cd.mythicdraft.exception.DuplicateDraftException;
 import com.cd.mythicdraft.json.JsonCard;
 import com.cd.mythicdraft.json.JsonDraft;
 import com.cd.mythicdraft.json.JsonPack;
 import com.cd.mythicdraft.json.JsonPackPick;
 import com.cd.mythicdraft.json.JsonPlayer;
+import com.cd.mythicdraft.json.JsonUploadStatus;
 import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Draft;
 import com.cd.mythicdraft.model.DraftPack;
@@ -49,19 +50,28 @@ public class DraftService {
 	private MtgoDraftParserService mtgoDraftParserService;
 	
 	@Transactional
-	public void addDraft(final InputStream mtgoDraftStream, 
-						 final String name, 
-						 final Integer wins, 
-						 final Integer losses) {
-		RawDraft aDraft;
+	public JsonUploadStatus addDraft(final InputStream mtgoDraftStream, 
+						 			 final String name, 
+						 			 final Integer wins, 
+						 			 final Integer losses) {
+		RawDraft aDraft = null;
+		JsonUploadStatus uploadStatus = new JsonUploadStatus();
 		
 		try {
 			aDraft = mtgoDraftParserService.parse(mtgoDraftStream);
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			uploadStatus.setDraftInvalid(true);
 		}
 
-		draftDao.addDraft(convertRawDraft(aDraft, name, wins, losses));
+		if(aDraft != null && !uploadStatus.isDraftInvalid()) {
+			try {
+				draftDao.addDraft(convertRawDraft(aDraft, name, wins, losses));
+			} catch (DuplicateDraftException e) {
+				uploadStatus.setDraftDuplicate(true);
+			}	
+		}
+		
+		return uploadStatus;
 	}
 
 	public JsonDraft getDraftByActivePlayer(final Integer draftId) {
@@ -71,7 +81,10 @@ public class DraftService {
 		return jsonDraft;
 	}
 	
-	public JsonPackPick getPackByIdAndPick(final Integer draftPackId, final Integer pickId) {
+	public JsonPackPick getPackByIdAndPick(final Integer draftId,
+										   final Integer draftPackId, 
+										   final Integer pickId) {
+		
 		final JsonPackPick jsonPackPick = new JsonPackPick();
 		final List<JsonCard> availablePicks = new ArrayList<JsonCard>();
 		final JsonCard pick = new JsonCard();
@@ -100,6 +113,8 @@ public class DraftService {
 		jsonPackPick.setPick(pickKey);
 
 		jsonPackPick.setAvailable(availablePicks);		
+		
+		jsonPackPick.setDraftMetaData(getJsonDraftFromDraft(draftDao.getDraftById(draftId)));
 		
 		return jsonPackPick;
 	}
@@ -195,6 +210,7 @@ public class DraftService {
 			}
 			
 			draftPack.setSequenceId(i);
+			draftPack.setPackSize(aRawDraft.getPackSizes().get(i));
 			
 			draftPacks.add(draftPack);
 		}
@@ -277,6 +293,7 @@ public class DraftService {
 			
 			jsonPack.setId(pack.getId());
 			jsonPack.setSetCode(pack.getSet().getName());
+			jsonPack.setPackSize(pack.getPackSize());
 			
 			jsonPacks.add(jsonPack);
 		}

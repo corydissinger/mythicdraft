@@ -16,6 +16,7 @@ public class RawDraftBuilder {
 	private String activePlayer;
 	private List<String> otherPlayers;	
 	private List<String> packSets;
+	private List<Integer> packSizes;
 	private Map<Integer, String> tempIdToCardNameMap;
 
 	public RawDraft build() {
@@ -26,7 +27,8 @@ public class RawDraftBuilder {
 							activePlayer,
 							otherPlayers,
 							packSets,
-							tempIdToCardNameMap);
+							tempIdToCardNameMap,
+							packSizes);
 	}
 	
 	public RawDraftBuilder setPackToListOfPickToAvailablePicksMap(Map<Integer, List<MutablePair<Integer, List<Integer>>>> packToListOfPickToAvailablePicksMap) {
@@ -68,5 +70,8 @@ public class RawDraftBuilder {
 		this.tempIdToCardNameMap = tempIdToCardNameMap;
 		return this;
 	}
-	
+
+	public void setPackSizes(List<Integer> packSizes) {
+		this.packSizes = packSizes;
+	}	
 }

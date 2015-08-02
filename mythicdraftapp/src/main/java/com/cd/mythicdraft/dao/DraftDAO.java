@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import com.cd.mythicdraft.exception.DuplicateDraftException;
 import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Draft;
 import com.cd.mythicdraft.model.DraftPackPick;
@@ -12,7 +13,7 @@ import com.cd.mythicdraft.model.Set;
 
 public interface DraftDAO {
 	
-	public void addDraft(Draft draft);
+	public void addDraft(Draft draft) throws DuplicateDraftException;
 	
 	public Map<String, Card> getCardNameToCardMap(final Map<String, String> cardNameToCardSetCode);
 	
@@ -33,4 +34,6 @@ public interface DraftDAO {
 	public DraftPackPick getPackByIdAndPick(final Integer draftPackId, final Integer pickId);
 
 	public Collection<Draft> getRecentDrafts(final Integer numberOfDrafts);
+
+	public Draft getDraftById(Integer draftId);
 }

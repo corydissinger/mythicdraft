@@ -1,32 +1,61 @@
 var request = window.superagent;
+var Router = ReactRouter;
+var DefaultRoute = Router.DefaultRoute;
+var Link = Router.Link;
+var Route = Router.Route;
+var RouteHandler = Router.RouteHandler;
+
 var navElement = document.getElementById("navContainer");
-var content = document.getElementById("container");
+var appElement = document.getElementById("container");
+
+var nextDummyValue = 0; //shame
 
 ReactModal.setAppElement(navElement);
 ReactModal.injectCSS();
 
 var UploadForm = React.createClass({
+	getInitialState: function() {
+		return {isSubmitDisabled: false,
+			    isDraftDuplicate: false,
+			    isDraftInvalid: false};
+	},
+
 	handleSubmit: function(e) {
-		e.preventDefault();
+		e.preventDefault();			
+		var comp = this;		
+
+		comp.setState({isSubmitDisabled: true});
 		
-		var comp = this;
 		var draftFile = e.target[0].files[0];
-		
-		console.log(this.refs.uploadForm.getDOMNode());
-		console.log(draftFile.value);
-		console.log(e);
-		
+			
 		request.post('/upload')
 			.attach('file', draftFile, draftFile.name)		
 			.field('name', this.refs.draftName.getDOMNode().value)
 			.field('wins', this.refs.draftWins.getDOMNode().value)
 			.field('losses', this.refs.draftLosses.getDOMNode().value)
 			.end(function(err, resp) {
-				comp.setState({data: resp.body});
+				if(!resp.body.draftInvalid && !resp.body.draftDuplicate) {
+					comp.props.navbar.closeUploadModal();
+				} else {
+					comp.setState({isSubmitDisabled: false,
+								   isDraftDuplicate: resp.body.draftDuplicate,
+								   isDraftInvalid: resp.body.draftInvalid});
+				}				
 			});		
 	},
 
 	render: function(){
+		var hasError = this.state.isDraftInvalid || this.state.isDraftDuplicate;
+		var errorText = '';
+		
+		if(hasError) {
+			if(this.state.isDraftDuplicate) {
+				errorText = 'You have already uploaded this draft.';
+			} else {
+				errorText = 'The file uploaded is not a valid MTGO draft log.';
+			}
+		}
+	
 		return (
 			<div className="modal-content">
 				<div className="modal-header">
@@ -38,10 +67,10 @@ var UploadForm = React.createClass({
 				</div>
 				<div className="modal-body">
 					<form encType="multipart/form-data" onSubmit={this.handleSubmit} ref="uploadForm">
-						<div className="form-group">
+						<div className={hasError ? "form-group has-error" : "form-group"}>
 							<label htmlFor="file">Draft to Upload</label>
 							<input type="file" name="file" ref="draftFile" required></input>
-							<p className="help-block">This file should be the MTGO draft log</p>
+							<p className="help-block">This file should be the MTGO draft log.</p>
 						</div>
 						
 						<div className="form-group">
@@ -58,8 +87,10 @@ var UploadForm = React.createClass({
 							<label htmlFor="losses">Rounds Lost</label>
 							<input className="form-control" type="number" name="losses" ref="draftLosses" required></input>					
 						</div>					
-						
-						<button type="submit" className="btn btn-default">Submit</button>
+											
+						<button type="submit" className="btn btn-default" disabled={this.state.isSubmitDisabled}>Submit</button>
+						&nbsp;&nbsp;&nbsp;
+						<span className={hasError ? 'text-danger' : ''}>{errorText}</span>
 					</form>					
 				</div>
 			</div>
@@ -68,18 +99,26 @@ var UploadForm = React.createClass({
 });
 
 var RecentDrafts = React.createClass({
+	_updateState: function(props) {
+		var comp = this;
+		
+		request
+			.get("/draft/recent")
+			.end(function(err, resp) {
+				comp.setState({data: resp.body});
+			});	
+	},
+
 	getInitialState: function() {
 		return {data: []};
 	},
 	
 	componentDidMount: function() {
-		var comp = this;
-		
-		request
-			.get(comp.props.url)
-			.end(function(err, resp) {
-				comp.setState({data: resp.body});
-			});
+		this._updateState(this.props);
+	},
+	
+	componentWillReceiveProps: function(nextProps) {
+		this._updateState(nextProps);
 	},
 	
 	render: function() {
@@ -128,12 +167,9 @@ var RecentDraft = React.createClass({
 		return (
 			<tr>
 				<td>
-					<a data-draftid={this.props.data.id} 
-					   data-packs={packsJson} 
-					   href={"#/draft/" + this.props.data.id + "/pack/" + this.props.data.packs[0].id} 
-					   onClick={showDraft}>
+					<Link to={"/draft/" + this.props.data.id + "/pack/" + this.props.data.packs[0].id + "/pick/0"}>
 						{this.props.data.name}
-					</a>					
+					</Link>					
 				</td>
 				<td>
 					<a href={"#/player" + this.props.data.activePlayer.id}>
@@ -145,7 +181,6 @@ var RecentDraft = React.createClass({
 						{packsString}
 					</span>
 					<a href={'#/draft/' + this.props.data.eventId}>
-						View Draft
 					</a>
 				</td>
 				<td>
@@ -170,6 +205,7 @@ var NavBar = React.createClass({
 
 	closeUploadModal: function() {
 		this.setState({ uploadModalIsOpen: false });
+		this.props.app.forceUpdate(nextDummyValue++);
 	},
 	
 	render: function() {
@@ -203,26 +239,46 @@ var NavBar = React.createClass({
 });
 
 var Draft = React.createClass({
+	_updateState: function(props) {
+		var comp = this;
+		var draftId = props.params.draftId;
+		var packId = props.params.packId;
+		var pickNumber = props.params.pickId;
+		
+		request.get('/draft/' + draftId + '/pack/' + packId + '/pick/' + pickNumber)
+			.end(function(err, resp) {		
+				var currentPack;
+				
+				for(var i = 0; i < resp.body.draftMetaData.packs.length; i++){
+					if(packId == resp.body.draftMetaData.packs[i].id){
+						currentPack = i;
+						break;
+					}
+				}
+			
+				comp.setState({data: resp.body, 
+							   packs: resp.body.draftMetaData.packs, 
+							   currentPack: currentPack, 
+							   pickNumber: pickNumber, 
+							   isPickShown: props.isPickShown});
+			});	
+	},
+
+	componentWillReceiveProps: function(nextProps) {
+		nextProps.isPickShown = false;
+		this._updateState(nextProps);
+	},
+	
+	contextTypes: {
+		router: React.PropTypes.func
+	},
+	
 	getInitialState: function() {
 		return {data: []};
 	},
 	
 	componentDidMount: function() {
-		var comp = this;
-		var pickNumber = this.props.pickNumber;
-		var packId = this.props.packs[this.props.currentPack].id;
-		
-		request.get('/draft/' + this.props.draftId + '/pack/' + packId + '/pick/' + pickNumber)
-			.end(function(err, resp) {
-				if(pickNumber == 0) {
-					var packs = comp.props.packs;
-					packs[comp.props.currentPack].packSize = resp.body.available.length;
-					
-					comp.setProps({packs: packs});
-				}
-				
-				comp.setState({data: resp.body});
-			});
+		this._updateState(this.props);
 	},
 	
 	render: function() {
@@ -250,39 +306,32 @@ var Draft = React.createClass({
 });	
 
 var DraftControls = React.createClass({
-	updatePick: function(direction) {
-		var comp = this.props.draft;
-		var nextPickNumber = this.props.draft.props.pickNumber + direction;;
-		var packs = this.props.draft.props.packs;
-		var currentPack = this.props.draft.props.currentPack;
-			
-		if(nextPickNumber == packs[currentPack].packSize) {
-			currentPack++;
-			nextPickNumber = 0;
-		} else if(nextPickNumber == -1) {
-			currentPack--;
-			nextPickNumber = packs[currentPack].packSize - 1;
-		} 
-	
-		var packId = packs[currentPack].id;
-	
-		request.get('/draft/' + this.props.draft.props.draftId + '/pack/' + packId + '/pick/' + nextPickNumber)
-			.end(function(err, resp) {
-				if(nextPickNumber == 0) {
-					packs[currentPack].packSize = resp.body.available.length;					
-				}
-				
-				comp.setProps({pickNumber: nextPickNumber, currentPack: currentPack, packs: packs});
-				comp.setState({data: resp.body, isPickShown: false});
-			});	
-	},
-
 	showPick: function() {
 		this.props.draft.setState({isPickShown: true});
 	},
 	
 	render: function() {
-		var currentPackSize = this.props.draft.props.packs[this.props.draft.props.currentPack].packSize;
+		var currentPackSize = Number(this.props.draft.state.packs[this.props.draft.state.currentPack].packSize);
+		var previousDisabled = Number(this.props.draft.state.pickNumber) == 0 && Number(this.props.draft.state.currentPack) == 0 ? 'disabled' : '';
+		var nextDisabled = Number(this.props.draft.state.pickNumber) == currentPackSize - 1 && Number(this.props.draft.state.currentPack) == 2 ? 'disabled' : '';
+	
+		var draftId = this.props.draft.state.data.draftMetaData.id;
+		var nextPickNumber = Number(this.props.draft.state.pickNumber) + 1;
+		var previousPickNumber = Number(this.props.draft.state.pickNumber) - 1;
+		var packs = this.props.draft.state.packs;
+		var currentPack = this.props.draft.state.currentPack;
+		var nextPackId = packs[currentPack].id;
+		var previousPackId = packs[currentPack].id;
+			
+		if(!nextDisabled && nextPickNumber == packs[currentPack].packSize) {
+			nextPackId = packs[currentPack + 1].id;
+			nextPickNumber = 0;
+		} 
+
+		if(previousPickNumber == -1 && currentPack != 0) {
+			previousPackId = packs[currentPack - 1].id;
+			previousPickNumber = packs[currentPack - 1].packSize - 1;
+		} 	
 	
 		return (
 			<div className="row">
@@ -290,12 +339,10 @@ var DraftControls = React.createClass({
 				<div className="col-md-6">
 					<div className="row">
 						<div className="col-md-4">
-							<button type="button" 
-									className="btn btn-warning" 
-									disabled={ this.props.draft.props.pickNumber == 0 && this.props.draft.props.currentPack == 0 ? 'disabled' : ''} 
-									onClick={this.updatePick.bind(this, -1)} >
+							<Link className={previousDisabled ? "hide" : "btn btn-warning"}
+								  to={"/draft/" + draftId + "/pack/" + previousPackId + "/pick/" + previousPickNumber} >
 								Previous Pick
-							</button>
+							</Link>
 						</div>
 						<div className="col-md-4">						
 							<button type="button" 
@@ -305,12 +352,10 @@ var DraftControls = React.createClass({
 							</button>			
 						</div>							
 						<div className="col-md-4">							
-							<button type="button" 
-									className="btn btn-success" 
-									disabled={ this.props.draft.props.pickNumber == currentPackSize - 1 && this.props.draft.props.currentPack == 2 ? 'disabled' : ''} 
-									onClick={this.updatePick.bind(this, 1)} >
+							<Link className={nextDisabled ? "hide" : "btn btn-success"}
+								  to={"/draft/" + draftId + "/pack/" + nextPackId + "/pick/" + nextPickNumber} >
 								Next Pick
-							</button>										
+							</Link>										
 						</div>
 					</div>
 				</div>
@@ -367,20 +412,34 @@ var Card = React.createClass({
 	}
 });
 
-function showMain() {
-	React.render(<NavBar/>, navElement);
-	React.render(<RecentDrafts url="/draft/recent"/>, content);
-}
-
-function showDraft(event) {
-	var draftId = event.currentTarget.dataset.draftid;
-	var packs = JSON.parse(event.currentTarget.dataset.packs);
-	var pickNumber = event.currentTarget.dataset.pickid || 0;
+var App = React.createClass({
+	forceUpdate: function(dummyValue) {
+		this.setState({update: dummyValue});
+	},
 	
-	React.render(<Draft draftId={draftId} 
-						packs={packs}
-						currentPack={0}
-						pickNumber={pickNumber} />, content);
-}
+	render: function() {
+		return (
+			<div>
+				<NavBar app={this}/>
+				<RouteHandler />
+			</div>
+		);
+	}
+});
 
-showMain();
+var routes = (
+  <Route name="app" path="/" handler={App}>
+    <Route name="draft" path="draft/:draftId/" handler={Draft} >
+		<Route name="pack" path="pack/:packId/" handler={Draft} >
+			<Route name="pick" path="pick/:pickId" handler={Draft} >
+			</Route>
+		</Route>
+	</Route>
+	
+    <DefaultRoute handler={RecentDrafts}/>
+  </Route>
+);
+
+Router.run(routes, function (Handler) {
+  React.render(<Handler/>, appElement);
+});

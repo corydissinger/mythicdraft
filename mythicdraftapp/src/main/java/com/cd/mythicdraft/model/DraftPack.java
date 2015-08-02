@@ -44,6 +44,9 @@ public class DraftPack implements Serializable {
 	@Column(name = "SEQUENCE_ID")
 	private Integer sequenceId;
 	
+	@Column(name = "PACK_SIZE")
+	private Integer packSize;
+	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "DRAFT_ID")
 	private Draft draft;
@@ -86,6 +89,14 @@ public class DraftPack implements Serializable {
 
 	public void setSequenceId(Integer sequenceId) {
 		this.sequenceId = sequenceId;
+	}
+
+	public Integer getPackSize() {
+		return packSize;
+	}
+
+	public void setPackSize(Integer packSize) {
+		this.packSize = packSize;
 	}
 
 	public Draft getDraft() {

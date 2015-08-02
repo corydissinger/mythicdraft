@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cd.mythicdraft.json.JsonUploadStatus;
 import com.cd.mythicdraft.service.DraftService;
 
 @Controller
@@ -23,26 +24,28 @@ public class FileUploadController {
 	private DraftService draftService;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public @ResponseBody String processUpload(@RequestParam String name,
-											  @RequestParam Integer wins,
-											  @RequestParam Integer losses,
-							  				  @RequestParam MultipartFile file) {
+	public @ResponseBody JsonUploadStatus processUpload(@RequestParam String name,
+										  				@RequestParam Integer wins,
+									  					@RequestParam Integer losses,
+									  					@RequestParam MultipartFile file) {
+		JsonUploadStatus uploadStatus = new JsonUploadStatus();
 		
-		if(!file.isEmpty()) {
-			try {
-				draftService.addDraft(file.getInputStream(), 
-									  name,
-									  wins,
-									  losses);
-				
-				return "File upload succeeded";
-			} catch (IOException e) {
-				logger.error("File upload failed!");
-				throw new RuntimeException(e);
-			}			
+		//Draft logs should be text and should not be huge
+		if(!"text/plain".equals(file.getContentType()) || 15000 < file.getSize()){
+			uploadStatus.setDraftInvalid(true);
+			return uploadStatus;
 		}
-			
-		return "Draft upload failed";
+		
+		try {
+			uploadStatus = draftService.addDraft(file.getInputStream(), 
+								  			     name,
+								  			     wins,
+								  			     losses);
+		} catch (IOException e) {
+			uploadStatus.setDraftInvalid(true);
+		}
+		
+		return uploadStatus;
 	}
 	
 }

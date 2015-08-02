@@ -37,7 +37,7 @@ public class DraftController {
 														 @PathVariable final Integer packId,
 		   	   											 @PathVariable final Integer pickId) {
 		
-		return draftService.getPackByIdAndPick(packId, pickId);
+		return draftService.getPackByIdAndPick(draftId, packId, pickId);
 	}
 	
 }

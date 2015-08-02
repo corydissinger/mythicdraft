@@ -15,6 +15,7 @@ public class RawDraft {
 	private final String activePlayer;
 	private final List<String> otherPlayers;
 	private final List<String> packSets;
+	private final List<Integer> packSizes;
 	private final Map<Integer, String> tempIdToCardNameMap;
 	
 	public RawDraft(final Map<Integer, List<MutablePair<Integer, List<Integer>>>> packToListOfPickToAvailablePicksMap,
@@ -24,7 +25,8 @@ public class RawDraft {
 					final String activePlayer,
 					final List<String> otherPlayers,
 					final List<String> packSets,
-					final Map<Integer, String> tempIdToCardNameMap) {
+					final Map<Integer, String> tempIdToCardNameMap,
+					final List<Integer> packSizes) {
 		this.packToListOfPickToAvailablePicksMap = packToListOfPickToAvailablePicksMap;
 		this.cardNameToRawCardMap = cardNameToTempIdMap;
 		this.eventId = eventId;
@@ -33,6 +35,7 @@ public class RawDraft {
 		this.otherPlayers = otherPlayers;		
 		this.packSets = packSets;
 		this.tempIdToCardNameMap = tempIdToCardNameMap;
+		this.packSizes = packSizes;
 	}
 
 	public Map<Integer, List<MutablePair<Integer, List<Integer>>>> getPackToListOfPickToAvailablePicksMap() {
@@ -65,6 +68,10 @@ public class RawDraft {
 
 	public Map<Integer, String> getTempIdToCardNameMap() {
 		return tempIdToCardNameMap;
+	}
+
+	public List<Integer> getPackSizes() {
+		return packSizes;
 	}
 	
 }

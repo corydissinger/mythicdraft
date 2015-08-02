@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import com.cd.mythicdraft.exception.DuplicateDraftException;
 import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Draft;
 import com.cd.mythicdraft.model.DraftPack;
@@ -31,10 +32,10 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 
 	@Override
 	@Transactional
-	public void addDraft(Draft draft) {
+	public void addDraft(Draft draft) throws DuplicateDraftException {
 		//le shrug, could be better
 		if(isDraftAlreadySaved(draft)) {
-			return;
+			throw new DuplicateDraftException();
 		}
 		
 		Session session = getCurrentSession();
@@ -135,6 +136,14 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 		}
 		
 		return false;
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Draft getDraftById(final Integer draftId) {
+		Session session = getCurrentSession();
+		
+		return (Draft) session.get(Draft.class, draftId);
 	}
 	
 	@Override
