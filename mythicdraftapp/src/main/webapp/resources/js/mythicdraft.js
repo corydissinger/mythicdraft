@@ -60,8 +60,8 @@ var UploadForm = React.createClass({
 			<div className="modal-content">
 				<div className="modal-header">
 					<button type="button" className="close" onClick={this.props.navbar.closeUploadModal}>
-						<span aria-hidden="true">&times;</span>
-						<span className="sr-only">Close</span>
+						<span aria-hidden="true" className="glyphicon glyphicon-remove"></span>
+						<span className="sr-only margin-left">Close</span>
 					</button>
 					<h4 className="modal-title">Upload Draft</h4>				
 				</div>
@@ -88,9 +88,8 @@ var UploadForm = React.createClass({
 							<input className="form-control" type="number" name="losses" ref="draftLosses" required></input>					
 						</div>					
 											
-						<button type="submit" className="btn btn-default" disabled={this.state.isSubmitDisabled}>Submit</button>
-						&nbsp;&nbsp;&nbsp;
-						<span className={hasError ? 'text-danger' : ''}>{errorText}</span>
+						<button type="submit" className="btn btn-default" disabled={this.state.isSubmitDisabled}>Submit</button>					
+						<span className={hasError ? 'text-danger margin-left' : ''}>{errorText}</span>
 					</form>					
 				</div>
 			</div>
@@ -219,7 +218,7 @@ var NavBar = React.createClass({
 						<ul className="nav navbar-nav">
 							<li onClick={this.openUploadModal}>
 								<a href="#">
-									<span className="glyphicon glyphicon-upload"></span>&nbsp;Upload
+									<span className="glyphicon glyphicon-upload"></span><span className="margin-left">Upload</span>
 								</a>
 							</li>
 							<ReactModal className="Modal__Bootstrap modal-dialog" 
@@ -310,6 +309,12 @@ var DraftControls = React.createClass({
 		this.props.draft.setState({isPickShown: true});
 	},
 	
+	linkHandler: function(event) {
+		var link = React.findDOMNode(this.refs.shareLink);
+		link.focus();
+		link.select();
+	},
+	
 	render: function() {
 		var currentPackSize = Number(this.props.draft.state.packs[this.props.draft.state.currentPack].packSize);
 		var previousDisabled = Number(this.props.draft.state.pickNumber) == 0 && Number(this.props.draft.state.currentPack) == 0 ? 'disabled' : '';
@@ -323,6 +328,8 @@ var DraftControls = React.createClass({
 		var nextPackId = packs[currentPack].id;
 		var previousPackId = packs[currentPack].id;
 			
+		var linkToThis = "http://" + window.location.host + "/#/draft/" + draftId + "/pack/" + nextPackId + "/pick/" + this.props.draft.state.pickNumber;
+			
 		if(!nextDisabled && nextPickNumber == packs[currentPack].packSize) {
 			nextPackId = packs[currentPack + 1].id;
 			nextPickNumber = 0;
@@ -335,31 +342,35 @@ var DraftControls = React.createClass({
 	
 		return (
 			<div className="row">
-				<div className="col-md-3"></div>
-				<div className="col-md-6">
+				<div className="col-md-1"></div>
+				<div className="col-md-10">
 					<div className="row">
+						<div className="col-md-2"></div>					
 						<div className="col-md-4">
-							<Link className={previousDisabled ? "hide" : "btn btn-warning"}
+							<Link className={previousDisabled ? "visibility-hidden btn btn-warning" : "btn btn-warning"}
 								  to={"/draft/" + draftId + "/pack/" + previousPackId + "/pick/" + previousPickNumber} >
 								Previous Pick
 							</Link>
-						</div>
-						<div className="col-md-4">						
 							<button type="button" 
 									onClick={this.showPick}
-									className="btn btn-info">
+									className="margin-left btn btn-info">
 								Show Current Pick
 							</button>			
-						</div>							
-						<div className="col-md-4">							
-							<Link className={nextDisabled ? "hide" : "btn btn-success"}
+							<Link className={nextDisabled ? "visibility-hidden btn btn-success" : "margin-left btn btn-success"}
 								  to={"/draft/" + draftId + "/pack/" + nextPackId + "/pick/" + nextPickNumber} >
 								Next Pick
 							</Link>										
 						</div>
+						<div className="col-md-2">
+							<div onClick={this.linkHandler} className="input-group input-group-sm">
+								<span className="input-group-addon glyphicon glyphicon-share"></span>
+								<input ref="shareLink" type="text" className="form-control" aria-describedby="basic-addon1" value={linkToThis}/>						
+							</div>											
+						</div>																	
+						<div className="col-md-2"></div>											
 					</div>
 				</div>
-				<div className="col-md-3"></div>
+				<div className="col-md-1"></div>				
 			</div>
 		);
 	}
@@ -375,15 +386,15 @@ var CardRow = React.createClass({
 			<div className="row">
 				<div className="col-md-1">
 			    </div>
+				<div className="col-md-10">
 				{cards.map(function(aCard) {
 					
-					return <div className="col-md-2">
-						       <Card data={aCard} 
+					return 	   <Card data={aCard} 
 									 key={aCard.id} 
 									 isPick={aCard.id == pick ? true : false} 
-									 isPickShown={isPickShown} />
-						   </div>;
+									 isPickShown={isPickShown} />;
 				})}				
+				</div>
 				<div className="col-md-1">
 			    </div>				
 			</div>			

@@ -48,3 +48,11 @@
     -webkit-transition: opacity .5s ease-out;
     -o-transition: opacity .5s ease-out;
 }
+
+.visibility-hidden {
+	visibility: hidden;	
+}
+
+.margin-left {
+	margin-left: 5px;
+}
