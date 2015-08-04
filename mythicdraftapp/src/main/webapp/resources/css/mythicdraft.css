@@ -56,3 +56,16 @@
 .margin-left {
 	margin-left: 5px;
 }
+
+.top-buffer {
+	margin-top: 10px;
+}
+
+.row.no-pad {
+  margin-right:0;
+  margin-left:0;
+}
+.row.no-pad > [class*='col-'] {
+  padding-right:0;
+  padding-left:0;
+}

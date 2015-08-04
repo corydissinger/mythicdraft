@@ -13,6 +13,7 @@
 		"babel": "5.8.3",
 		"grunt-babel": "5.0.1",
 		"cssmin": "0.4.3",
-		"grunt-contrib-cssmin": "0.13.0"
+		"grunt-contrib-cssmin": "0.13.0",
+		"grunt-contrib-uglify": "0.9.1"
 	}
 }

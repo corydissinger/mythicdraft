@@ -36,4 +36,8 @@ public interface DraftDAO {
 	public Collection<Draft> getRecentDrafts(final Integer numberOfDrafts);
 
 	public Draft getDraftById(Integer draftId);
+	
+	public List<Integer> getDistinctMultiverseIdsForDraft(Integer draftId);
+	
+	public List<Integer> getAllPicksInOrder(Integer draftId);
 }

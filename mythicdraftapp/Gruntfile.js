@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				files: {
-					'target/mythic-draft/resources/js/app.js': 'src/main/webapp/resources/js/mythicdraft.js'
+					'target/mythic-draft/resources/js/mythicdraft-babeled.js': 'src/main/webapp/resources/js/mythicdraft.js'
 				}
 			}
 		},
@@ -18,8 +18,15 @@ module.exports = function(grunt) {
 					'target/mythic-draft/resources/css/app.css': 'src/main/webapp/resources/css/mythicdraft.css'
 				}				
 			}
-		}
+		},
+ 	    uglify: {
+			dist: {
+				files: {
+					'target/mythic-draft/resources/js/app.js': ['target/mythic-draft/resources/js/mythicdraft-babeled.js']
+				}
+			}
+		}		
 	});
 	 
-	grunt.registerTask('default', ['babel', 'cssmin']);
+	grunt.registerTask('default', ['babel', 'cssmin', 'uglify']);
 }

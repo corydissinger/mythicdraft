@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
@@ -253,6 +254,54 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 		}
 		
 		return sets;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Integer> getDistinctMultiverseIdsForDraft(Integer draftId) {
+		Query query = getCurrentSession().createSQLQuery("SELECT DISTINCT PICK.CARD_ID "
+													   + "FROM DRAFT_PACK_PICK PICK "
+													   + "INNER JOIN DRAFT_PACK PACK "
+													   + "   ON PACK.ID = PICK.DRAFT_PACK_ID "
+													   + "INNER JOIN DRAFT DRAFT "
+													   + "   ON DRAFT.ID = PACK.DRAFT_ID "
+													   + "WHERE DRAFT.ID = :draftId "
+													   + "UNION "
+													   + "SELECT DISTINCT AVAILABLE_PICK.CARD_ID "
+													   + "FROM DRAFT_PACK_AVAILABLE_PICK AVAILABLE_PICK "													   
+													   + "INNER JOIN DRAFT_PACK_PICK PICK "
+													   + "   ON PICK.ID = AVAILABLE_PICK.DRAFT_PACK_PICK_ID "
+													   + "INNER JOIN DRAFT_PACK PACK "
+													   + "   ON PACK.ID = PICK.DRAFT_PACK_ID "
+													   + "INNER JOIN DRAFT DRAFT "
+													   + "   ON DRAFT.ID = PACK.DRAFT_ID "
+													   + "WHERE DRAFT.ID = :draftId").setInteger("draftId", draftId);													   
+		
+		List<Integer> multiverseIds = query.list();
+		
+		return multiverseIds;
+	}
+
+	@Override
+	@Transactional(readOnly = true)	
+	public List<Integer> getAllPicksInOrder(Integer draftId) {
+		Query query = getCurrentSession().createSQLQuery("SELECT DISTINCT PICK.CARD_ID, PICK.SEQUENCE_ID AS PICK_SEQ, PACK.SEQUENCE_ID AS PACK_SEQ "
+													   + "FROM DRAFT_PACK_PICK PICK "
+													   + "INNER JOIN DRAFT_PACK PACK "
+													   + "   ON PACK.ID = PICK.DRAFT_PACK_ID "
+													   + "INNER JOIN DRAFT DRAFT "
+													   + "   ON DRAFT.ID = PACK.DRAFT_ID "
+													   + "WHERE DRAFT.ID = :draftId "
+													   + "ORDER BY PACK_SEQ ASC, PICK_SEQ ASC").setInteger("draftId", draftId);													   
+
+		List<Object[]> multiverseIds = query.list();
+		List<Integer> picksInOrder = new ArrayList<Integer>(multiverseIds.size());
+		
+		for(Object[] multiverseId : multiverseIds) {
+			picksInOrder.add((Integer)multiverseId[0]);
+		}
+		
+		return picksInOrder;
 	}	
 	
 }

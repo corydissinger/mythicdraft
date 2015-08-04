@@ -3,9 +3,11 @@ package com.cd.mythicdraft.service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.MutablePair;
@@ -21,6 +23,7 @@ import com.cd.mythicdraft.dao.DraftDAO;
 import com.cd.mythicdraft.domain.RawCard;
 import com.cd.mythicdraft.domain.RawDraft;
 import com.cd.mythicdraft.exception.DuplicateDraftException;
+import com.cd.mythicdraft.json.JsonAllPicks;
 import com.cd.mythicdraft.json.JsonCard;
 import com.cd.mythicdraft.json.JsonDraft;
 import com.cd.mythicdraft.json.JsonPack;
@@ -112,6 +115,11 @@ public class DraftService {
 		
 		jsonPackPick.setPick(pickKey);
 
+		long seed = System.nanoTime();
+		
+		Collections.shuffle(availablePicks, new Random(seed));
+		Collections.shuffle(availablePicks, new Random(seed));		
+		
 		jsonPackPick.setAvailable(availablePicks);		
 		
 		jsonPackPick.setDraftMetaData(getJsonDraftFromDraft(draftDao.getDraftById(draftId)));
@@ -124,6 +132,19 @@ public class DraftService {
 				.stream()
 				.map(this::getJsonDraftFromDraft)
 				.collect(Collectors.toList());
+	}
+	
+	@Transactional(readOnly = true)
+	public JsonAllPicks getAllPicks(final Integer draftId) {
+		final JsonAllPicks picks = new JsonAllPicks();
+		
+		final List<Integer> allCards = draftDao.getDistinctMultiverseIdsForDraft(draftId);
+		final List<Integer> picksInOrder = draftDao.getAllPicksInOrder(draftId);
+		
+		picks.setAllCards(allCards);
+		picks.setPicksInOrder(picksInOrder);
+		
+		return picks;
 	}
 
 	private Draft convertRawDraft(RawDraft aRawDraft, String name, Integer wins, Integer losses) {

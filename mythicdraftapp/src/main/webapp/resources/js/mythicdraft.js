@@ -288,17 +288,12 @@ var Draft = React.createClass({
 		var pick = this.state.data.pick;	
 		var isPickShown = this.state.isPickShown;
 		var available = this.state.data.available;
-		var cardsRowOne = available.slice(0, 5);
-		var cardsRowTwo = available.slice(5, 10);
-		var cardsRowThree = available.slice(10, 15);
 		
 		return (
 			<div className="container-fluid">
 				<DraftControls draft={this} />
-				<CardRow ref="cardRow" cards={cardsRowOne} pick={pick} isPickShown={isPickShown} />
-				<CardRow ref="cardRow" cards={cardsRowTwo} pick={pick} isPickShown={isPickShown} />
-				<CardRow ref="cardRow" cards={cardsRowThree} pick={pick} isPickShown={isPickShown} />
-				<DraftControls draft={this} />
+				<CardRow ref="cardRow" cards={available} pick={pick} isPickShown={isPickShown} />
+				<AllPicks draftId={this.props.params.draftId} />
 			</div>
 		);
 	}
@@ -342,35 +337,31 @@ var DraftControls = React.createClass({
 	
 		return (
 			<div className="row">
-				<div className="col-md-1"></div>
-				<div className="col-md-10">
-					<div className="row">
-						<div className="col-md-2"></div>					
-						<div className="col-md-4">
-							<Link className={previousDisabled ? "visibility-hidden btn btn-warning" : "btn btn-warning"}
-								  to={"/draft/" + draftId + "/pack/" + previousPackId + "/pick/" + previousPickNumber} >
-								Previous Pick
-							</Link>
-							<button type="button" 
-									onClick={this.showPick}
-									className="margin-left btn btn-info">
-								Show Current Pick
-							</button>			
-							<Link className={nextDisabled ? "visibility-hidden btn btn-success" : "margin-left btn btn-success"}
-								  to={"/draft/" + draftId + "/pack/" + nextPackId + "/pick/" + nextPickNumber} >
-								Next Pick
-							</Link>										
-						</div>
-						<div className="col-md-2">
-							<div onClick={this.linkHandler} className="input-group input-group-sm">
-								<span className="input-group-addon glyphicon glyphicon-share"></span>
-								<input ref="shareLink" type="text" className="form-control" aria-describedby="basic-addon1" value={linkToThis}/>						
-							</div>											
-						</div>																	
-						<div className="col-md-2"></div>											
-					</div>
+				<div className="col-md-1 col-md-offset-3 col-xs-4">
+					<Link className={previousDisabled ? "visibility-hidden btn btn-sm btn-warning" : "btn btn-sm btn-warning"}
+						  to={"/draft/" + draftId + "/pack/" + previousPackId + "/pick/" + previousPickNumber} >
+						Previous
+					</Link>
 				</div>
-				<div className="col-md-1"></div>				
+				<div className="col-md-1 col-xs-4">					
+					<button type="button" 
+							onClick={this.showPick}
+							className="btn btn-sm btn-info">
+						Show Pick
+					</button>			
+				</div>
+				<div className="col-md-1 col-xs-4">										
+					<Link className={nextDisabled ? "visibility-hidden btn btn-sm btn-success" : "btn btn-sm btn-success"}
+						  to={"/draft/" + draftId + "/pack/" + nextPackId + "/pick/" + nextPickNumber} >
+						Next
+					</Link>										
+				</div>
+				<div className="col-md-3 col-md-offset-0 col-xs-10 col-xs-offset-1">
+					<div onClick={this.linkHandler} className="input-group input-group-sm">
+						<span className="input-group-addon glyphicon glyphicon-share"></span>
+						<input ref="shareLink" type="text" className="form-control" aria-describedby="basic-addon1" value={linkToThis}/>						
+					</div>											
+				</div>																	
 			</div>
 		);
 	}
@@ -381,22 +372,19 @@ var CardRow = React.createClass({
 		var cards = this.props.cards;		
 		var pick = this.props.pick;
 		var isPickShown = this.props.isPickShown;
+		var counter = 0;
 		
 		return (
-			<div className="row">
-				<div className="col-md-1">
-			    </div>
-				<div className="col-md-10">
+			<div className="row top-buffer no-pad">				
 				{cards.map(function(aCard) {
 					
-					return 	   <Card data={aCard} 
-									 key={aCard.id} 
-									 isPick={aCard.id == pick ? true : false} 
-									 isPickShown={isPickShown} />;
+					return <div className={counter++ % 5 == 0 ? "col-md-offset-1 col-md-2 col-sm-3 col-xs-4" : "col-md-2 col-sm-3 col-xs-4"}>
+						       <Card data={aCard} 
+									  key={aCard.id} 
+									  isPick={aCard.id == pick ? true : false} 
+									  isPickShown={isPickShown} />
+							</div>;
 				})}				
-				</div>
-				<div className="col-md-1">
-			    </div>				
 			</div>			
 		);
 	}
@@ -408,17 +396,47 @@ var Card = React.createClass({
 	
 		if(this.props.isPickShown) {
 			if(this.props.isPick) {
-				classString = '';
+				classString = 'img-responsive';
 			} else {
-				classString = 'card-not-picked-animation';
+				classString = 'img-responsive card-not-picked-animation';
 			}
 		} else {
-			classString = '';
+			classString = 'img-responsive';
 		}
 	
 		return (
 			<img className={classString}
 				 src={"http://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" + this.props.data.multiverseId} />
+		);
+	}
+});
+
+var AllPicks = React.createClass({
+	getInitialState: function() {
+		return { allCards: [] };
+	},
+
+	componentDidMount: function() {
+		var comp = this;
+		var draftId = this.props.draftId;
+		
+		request.get('/draft/' + draftId + '/all')
+			.end(function(err, resp) {							
+				comp.setState({allCards: resp.body.allCards});
+			});		
+	},
+
+	render: function() {
+		var cardIds = this.state.allCards;
+	
+		return (
+			<div>
+				<div className="hidden">		
+					{cardIds.map(function(aCardId) {
+						return <img src={"http://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" + aCardId} />;
+					})}
+				</div>
+			</div>
 		);
 	}
 });
