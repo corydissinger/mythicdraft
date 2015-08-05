@@ -77,8 +77,8 @@ public class DraftService {
 		return uploadStatus;
 	}
 
-	public JsonDraft getDraftByActivePlayer(final Integer draftId) {
-		final Draft draft = draftDao.getDraftByActivePlayer(draftId);
+	public JsonDraft getDraftById(final Integer draftId) {
+		final Draft draft = draftDao.getDraftById(draftId);
 		final JsonDraft jsonDraft = getJsonDraftFromDraft(draft);
 		
 		return jsonDraft;
@@ -133,6 +133,13 @@ public class DraftService {
 				.map(this::getJsonDraftFromDraft)
 				.collect(Collectors.toList());
 	}
+	
+	public List<JsonDraft> getDraftsByPlayerId(final Integer playerId) {
+		return draftDao.getDraftsByPlayerId(playerId)
+				.stream()
+				.map(this::getJsonDraftFromDraft)
+				.collect(Collectors.toList());
+	}	
 	
 	@Transactional(readOnly = true)
 	public JsonAllPicks getAllPicks(final Integer draftId) {

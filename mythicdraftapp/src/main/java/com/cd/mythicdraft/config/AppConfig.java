@@ -40,8 +40,9 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     	
     	Properties cacheMappings = new Properties();
     	
-    	cacheMappings.setProperty("/draft/**", "31536000");
+    	cacheMappings.setProperty("/draft/*/pack/*/pick/**", "31536000");
     	cacheMappings.setProperty("/draft/recent", "1");
+    	cacheMappings.setProperty("/draft/player/**", "15");    	
     	
     	interceptor.setCacheMappings(cacheMappings);
 		return interceptor;

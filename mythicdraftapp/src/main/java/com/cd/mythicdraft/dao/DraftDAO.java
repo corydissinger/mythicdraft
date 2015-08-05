@@ -29,15 +29,15 @@ public interface DraftDAO {
 
 	public boolean isDraftAlreadySaved(final Draft draft);
 
-	public Draft getDraftByActivePlayer(final Integer draftId);
+	public Draft getDraftById(final Integer draftId);
 
 	public DraftPackPick getPackByIdAndPick(final Integer draftPackId, final Integer pickId);
 
 	public Collection<Draft> getRecentDrafts(final Integer numberOfDrafts);
 
-	public Draft getDraftById(Integer draftId);
-	
 	public List<Integer> getDistinctMultiverseIdsForDraft(Integer draftId);
 	
 	public List<Integer> getAllPicksInOrder(Integer draftId);
+	
+	public Collection<Draft> getDraftsByPlayerId(final Integer playerId);
 }

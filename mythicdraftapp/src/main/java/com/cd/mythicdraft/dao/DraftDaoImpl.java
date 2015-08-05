@@ -29,7 +29,7 @@ import com.cd.mythicdraft.model.Player;
 import com.cd.mythicdraft.model.Set;
 
 @Repository(value = "draftDao")
-public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
+public class DraftDaoImpl extends AbstractDAO implements DraftDAO {
 
 	@Override
 	@Transactional
@@ -66,7 +66,7 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Draft getDraftByActivePlayer(final Integer draftId) {
+	public Draft getDraftById(final Integer draftId) {
 		Criteria crit = getCurrentSession().createCriteria(Draft.class);
 
 		crit.createAlias("draftPlayers", "draftPlayers");
@@ -137,14 +137,6 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 		}
 		
 		return false;
-	}
-	
-	@Override
-	@Transactional(readOnly = true)
-	public Draft getDraftById(final Integer draftId) {
-		Session session = getCurrentSession();
-		
-		return (Draft) session.get(Draft.class, draftId);
 	}
 	
 	@Override
@@ -302,6 +294,23 @@ public class DraftDAOImpl extends AbstractDAO implements DraftDAO {
 		}
 		
 		return picksInOrder;
+	}
+
+	@Override
+	@Transactional(readOnly = true)	
+	public Collection<Draft> getDraftsByPlayerId(Integer playerId) {
+		Query query = getCurrentSession().createSQLQuery("SELECT D.ID, D.NAME, D.CREATED, D.EVENT_ID, D.EVENT_DATE, D.WINS, D.LOSSES "
+														 + "FROM DRAFT D "
+														 + "INNER JOIN DRAFT_PLAYER P "
+														 + "   ON P.DRAFT_ID = D.ID "
+														 + "WHERE P.PLAYER_ID = :playerId "
+														 + "  AND P.IS_ACTIVE_PLAYER = true "
+														 + "ORDER BY D.CREATED DESC").addEntity(Draft.class)
+														 						     .setInteger("playerId", playerId);
+			
+		final Collection<Draft> drafts = new ArrayList<Draft>(query.list());
+		
+		return drafts;
 	}	
 	
 }

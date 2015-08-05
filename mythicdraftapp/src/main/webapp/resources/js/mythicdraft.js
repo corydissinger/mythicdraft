@@ -98,11 +98,22 @@ var UploadForm = React.createClass({
 });
 
 var RecentDrafts = React.createClass({
+	contextTypes: {
+		router: React.PropTypes.func
+	},
+
 	_updateState: function(props) {
 		var comp = this;
+		var targetUrl;
+		
+		if(props.params.playerId) {
+			targetUrl = "/draft/player/" + props.params.playerId;
+		} else {
+			targetUrl = "/draft/recent";
+		}
 		
 		request
-			.get("/draft/recent")
+			.get(targetUrl)
 			.end(function(err, resp) {
 				comp.setState({data: resp.body});
 			});	
@@ -171,9 +182,9 @@ var RecentDraft = React.createClass({
 					</Link>					
 				</td>
 				<td>
-					<a href={"#/player" + this.props.data.activePlayer.id}>
+					<Link to={"/draft/player/" + this.props.data.activePlayer.id}>
 						{this.props.data.activePlayer.name}
-					</a>
+					</Link>					
 				</td>				
 				<td>
 					<span>
@@ -465,6 +476,8 @@ var routes = (
 		</Route>
 	</Route>
 	
+	<Route name="player" path="draft/player/:playerId" handler={RecentDrafts} />
+
     <DefaultRoute handler={RecentDrafts}/>
   </Route>
 );

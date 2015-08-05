@@ -27,9 +27,9 @@ public class DraftController {
 	
 	@RequestMapping(value = "/draft/{draftId}",
 					method = RequestMethod.GET)
-	public @ResponseBody JsonDraft getDraftForActivePlayer(@PathVariable final Integer draftId) {
+	public @ResponseBody JsonDraft getDraftById(@PathVariable final Integer draftId) {
 		
-		return draftService.getDraftByActivePlayer(draftId);
+		return draftService.getDraftById(draftId);
 	}
 	
 	@RequestMapping(value = "/draft/{draftId}/pack/{packId}/pick/{pickId}",
@@ -46,6 +46,11 @@ public class DraftController {
 	public @ResponseBody JsonAllPicks getPackByIdAndPick(@PathVariable final Integer draftId) {
 
 		return draftService.getAllPicks(draftId);
+	}
+	
+	@RequestMapping(value = "/draft/player/{playerId}")
+	public @ResponseBody List<JsonDraft> getDraftsByPlayerId(@PathVariable final Integer playerId) {
+		return draftService.getDraftsByPlayerId(playerId);
 	}	
 }
 
