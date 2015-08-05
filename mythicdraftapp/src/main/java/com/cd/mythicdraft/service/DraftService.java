@@ -153,6 +153,13 @@ public class DraftService {
 		
 		return picks;
 	}
+	
+	public List<JsonPlayer> getPlayersSearch(final String searchString) {
+		return draftDao.getPlayersSearch(searchString)
+				.stream()
+				.map(this::getJsonPlayerFromPlayer)
+				.collect(Collectors.toList());
+	}
 
 	private Draft convertRawDraft(RawDraft aRawDraft, String name, Integer wins, Integer losses) {
 		Draft draft = new Draft();
@@ -302,10 +309,7 @@ public class DraftService {
 		
 		for(DraftPlayer draftPlayer : draft.getDraftPlayers()) {
 			Player player = draftPlayer.getPlayer();
-			JsonPlayer jsonPlayer = new JsonPlayer();
-
-			jsonPlayer.setId(player.getId());
-			jsonPlayer.setName(player.getName());			
+			JsonPlayer jsonPlayer = getJsonPlayerFromPlayer(player);
 			
 			if(draftPlayer.getIsActivePlayer()) {
 				jsonDraft.setActivePlayer(jsonPlayer);
@@ -330,5 +334,14 @@ public class DraftService {
 		
 		return jsonDraft;
 	}	
+	
+	private JsonPlayer getJsonPlayerFromPlayer(final Player aPlayer) {
+		final JsonPlayer jsonPlayer = new JsonPlayer();
+		
+		jsonPlayer.setId(aPlayer.getId());
+		jsonPlayer.setName(aPlayer.getName());
+		
+		return jsonPlayer;
+	}
 	
 }

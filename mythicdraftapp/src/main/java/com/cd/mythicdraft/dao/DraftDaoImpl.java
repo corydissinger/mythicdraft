@@ -13,6 +13,7 @@ import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -311,6 +312,17 @@ public class DraftDaoImpl extends AbstractDAO implements DraftDAO {
 		final Collection<Draft> drafts = new ArrayList<Draft>(query.list());
 		
 		return drafts;
+	}
+
+	@Override
+	@Transactional(readOnly = true)		
+	public Collection<Player> getPlayersSearch(String searchString) {
+		Criteria criteria = getCurrentSession().createCriteria(Player.class)
+											   .add(Restrictions.like("name", searchString, MatchMode.START));
+		
+		List<Player> players = criteria.list();
+		
+		return players;
 	}	
 	
 }

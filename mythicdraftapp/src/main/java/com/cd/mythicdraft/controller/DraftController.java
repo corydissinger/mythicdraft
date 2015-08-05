@@ -7,11 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cd.mythicdraft.json.JsonAllPicks;
 import com.cd.mythicdraft.json.JsonDraft;
 import com.cd.mythicdraft.json.JsonPackPick;
+import com.cd.mythicdraft.json.JsonPlayer;
 import com.cd.mythicdraft.service.DraftService;
 
 @Controller
@@ -51,6 +53,11 @@ public class DraftController {
 	@RequestMapping(value = "/draft/player/{playerId}")
 	public @ResponseBody List<JsonDraft> getDraftsByPlayerId(@PathVariable final Integer playerId) {
 		return draftService.getDraftsByPlayerId(playerId);
+	}
+	
+	@RequestMapping(value = "/player/search")
+	public @ResponseBody List<JsonPlayer> getDraftsByPlayerId(@RequestParam("name") final String name) {
+		return draftService.getPlayersSearch(name);
 	}	
 }
 

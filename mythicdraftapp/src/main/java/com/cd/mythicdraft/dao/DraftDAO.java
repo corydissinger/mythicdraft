@@ -40,4 +40,6 @@ public interface DraftDAO {
 	public List<Integer> getAllPicksInOrder(Integer draftId);
 	
 	public Collection<Draft> getDraftsByPlayerId(final Integer playerId);
+	
+	public Collection<Player> getPlayersSearch(final String searchString);
 }
