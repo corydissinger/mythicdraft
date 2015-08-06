@@ -324,5 +324,17 @@ public class DraftDaoImpl extends AbstractDAO implements DraftDAO {
 		
 		return players;
 	}	
+
+	@Override
+	@Transactional(readOnly = true)
+	public Player getPlayerById(final Integer playerId) {
+		Criteria crit = getCurrentSession().createCriteria(Player.class);
+
+		crit.add(Restrictions.eq("id", playerId));		
+		
+		final Player player = (Player)crit.uniqueResult(); 
+		
+		return player;
+	}	
 	
 }

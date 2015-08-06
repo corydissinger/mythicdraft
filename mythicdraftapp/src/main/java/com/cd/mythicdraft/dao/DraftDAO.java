@@ -42,4 +42,6 @@ public interface DraftDAO {
 	public Collection<Draft> getDraftsByPlayerId(final Integer playerId);
 	
 	public Collection<Player> getPlayersSearch(final String searchString);
+	
+	public Player getPlayerById(final Integer playerId);
 }

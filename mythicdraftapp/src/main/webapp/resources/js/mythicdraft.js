@@ -104,16 +104,9 @@ var RecentDrafts = React.createClass({
 
 	_updateState: function(props) {
 		var comp = this;
-		var targetUrl;
-		
-		if(props.params.playerId) {
-			targetUrl = "/draft/player/" + props.params.playerId;
-		} else {
-			targetUrl = "/draft/recent";
-		}
 		
 		request
-			.get(targetUrl)
+			.get("/draft/recent")
 			.end(function(err, resp) {
 				comp.setState({data: resp.body});
 			});	
@@ -132,7 +125,7 @@ var RecentDrafts = React.createClass({
 	},
 	
 	render: function() {
-		var drafts = this.state.data || [];		
+		var drafts = this.state.data;		
 		
 		return (
 			<table className="table table-hover">
@@ -140,9 +133,6 @@ var RecentDrafts = React.createClass({
 					<tr>
 						<td>
 							Draft Name
-						</td>
-						<td>
-							Active Drafter
 						</td>
 						<td>
 							Format
@@ -192,6 +182,127 @@ var RecentDraft = React.createClass({
 					</span>
 					<a href={'#/draft/' + this.props.data.eventId}>
 					</a>
+				</td>
+				<td>
+					{this.props.data.wins}
+				</td>
+				<td>
+					{this.props.data.losses}
+				</td>				
+			</tr>
+		);
+	}
+});
+
+var PlayerDrafts = React.createClass({
+	contextTypes: {
+		router: React.PropTypes.func
+	},
+
+	_updateState: function(props) {
+		var comp = this;
+		
+		request
+			.get("/draft/player/" + props.params.playerId)
+			.end(function(err, resp) {
+				comp.setState({data: resp.body});
+			});	
+	},
+
+	getInitialState: function() {
+		return {data: {
+			drafts: [],
+			player: {},
+			winPercentage: ""
+		}};
+	},
+	
+	componentDidMount: function() {
+		this._updateState(this.props);
+	},
+	
+	componentWillReceiveProps: function(nextProps) {
+		this._updateState(nextProps);
+	},
+	
+	render: function() {
+		var drafts = this.state.data.drafts;		
+		var player = this.state.data.player;		
+		var winPercentage = this.state.data.winPercentage;
+		
+		return (
+			<div className="row">
+				<div className="col-xs-12 col-md-3">
+					<h2 className="text-info text-center">
+						{player.name}
+					</h2>
+					<div className="row well">
+						<div className="col-xs-8">
+							Total Drafts Uploaded
+						</div>
+						<div className="col-xs-4">
+							{drafts.length}
+						</div>
+					</div>
+					<div className="row well">
+						<div className="col-xs-8">
+							Win Percentage
+						</div>
+						<div className="col-xs-4">
+							{winPercentage}
+						</div>						
+					</div>						
+				</div>
+				<div className="col-xs-12 col-md-9">
+					<table className="table table-hover">
+						<thead>
+							<tr>
+								<td>
+									Draft Name
+								</td>
+								<td>
+									Format
+								</td>
+								<td>
+									Wins
+								</td>
+								<td>
+									Losses
+								</td>						
+							</tr>				
+						</thead>
+						<tbody>
+							{drafts.map(function(draft) {
+								return <PlayerDraft data={draft} />;
+							})}
+						</tbody>
+					</table>							
+				</div>
+			</div>
+		);
+	}
+});
+
+var PlayerDraft = React.createClass({
+	render: function() {
+		var packsString = "";
+		var packsJson = JSON.stringify(this.props.data.packs);
+		
+		this.props.data.packs.map(function(aPack) {
+			packsString += aPack.setCode + " ";
+		});
+	
+		return (
+			<tr>
+				<td>
+					<Link to={"/draft/" + this.props.data.id + "/pack/" + this.props.data.packs[0].id + "/pick/0"}>
+						{this.props.data.name}
+					</Link>					
+				</td>
+				<td>
+					<span>
+						{packsString}
+					</span>
 				</td>
 				<td>
 					{this.props.data.wins}
@@ -476,7 +587,7 @@ var routes = (
 		</Route>
 	</Route>
 	
-	<Route name="player" path="draft/player/:playerId" handler={RecentDrafts} />
+	<Route name="player" path="draft/player/:playerId" handler={PlayerDrafts} />
 
     <DefaultRoute handler={RecentDrafts}/>
   </Route>

@@ -2,6 +2,8 @@ package com.cd.mythicdraft.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,6 +31,7 @@ import com.cd.mythicdraft.json.JsonDraft;
 import com.cd.mythicdraft.json.JsonPack;
 import com.cd.mythicdraft.json.JsonPackPick;
 import com.cd.mythicdraft.json.JsonPlayer;
+import com.cd.mythicdraft.json.JsonPlayerStats;
 import com.cd.mythicdraft.json.JsonUploadStatus;
 import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Draft;
@@ -134,11 +137,27 @@ public class DraftService {
 				.collect(Collectors.toList());
 	}
 	
-	public List<JsonDraft> getDraftsByPlayerId(final Integer playerId) {
-		return draftDao.getDraftsByPlayerId(playerId)
-				.stream()
-				.map(this::getJsonDraftFromDraft)
-				.collect(Collectors.toList());
+	public JsonPlayerStats getDraftsByPlayerId(final Integer playerId) {
+		final JsonPlayerStats stats = new JsonPlayerStats();
+		final List<JsonDraft> drafts = draftDao.getDraftsByPlayerId(playerId)
+											   .stream()
+											   .map(this::getJsonDraftFromDraft)
+											   .collect(Collectors.toList()); 
+		
+		stats.setDrafts(drafts);
+		stats.setPlayer(getJsonPlayerFromPlayer(draftDao.getPlayerById(playerId)));
+		
+		Integer gamesPlayed = 0;
+		Integer gamesWon = 0;
+		
+		for(JsonDraft draft : drafts) {
+			gamesPlayed += draft.getWins() + draft.getLosses();
+			gamesWon += draft.getWins();
+		}
+		
+		stats.setWinPercentage(BigDecimal.valueOf(gamesWon).divide(BigDecimal.valueOf(gamesPlayed), 2, RoundingMode.DOWN));
+		
+		return stats;
 	}	
 	
 	@Transactional(readOnly = true)

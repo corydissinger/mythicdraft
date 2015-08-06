@@ -14,6 +14,7 @@ import com.cd.mythicdraft.json.JsonAllPicks;
 import com.cd.mythicdraft.json.JsonDraft;
 import com.cd.mythicdraft.json.JsonPackPick;
 import com.cd.mythicdraft.json.JsonPlayer;
+import com.cd.mythicdraft.json.JsonPlayerStats;
 import com.cd.mythicdraft.service.DraftService;
 
 @Controller
@@ -51,7 +52,7 @@ public class DraftController {
 	}
 	
 	@RequestMapping(value = "/draft/player/{playerId}")
-	public @ResponseBody List<JsonDraft> getDraftsByPlayerId(@PathVariable final Integer playerId) {
+	public @ResponseBody JsonPlayerStats getDraftsByPlayerId(@PathVariable final Integer playerId) {
 		return draftService.getDraftsByPlayerId(playerId);
 	}
 	
