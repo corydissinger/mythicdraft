@@ -57,7 +57,7 @@ public class DraftController {
 	}
 	
 	@RequestMapping(value = "/player/search")
-	public @ResponseBody List<JsonPlayer> getDraftsByPlayerId(@RequestParam("name") final String name) {
+	public @ResponseBody List<JsonPlayer> getPlayersSearch(@RequestParam("name") final String name) {
 		return draftService.getPlayersSearch(name);
 	}	
 }

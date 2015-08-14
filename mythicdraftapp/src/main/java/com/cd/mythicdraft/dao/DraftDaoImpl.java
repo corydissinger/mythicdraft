@@ -318,7 +318,9 @@ public class DraftDaoImpl extends AbstractDAO implements DraftDAO {
 	@Transactional(readOnly = true)		
 	public Collection<Player> getPlayersSearch(String searchString) {
 		Criteria criteria = getCurrentSession().createCriteria(Player.class)
-											   .add(Restrictions.like("name", searchString, MatchMode.START));
+											   .add(Restrictions.like("name", searchString, MatchMode.START))
+											   .setMaxResults(20)
+											   .addOrder(Order.asc("name"));
 		
 		List<Player> players = criteria.list();
 		

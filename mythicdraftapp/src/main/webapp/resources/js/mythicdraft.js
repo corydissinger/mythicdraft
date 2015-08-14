@@ -135,6 +135,9 @@ var RecentDrafts = React.createClass({
 							Draft Name
 						</td>
 						<td>
+							Active Player
+						</td>						
+						<td>
 							Format
 						</td>
 						<td>
@@ -315,6 +318,64 @@ var PlayerDraft = React.createClass({
 	}
 });
 
+var PlayerSearch = React.createClass({
+	getInitialState: function() {
+		return { players: [], searchDisabled: false };
+	},
+	
+	componentDidUpdate: function(prevProps, prevState) {
+		if(this.state.players.length > 0){
+			React.findDOMNode(this.refs.player0).focus();
+		}
+	},
+	
+	handleChange: function(event) {
+		var searchString = event.target.value;
+	
+		if(!searchString || searchString.length < 3) {
+			this.setState({ players: [] });
+			return;
+		} else {
+			this.setState({ searchDisabled: true });
+		}
+	
+		var comp = this;
+	
+		request.get('/player/search')
+			.query({ name: searchString })
+			.end(function(err, resp){
+				comp.setState({ players: resp.body, searchDisabled: false });
+			});
+	},
+	
+	handlePlayerSelect: function(event) {		
+		console.log("selected" + event);
+		//window.location.hash = "#/draft/player/" + playerId;
+	},
+	
+	render: function() {
+		var players = this.state.players;
+		var opts = {};
+		
+		if(this.state.searchDisabled) {
+			opts['disabled'] = 'disabled';
+		}
+	
+		return (
+			<form className="navbar-form navbar-left" role="search">
+				<div className="form-group">
+					<input className="form-control" placeholder="Player Search" onInput={this.handleChange} list="players" {...opts}/>
+					<datalist onChange={this.handlePlayerSelect} id="players" ref="playersList">
+						{players.map(function(aPlayer, idx) {
+							return <option key={aPlayer.id} ref={"player" + idx} value={aPlayer.name}></option>;
+						}, this)}
+					</datalist>
+				</div>
+			</form>
+		);
+	}
+});
+
 var NavBar = React.createClass({
 	getInitialState: function() {
 		return { uploadModalIsOpen: false };
@@ -347,8 +408,11 @@ var NavBar = React.createClass({
 										isOpen={this.state.uploadModalIsOpen}
 										onRequestClose={this.closeUploadModal}>
 								<UploadForm navbar={this} />
-						    </ReactModal>								   
+						    </ReactModal>
 						</ul>
+						
+						<PlayerSearch />
+						
 						<ul className="nav navbar-nav navbar-right">
 							<img className="navbar-ad" src="http://placehold.it/728x90" alt="Leaderboard Ad" />											
 						</ul>

@@ -20,6 +20,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import com.cd.mythicdraft.dao.DraftDAO;
 import com.cd.mythicdraft.domain.RawCard;
@@ -69,6 +70,8 @@ public class DraftService {
 			uploadStatus.setDraftInvalid(true);
 		}
 
+		uploadStatus.setDraftInvalid(isDraftValid(aDraft));
+		
 		if(aDraft != null && !uploadStatus.isDraftInvalid()) {
 			try {
 				draftDao.addDraft(convertRawDraft(aDraft, name, wins, losses));
@@ -362,5 +365,39 @@ public class DraftService {
 		
 		return jsonPlayer;
 	}
-	
+
+	private boolean isDraftValid(RawDraft aDraft) {
+		if(aDraft.getPackSets().isEmpty() || 
+		   aDraft.getPackSets().size() < 3) {
+			return true;
+		}
+		
+		//Simplest way I could think of identifying an incomplete draft.
+		//If there aren't exactly 3 last picks, this file is bogus.
+		int lastPicks = 0;
+		Map<Integer, List<MutablePair<Integer, List<Integer>>>> pickMapList = aDraft.getPackToListOfPickToAvailablePicksMap();
+		
+		for(Map.Entry<Integer, List<MutablePair<Integer, List<Integer>>>> entry : pickMapList.entrySet()) {
+			List<MutablePair<Integer, List<Integer>>> listOfPackPicks = entry.getValue();
+			
+			if(listOfPackPicks == null || listOfPackPicks.contains(null)){
+				return true;
+			}			
+			
+			for(MutablePair<Integer, List<Integer>> packPicks : listOfPackPicks) {
+				List<Integer> available = packPicks.getRight();
+				
+				if(CollectionUtils.isEmpty(available)) {
+					lastPicks++;
+				}
+			}
+			
+		}
+		
+		if(lastPicks != 3) {
+			return true;
+		}
+		
+		return false;
+	}	
 }
