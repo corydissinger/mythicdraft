@@ -323,16 +323,13 @@ var PlayerSearch = React.createClass({
 		return { players: [], searchDisabled: false };
 	},
 	
-	componentDidUpdate: function(prevProps, prevState) {
-		if(this.state.players.length > 0){
-			React.findDOMNode(this.refs.player0).focus();
-		}
-	},
-	
 	handleChange: function(event) {
 		var searchString = event.target.value;
 	
-		if(!searchString || searchString.length < 3) {
+		//If search is disabled it's because we're waiting on an ajax response
+		if(this.state.searchDisabled) {
+			return;
+		}else if(!searchString || searchString.length < 3) {
 			this.setState({ players: [] });
 			return;
 		} else {
@@ -348,26 +345,46 @@ var PlayerSearch = React.createClass({
 			});
 	},
 	
-	handlePlayerSelect: function(event) {		
+	handleKeyPress: function(event) {		
 		console.log("selected" + event);
-		//window.location.hash = "#/draft/player/" + playerId;
+		
+		if(event.keyCode == 13) {
+			var playerId = 0;
+			var selectedPlayerName = React.findDOMNode(this.refs.playerInput).value;
+			var playersList = React.findDOMNode(this.refs.playersList).children;
+			
+			for(var i = 0; i < playersList.length; i++){
+				var playerNode = playersList[i];
+				
+				if(playerNode.value == selectedPlayerName){
+					playerId = playerNode.dataset.playerId;
+					break;
+				}
+			}
+			
+			window.location.hash = "#/draft/player/" + playerId;
+		}		
 	},
 	
 	render: function() {
 		var players = this.state.players;
-		var opts = {};
-		
-		if(this.state.searchDisabled) {
-			opts['disabled'] = 'disabled';
-		}
 	
 		return (
 			<form className="navbar-form navbar-left" role="search">
 				<div className="form-group">
-					<input className="form-control" placeholder="Player Search" onInput={this.handleChange} list="players" {...opts}/>
+					<input type="text" 
+						   className="form-control" 
+						   placeholder="Player Search" 
+						   onInput={this.handleChange} 
+						   onKeyDown={this.handleKeyPress}
+						   ref="playerInput"
+						   list="players" />
 					<datalist onChange={this.handlePlayerSelect} id="players" ref="playersList">
 						{players.map(function(aPlayer, idx) {
-							return <option key={aPlayer.id} ref={"player" + idx} value={aPlayer.name}></option>;
+							return <option key={aPlayer.id} 
+										   data-player-id={aPlayer.id}
+										   value={aPlayer.name}>
+								   </option>;
 						}, this)}
 					</datalist>
 				</div>
