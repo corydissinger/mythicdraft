@@ -234,52 +234,54 @@ var PlayerDrafts = React.createClass({
 		var winPercentage = this.state.data.winPercentage;
 		
 		return (
-			<div className="row">
-				<div className="col-xs-12 col-md-3">
-					<h2 className="text-info text-center">
-						{player.name}
-					</h2>
-					<div className="row well">
-						<div className="col-xs-8">
-							Total Drafts Uploaded
+			<div className="container-fluid">
+				<div className="row">
+					<div className="col-xs-12 col-md-3">
+						<h2 className="text-info text-center">
+							{player.name}
+						</h2>
+						<div className="row well">
+							<div className="col-xs-8">
+								Total Drafts Uploaded
+							</div>
+							<div className="col-xs-4">
+								{drafts.length}
+							</div>
 						</div>
-						<div className="col-xs-4">
-							{drafts.length}
-						</div>
-					</div>
-					<div className="row well">
-						<div className="col-xs-8">
-							Win Percentage
-						</div>
-						<div className="col-xs-4">
-							{winPercentage}
+						<div className="row well">
+							<div className="col-xs-8">
+								Win Percentage
+							</div>
+							<div className="col-xs-4">
+								{winPercentage}
+							</div>						
 						</div>						
-					</div>						
-				</div>
-				<div className="col-xs-12 col-md-9">
-					<table className="table table-hover">
-						<thead>
-							<tr>
-								<td>
-									Draft Name
-								</td>
-								<td>
-									Format
-								</td>
-								<td>
-									Wins
-								</td>
-								<td>
-									Losses
-								</td>						
-							</tr>				
-						</thead>
-						<tbody>
-							{drafts.map(function(draft) {
-								return <PlayerDraft data={draft} />;
-							})}
-						</tbody>
-					</table>							
+					</div>
+					<div className="col-xs-12 col-md-9">
+						<table className="table table-hover">
+							<thead>
+								<tr>
+									<td>
+										Draft Name
+									</td>
+									<td>
+										Format
+									</td>
+									<td>
+										Wins
+									</td>
+									<td>
+										Losses
+									</td>						
+								</tr>				
+							</thead>
+							<tbody>
+								{drafts.map(function(draft) {
+									return <PlayerDraft data={draft} />;
+								})}
+							</tbody>
+						</table>							
+					</div>
 				</div>
 			</div>
 		);
@@ -345,9 +347,7 @@ var PlayerSearch = React.createClass({
 			});
 	},
 	
-	handleKeyPress: function(event) {		
-		console.log("selected" + event);
-		
+	handleKeyPress: function(event) {				
 		if(event.keyCode == 13) {
 			var playerId = 0;
 			var selectedPlayerName = React.findDOMNode(this.refs.playerInput).value;
@@ -363,6 +363,7 @@ var PlayerSearch = React.createClass({
 			}
 			
 			window.location.hash = "#/draft/player/" + playerId;
+			event.preventDefault();			
 		}		
 	},
 	
@@ -407,16 +408,30 @@ var NavBar = React.createClass({
 		this.props.app.forceUpdate(nextDummyValue++);
 	},
 	
+	componentDidMount: function() {
+		bindNavbarToggle();
+	},
+	
 	render: function() {
 		return (
 			<nav className="navbar navbar-default">
 				<div className="container-fluid">
 					<div className="navbar-header">
 						<a className="navbar-brand" href="#">Mythic Draft</a>
+						<button type="button" 
+								className="navbar-toggle collapsed" 
+								data-toggle="collapse" 
+								data-target="#collapsable-navbar" 
+								aria-expanded="false">
+							<span className="sr-only">Toggle navigation</span>
+							<span className="icon-bar"></span>
+							<span className="icon-bar"></span>
+							<span className="icon-bar"></span>								
+						</button>
 					</div>
-					<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<div className="collapse navbar-collapse" id="collapsable-navbar">
 						<ul className="nav navbar-nav">
-							<li onClick={this.openUploadModal}>
+							<li onClick={this.openUploadModal} className="visible-md-block visible-lg-block">
 								<a href="#">
 									<span className="glyphicon glyphicon-upload"></span><span className="margin-left">Upload</span>
 								</a>
@@ -430,7 +445,7 @@ var NavBar = React.createClass({
 						
 						<PlayerSearch />
 						
-						<ul className="nav navbar-nav navbar-right">
+						<ul className="nav navbar-nav navbar-right visible-md-block visible-lg-block">
 							<img className="navbar-ad" src="http://placehold.it/728x90" alt="Leaderboard Ad" />											
 						</ul>
 					</div>									
@@ -491,12 +506,17 @@ var Draft = React.createClass({
 		var pick = this.state.data.pick;	
 		var isPickShown = this.state.isPickShown;
 		var available = this.state.data.available;
+		var pickNumber = this.state.pickNumber;
+		var packNumber = this.state.currentPack;
+		var packs = this.state.packs;
 		
 		return (
 			<div className="container-fluid">
 				<DraftControls draft={this} />
+				<h1>Pack {Number(packNumber) + 1} Pick {Number(pickNumber) + 1}</h1>
 				<CardRow ref="cardRow" cards={available} pick={pick} isPickShown={isPickShown} />
-				<AllPicks draftId={this.props.params.draftId} />
+				<h1>All Player Picks</h1>
+				<AllPlayerPicks pickNumber={pickNumber} packNumber={packNumber} draftId={this.props.params.draftId} packs={packs} />
 			</div>
 		);
 	}
@@ -582,10 +602,10 @@ var CardRow = React.createClass({
 				{cards.map(function(aCard) {
 					
 					return <div className={counter++ % 5 == 0 ? "col-md-offset-1 col-md-2 col-sm-3 col-xs-4" : "col-md-2 col-sm-3 col-xs-4"}>
-						       <Card data={aCard} 
-									  key={aCard.id} 
-									  isPick={aCard.id == pick ? true : false} 
-									  isPickShown={isPickShown} />
+						       <Card multiverseId={aCard.multiverseId} 
+									 key={aCard.id} 
+									 isPick={aCard.id == pick ? true : false} 
+									 isPickShown={isPickShown} />
 							</div>;
 				})}				
 			</div>			
@@ -609,14 +629,14 @@ var Card = React.createClass({
 	
 		return (
 			<img className={classString}
-				 src={"http://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" + this.props.data.multiverseId} />
+				 src={"http://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" + this.props.multiverseId} />
 		);
 	}
 });
 
-var AllPicks = React.createClass({
+var AllPlayerPicks = React.createClass({
 	getInitialState: function() {
-		return { allCards: [] };
+		return { allCards: [] , picksInOrder: []};
 	},
 
 	componentDidMount: function() {
@@ -625,20 +645,30 @@ var AllPicks = React.createClass({
 		
 		request.get('/draft/' + draftId + '/all')
 			.end(function(err, resp) {							
-				comp.setState({allCards: resp.body.allCards});
+				comp.setState({allCards: resp.body.allCards, picksInOrder: resp.body.picksInOrder});
 			});		
 	},
 
 	render: function() {
+		var pickIdsInOrder = this.state.picksInOrder;
 		var cardIds = this.state.allCards;
-	
+		var packNumber = this.props.packNumber;
+		var pickNumber = this.props.pickNumber;
+		
 		return (
-			<div>
+			<div className="row">
+				{pickIdsInOrder.map(function(aCardId, index) {
+					return  <div className="col-md-1 col-xs-3">
+								<Card multiverseId={aCardId} 
+									  key={aCardId + index} />
+							</div>;
+				})}
+				
 				<div className="hidden">		
 					{cardIds.map(function(aCardId) {
 						return <img src={"http://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" + aCardId} />;
 					})}
-				</div>
+				</div>				
 			</div>
 		);
 	}

@@ -54,6 +54,7 @@
 	<c:choose>
 		<c:when test="${development}">
 			<script type="text/jsx" src="resources/js/mythicdraft.js"></script>
+			<script src="resources/js/bootstrap-toggle-shim.js"></script>
 		</c:when>
 		<c:otherwise>
 			<script src="resources/js/app.js"></script>		

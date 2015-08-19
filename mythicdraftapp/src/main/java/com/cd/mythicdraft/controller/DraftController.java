@@ -46,7 +46,7 @@ public class DraftController {
 	
 	@RequestMapping(value = "/draft/{draftId}/all",
 					method = RequestMethod.GET)	
-	public @ResponseBody JsonAllPicks getPackByIdAndPick(@PathVariable final Integer draftId) {
+	public @ResponseBody JsonAllPicks getAllPicks(@PathVariable final Integer draftId) {
 
 		return draftService.getAllPicks(draftId);
 	}
