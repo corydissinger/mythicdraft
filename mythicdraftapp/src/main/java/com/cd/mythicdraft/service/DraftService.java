@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -24,6 +26,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.cd.mythicdraft.dao.DraftDAO;
 import com.cd.mythicdraft.domain.RawCard;
+import com.cd.mythicdraft.domain.RawDeck;
 import com.cd.mythicdraft.domain.RawDraft;
 import com.cd.mythicdraft.exception.DuplicateDraftException;
 import com.cd.mythicdraft.json.JsonAllPicks;
@@ -35,6 +38,8 @@ import com.cd.mythicdraft.json.JsonPlayer;
 import com.cd.mythicdraft.json.JsonPlayerStats;
 import com.cd.mythicdraft.json.JsonUploadStatus;
 import com.cd.mythicdraft.model.Card;
+import com.cd.mythicdraft.model.Deck;
+import com.cd.mythicdraft.model.DeckCard;
 import com.cd.mythicdraft.model.Draft;
 import com.cd.mythicdraft.model.DraftPack;
 import com.cd.mythicdraft.model.DraftPackAvailablePick;
@@ -45,6 +50,8 @@ import com.cd.mythicdraft.model.Set;
 
 @Service(value = "draftService")
 public class DraftService {
+
+	private static final Logger logger = Logger.getLogger(DraftService.class);	
 	
 	private DraftDAO draftDao;
 
@@ -55,6 +62,9 @@ public class DraftService {
 
     @Autowired
 	private MtgoDraftParserService mtgoDraftParserService;
+    
+    @Autowired
+	private MtgoDeckParserService mtgoDeckParserService;    
 	
 	@Transactional
 	public JsonUploadStatus addDraft(final InputStream mtgoDraftStream, 
@@ -70,15 +80,19 @@ public class DraftService {
 			uploadStatus.setDraftInvalid(true);
 		}
 
-		uploadStatus.setDraftInvalid(isDraftValid(aDraft));
+		uploadStatus.setDraftInvalid(isDraftInvalid(aDraft));
+		
+		Draft theDraft = convertRawDraft(aDraft, name, wins, losses);
 		
 		if(aDraft != null && !uploadStatus.isDraftInvalid()) {
 			try {
-				draftDao.addDraft(convertRawDraft(aDraft, name, wins, losses));
+				draftDao.addDraft(theDraft);
 			} catch (DuplicateDraftException e) {
 				uploadStatus.setDraftDuplicate(true);
 			}	
 		}
+		
+		uploadStatus.setDraftId(theDraft.getId());
 		
 		return uploadStatus;
 	}
@@ -181,6 +195,69 @@ public class DraftService {
 				.stream()
 				.map(this::getJsonPlayerFromPlayer)
 				.collect(Collectors.toList());
+	}
+
+	public boolean addDeck(int draftId, InputStream deck) {
+		final Draft draft = draftDao.getDraftById(draftId);
+		
+		RawDeck rawDeck;
+		
+		try {
+			rawDeck = mtgoDeckParserService.parse(deck);
+		} catch (IOException e) {
+			logger.error(e.getMessage());
+			return false;
+		}
+		
+		try {
+			Map<Integer, Card> tempIdToCardMap = draftDao.getTempCardIdToCardMap(rawDeck.getCardNameToTempIdMap());
+			
+			if(isDeckInvalid(draftId, tempIdToCardMap)) {
+				return true;
+			}
+			
+			draftDao.addDeck(convertRawDeck(rawDeck, draft, tempIdToCardMap));
+		} catch(DuplicateDraftException e) {
+			return true;
+		}
+		
+		return false;
+	}		
+	
+	private Deck convertRawDeck(final RawDeck rawDeck, final Draft draft, final Map<Integer, Card> tempCardIdToCardMap) {
+		Deck deck = new Deck();
+		
+		for(DeckCard aDeckCard : createDeckCards(rawDeck.getListOfMainDeckCards(), true, tempCardIdToCardMap)) {
+			deck.addDeckCard(aDeckCard);
+		}
+		
+		for(DeckCard aDeckCard : createDeckCards(rawDeck.getListOfSideBoardCards(), false, tempCardIdToCardMap)) {
+			deck.addDeckCard(aDeckCard);
+		}
+		
+		deck.setDraft(draft);
+		deck.setDraftId(draft.getId());
+		
+		return deck;
+	}
+
+	private List<DeckCard> createDeckCards(final List<MutablePair<Integer, Integer>> listOfCards, 
+										   final boolean isMainDeck, 
+										   final Map<Integer, Card> tempCardIdToCardMap) {
+		
+		List<DeckCard> deckCards = new ArrayList<DeckCard>(listOfCards.size());
+		
+		for(MutablePair<Integer, Integer> cardIdToCardCount : listOfCards) {
+			DeckCard deckCard = new DeckCard();
+			Card card = tempCardIdToCardMap.get(cardIdToCardCount.getLeft());
+			
+			deckCard.setIsMainDeck(isMainDeck);
+			deckCard.setCard(card);
+			deckCard.setCardId(card.getId());
+			deckCard.setCount(cardIdToCardCount.getRight());
+		}
+		
+		return deckCards;
 	}
 
 	private Draft convertRawDraft(RawDraft aRawDraft, String name, Integer wins, Integer losses) {
@@ -366,7 +443,7 @@ public class DraftService {
 		return jsonPlayer;
 	}
 
-	private boolean isDraftValid(RawDraft aDraft) {
+	private boolean isDraftInvalid(RawDraft aDraft) {
 		if(aDraft.getPackSets().isEmpty() || 
 		   aDraft.getPackSets().size() < 3) {
 			return true;
@@ -399,5 +476,18 @@ public class DraftService {
 		}
 		
 		return false;
-	}	
+	}
+
+	private boolean isDeckInvalid(Integer draftId, Map<Integer, Card> tempIdToCardMap) {
+		final List<Integer> allDraftPicks = draftDao.getDistinctMultiverseIdsForDraft(draftId);
+		final Collection<Card> distinctDeckCards = tempIdToCardMap.values();
+		
+		for(Card deckCard : distinctDeckCards) {
+			if(!allDraftPicks.contains(deckCard.getId())) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }

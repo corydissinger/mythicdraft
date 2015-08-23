@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.cd.mythicdraft.exception.DuplicateDraftException;
 import com.cd.mythicdraft.model.Card;
+import com.cd.mythicdraft.model.Deck;
 import com.cd.mythicdraft.model.Draft;
 import com.cd.mythicdraft.model.DraftPackPick;
 import com.cd.mythicdraft.model.Player;
@@ -44,4 +45,8 @@ public interface DraftDAO {
 	public Collection<Player> getPlayersSearch(final String searchString);
 	
 	public Player getPlayerById(final Integer playerId);
+
+	public void addDeck(Deck convertRawDeck) throws DuplicateDraftException;
+
+	public Map<Integer, Card> getTempCardIdToCardMap(Map<String, Integer> cardNameToTempIdMap);
 }

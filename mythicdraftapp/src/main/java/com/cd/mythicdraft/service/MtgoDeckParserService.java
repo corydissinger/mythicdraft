@@ -45,7 +45,7 @@ public class MtgoDeckParserService {
 			for(int i = 1; i < lineParts.length; i++) {
 				cardNameBuilder.append(lineParts[i]);
 				
-				if(i - 1 != lineParts.length) {
+				if(i + 1 != lineParts.length) {
 					cardNameBuilder.append(" ");
 				}
 			}

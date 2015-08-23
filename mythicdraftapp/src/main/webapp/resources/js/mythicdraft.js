@@ -27,9 +27,11 @@ var UploadForm = React.createClass({
 		comp.setState({isSubmitDisabled: true});
 		
 		var draftFile = e.target[0].files[0];
+		var deckFile = e.target[1].files[0];
 			
 		request.post('/upload')
 			.attach('file', draftFile, draftFile.name)		
+			.attach('deck', deckFile, deckFile.name)
 			.field('name', this.refs.draftName.getDOMNode().value)
 			.field('wins', this.refs.draftWins.getDOMNode().value)
 			.field('losses', this.refs.draftLosses.getDOMNode().value)
@@ -39,20 +41,23 @@ var UploadForm = React.createClass({
 				} else {
 					comp.setState({isSubmitDisabled: false,
 								   isDraftDuplicate: resp.body.draftDuplicate,
-								   isDraftInvalid: resp.body.draftInvalid});
+								   isDraftInvalid: resp.body.draftInvalid,
+								   isDeckInvalid: resp.body.deckInvalid});
 				}				
 			});		
 	},
 
 	render: function(){
-		var hasError = this.state.isDraftInvalid || this.state.isDraftDuplicate;
+		var hasError = this.state.isDraftInvalid || this.state.isDraftDuplicate || this.state.isDeckInvalid;
 		var errorText = '';
 		
 		if(hasError) {
 			if(this.state.isDraftDuplicate) {
 				errorText = 'You have already uploaded this draft.';
-			} else {
+			} else  if(this.state.isDraftInvalid) {
 				errorText = 'The file uploaded is not a valid MTGO draft log.';
+			} else {
+				errorText = 'The deck file uploaded contains cards not drafted, or is not a valid MTGO deck file in text form.';
 			}
 		}
 	
@@ -71,6 +76,12 @@ var UploadForm = React.createClass({
 							<label htmlFor="file">Draft to Upload</label>
 							<input type="file" name="file" ref="draftFile" required></input>
 							<p className="help-block">This file should be the MTGO draft log.</p>
+						</div>
+
+						<div className={hasError ? "form-group has-error" : "form-group"}>
+							<label htmlFor="deck">Deck to Upload</label>
+							<input type="file" name="deck" ref="deckFile" required></input>
+							<p className="help-block">This file should be the deck exported in text from the MTGO freeform log.</p>
 						</div>
 						
 						<div className="form-group">

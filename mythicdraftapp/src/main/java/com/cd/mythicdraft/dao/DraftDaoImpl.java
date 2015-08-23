@@ -10,7 +10,6 @@ import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
@@ -22,6 +21,8 @@ import org.springframework.util.CollectionUtils;
 
 import com.cd.mythicdraft.exception.DuplicateDraftException;
 import com.cd.mythicdraft.model.Card;
+import com.cd.mythicdraft.model.Deck;
+import com.cd.mythicdraft.model.DeckCard;
 import com.cd.mythicdraft.model.Draft;
 import com.cd.mythicdraft.model.DraftPack;
 import com.cd.mythicdraft.model.DraftPackPick;
@@ -148,7 +149,7 @@ public class DraftDaoImpl extends AbstractDAO implements DraftDAO {
 
 		setCodes.addAll(cardNameToCardSetCode.values());		
 		
-		Criteria crit = getCurrentSession().createCriteria(Card.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);;
+		Criteria crit = getCurrentSession().createCriteria(Card.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		
 		crit.add(Restrictions.in("cardName", cardNameToCardSetCode.keySet()));
 		
@@ -337,6 +338,39 @@ public class DraftDaoImpl extends AbstractDAO implements DraftDAO {
 		final Player player = (Player)crit.uniqueResult(); 
 		
 		return player;
+	}
+
+	@Override
+	@Transactional
+	public void addDeck(Deck deck) throws DuplicateDraftException {
+		Session session = getCurrentSession();
+		
+		session.persist(deck);
+		
+		for(DeckCard deckCard : deck.getDeckCards()) {
+			session.persist(deckCard);
+		}
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Map<Integer, Card> getTempCardIdToCardMap(Map<String, Integer> cardNameToTempIdMap) {
+		Map<Integer, Card> cardNameToCardMap = new HashMap<Integer, Card>(cardNameToTempIdMap.size());
+		List<String> cardList = new ArrayList<String>();
+		cardList.addAll(cardNameToTempIdMap.keySet());
+		
+		Query query = getCurrentSession().createSQLQuery("SELECT DISTINCT C.ID, C.NAME, C.SET_ID "
+				 									   + "FROM CARD C "
+				 									   + "WHERE C.NAME IN (:cardList)").addEntity(Card.class)
+				 									   					        	   .setParameterList("cardList", cardList);
+
+		final List<Card> results = query.list();
+		
+		for(Card result : results) {
+			cardNameToCardMap.put(cardNameToTempIdMap.get(result.getCardName()), result);
+		}
+		
+		return cardNameToCardMap;
 	}	
 	
 }

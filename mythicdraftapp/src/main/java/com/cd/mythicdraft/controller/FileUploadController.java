@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,10 +25,12 @@ public class FileUploadController {
 	private DraftService draftService;
 	
 	@RequestMapping(method=RequestMethod.POST)
+	@Transactional
 	public @ResponseBody JsonUploadStatus processUpload(@RequestParam String name,
 										  				@RequestParam Integer wins,
 									  					@RequestParam Integer losses,
-									  					@RequestParam MultipartFile file) {
+									  					@RequestParam MultipartFile file,
+									  					@RequestParam MultipartFile deck) {
 		JsonUploadStatus uploadStatus = new JsonUploadStatus();
 		
 		//Draft logs should be text and should not be huge
@@ -36,16 +39,44 @@ public class FileUploadController {
 			return uploadStatus;
 		}
 		
+		if(deck != null && (!"text/plain".equals(deck.getContentType()) || 5000 < deck.getSize())) {
+			uploadStatus.setDeckInvalid(true);
+			return uploadStatus;
+		}
+		
 		try {
 			uploadStatus = draftService.addDraft(file.getInputStream(), 
 								  			     name,
 								  			     wins,
 								  			     losses);
+			
+			if(deck != null) {
+				uploadStatus.setDeckInvalid(draftService.addDeck(uploadStatus.getDraftId(), deck.getInputStream()));
+			}
+			
 		} catch (IOException e) {
 			uploadStatus.setDraftInvalid(true);
 		}
 		
 		return uploadStatus;
 	}
-	
+
+	@RequestMapping(value = "/deck", method = RequestMethod.POST)
+	public @ResponseBody JsonUploadStatus processUploadDeck(@RequestParam Integer draftId,
+															@RequestParam MultipartFile deck) {
+		JsonUploadStatus uploadStatus = new JsonUploadStatus();
+
+		if(deck != null && (!"text/plain".equals(deck.getContentType()) || 5000 < deck.getSize())) {
+			uploadStatus.setDeckInvalid(true);
+			return uploadStatus;
+		}
+		
+		try {
+			uploadStatus.setDeckInvalid(draftService.addDeck(draftId, deck.getInputStream()));
+		} catch (IOException e) {
+			uploadStatus.setDeckInvalid(true);
+		}
+		
+		return uploadStatus;
+	}
 }
