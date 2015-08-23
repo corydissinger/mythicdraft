@@ -354,17 +354,22 @@ public class DraftDaoImpl extends AbstractDAO implements DraftDAO {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Map<Integer, Card> getTempCardIdToCardMap(Map<String, Integer> cardNameToTempIdMap) {
+	public Map<Integer, Card> getTempCardIdToCardMap(Map<String, Integer> cardNameToTempIdMap, Collection<String> setCodes) {
 		Map<Integer, Card> cardNameToCardMap = new HashMap<Integer, Card>(cardNameToTempIdMap.size());
 		List<String> cardList = new ArrayList<String>();
 		cardList.addAll(cardNameToTempIdMap.keySet());
-		
-		Query query = getCurrentSession().createSQLQuery("SELECT DISTINCT C.ID, C.NAME, C.SET_ID "
-				 									   + "FROM CARD C "
-				 									   + "WHERE C.NAME IN (:cardList)").addEntity(Card.class)
-				 									   					        	   .setParameterList("cardList", cardList);
 
-		final List<Card> results = query.list();
+		List<Set> sets = getSetsByName(setCodes);
+		
+		Criteria crit = getCurrentSession().createCriteria(Card.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		
+		crit.add(Restrictions.in("cardName", cardList));
+		
+		if(null == sets.get(0).isPromo() || !sets.get(0).isPromo()) {
+			crit.add(Restrictions.in("set", sets));
+		}
+
+		final List<Card> results = crit.list();
 		
 		for(Card result : results) {
 			cardNameToCardMap.put(cardNameToTempIdMap.get(result.getCardName()), result);

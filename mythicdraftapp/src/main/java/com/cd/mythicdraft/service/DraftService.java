@@ -200,7 +200,12 @@ public class DraftService {
 	public boolean addDeck(int draftId, InputStream deck) {
 		final Draft draft = draftDao.getDraftById(draftId);
 		
+		final List<String> setCodes = new ArrayList<String>(3);
 		RawDeck rawDeck;
+		
+		for(DraftPack aPack : draft.getDraftPacks()) {
+			setCodes.add(aPack.getSet().getName());
+		}
 		
 		try {
 			rawDeck = mtgoDeckParserService.parse(deck);
@@ -210,7 +215,7 @@ public class DraftService {
 		}
 		
 		try {
-			Map<Integer, Card> tempIdToCardMap = draftDao.getTempCardIdToCardMap(rawDeck.getCardNameToTempIdMap());
+			Map<Integer, Card> tempIdToCardMap = draftDao.getTempCardIdToCardMap(rawDeck.getCardNameToTempIdMap(), setCodes);
 			
 			if(isDeckInvalid(draftId, tempIdToCardMap)) {
 				return true;
@@ -255,6 +260,8 @@ public class DraftService {
 			deckCard.setCard(card);
 			deckCard.setCardId(card.getId());
 			deckCard.setCount(cardIdToCardCount.getRight());
+			
+			deckCards.add(deckCard);
 		}
 		
 		return deckCards;
