@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cd.mythicdraft.json.JsonAllPicks;
+import com.cd.mythicdraft.json.JsonDeck;
 import com.cd.mythicdraft.json.JsonDraft;
 import com.cd.mythicdraft.json.JsonPackPick;
 import com.cd.mythicdraft.json.JsonPlayer;
@@ -60,6 +61,11 @@ public class DraftController {
 	public @ResponseBody List<JsonPlayer> getPlayersSearch(@RequestParam("name") final String name) {
 		return draftService.getPlayersSearch(name);
 	}	
+	
+	@RequestMapping(value = "/draft/{draftId}/deck")
+	public @ResponseBody JsonDeck getDeckByDraftId(@PathVariable final Integer draftId) {
+		return draftService.getDeckByDraftId(draftId);
+	}
 }
 
 

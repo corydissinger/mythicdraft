@@ -376,6 +376,18 @@ public class DraftDaoImpl extends AbstractDAO implements DraftDAO {
 		}
 		
 		return cardNameToCardMap;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Deck getDeckByDraftId(Integer draftId) {
+		Criteria crit = getCurrentSession().createCriteria(Deck.class);
+		
+		crit.add(Restrictions.eq("draftId", draftId));
+		
+		final Deck deck = (Deck) crit.uniqueResult();
+		
+		return deck;
 	}	
 	
 }

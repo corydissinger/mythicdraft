@@ -31,6 +31,7 @@ import com.cd.mythicdraft.domain.RawDraft;
 import com.cd.mythicdraft.exception.DuplicateDraftException;
 import com.cd.mythicdraft.json.JsonAllPicks;
 import com.cd.mythicdraft.json.JsonCard;
+import com.cd.mythicdraft.json.JsonDeck;
 import com.cd.mythicdraft.json.JsonDraft;
 import com.cd.mythicdraft.json.JsonPack;
 import com.cd.mythicdraft.json.JsonPackPick;
@@ -228,6 +229,36 @@ public class DraftService {
 		
 		return false;
 	}		
+	
+	public JsonDeck getDeckByDraftId(Integer draftId) {
+		final JsonDeck deck = new JsonDeck();
+		final List<JsonCard> mainDeckCards = new ArrayList<JsonCard>();
+		final List<JsonCard> sideBoardCards = new ArrayList<JsonCard>();
+		int uniqueCardCount = 0;
+		
+		Deck theDeck = draftDao.getDeckByDraftId(draftId);
+		
+		for(DeckCard aCard : theDeck.getDeckCards()) {
+			final Integer multiverseId = aCard.getCardId();
+			final String id = multiverseId + "_" + uniqueCardCount++;
+			
+			final JsonCard jsonCard = new JsonCard();
+			
+			jsonCard.setId(id);
+			jsonCard.setMultiverseId(multiverseId);
+			
+			if(aCard.getIsMainDeck()) {
+				mainDeckCards.add(jsonCard);
+			} else {
+				sideBoardCards.add(jsonCard);
+			}
+		}
+		
+		deck.setMainDeckCards(mainDeckCards);
+		deck.setSideBoardCards(sideBoardCards);
+		
+		return deck;
+	}	
 	
 	private Deck convertRawDeck(final RawDeck rawDeck, final Draft draft, final Map<Integer, Card> tempCardIdToCardMap) {
 		Deck deck = new Deck();
@@ -497,4 +528,6 @@ public class DraftService {
 		
 		return false;
 	}
+
+
 }
