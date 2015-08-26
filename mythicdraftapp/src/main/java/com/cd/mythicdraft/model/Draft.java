@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -62,6 +63,9 @@ public class Draft implements Serializable {
 	@Fetch(FetchMode.JOIN)
 	@OrderBy("sequenceId ASC")
 	private java.util.Set<DraftPack> draftPacks;
+	
+	@OneToOne(mappedBy = "draft", optional = true)
+	private Deck deck;
 	
 	public Integer getId() {
 		return id;
@@ -148,5 +152,13 @@ public class Draft implements Serializable {
 	@Override
 	public String toString() {
 		return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}
+
+	public Deck getDeck() {
+		return deck;
+	}
+
+	public void setDeck(Deck deck) {
+		this.deck = deck;
 	}	
 }

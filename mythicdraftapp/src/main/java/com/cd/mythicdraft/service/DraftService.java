@@ -98,9 +98,16 @@ public class DraftService {
 		return uploadStatus;
 	}
 
+	@Transactional(readOnly = true)
 	public JsonDraft getDraftById(final Integer draftId) {
 		final Draft draft = draftDao.getDraftById(draftId);
 		final JsonDraft jsonDraft = getJsonDraftFromDraft(draft);
+		
+		final Deck deck = draft.getDeck();
+		
+		if(deck != null) {
+			jsonDraft.setDeckId(deck.getId());			
+		} 
 		
 		return jsonDraft;
 	}
@@ -198,7 +205,7 @@ public class DraftService {
 				.collect(Collectors.toList());
 	}
 
-	public boolean addDeck(int draftId, InputStream deck) {
+	public Integer addDeck(int draftId, InputStream deck) {
 		final Draft draft = draftDao.getDraftById(draftId);
 		
 		final List<String> setCodes = new ArrayList<String>(3);
@@ -212,31 +219,30 @@ public class DraftService {
 			rawDeck = mtgoDeckParserService.parse(deck);
 		} catch (IOException e) {
 			logger.error(e.getMessage());
-			return false;
+			return 0;
 		}
 		
 		try {
 			Map<Integer, Card> tempIdToCardMap = draftDao.getTempCardIdToCardMap(rawDeck.getCardNameToTempIdMap(), setCodes);
 			
 			if(isDeckInvalid(draftId, tempIdToCardMap)) {
-				return true;
+				return 0;
 			}
 			
-			draftDao.addDeck(convertRawDeck(rawDeck, draft, tempIdToCardMap));
+			return draftDao.addDeck(convertRawDeck(rawDeck, draft, tempIdToCardMap));
 		} catch(DuplicateDraftException e) {
-			return true;
+			return 0;
 		}
-		
-		return false;
 	}		
 	
-	public JsonDeck getDeckByDraftId(Integer draftId) {
+	@Transactional(readOnly = true)
+	public JsonDeck getDeckById(Integer deckId) {
 		final JsonDeck deck = new JsonDeck();
 		final List<JsonCard> mainDeckCards = new ArrayList<JsonCard>();
 		final List<JsonCard> sideBoardCards = new ArrayList<JsonCard>();
 		int uniqueCardCount = 0;
 		
-		Deck theDeck = draftDao.getDeckByDraftId(draftId);
+		Deck theDeck = draftDao.getDeckById(deckId);
 		
 		for(DeckCard aCard : theDeck.getDeckCards()) {
 			final Integer multiverseId = aCard.getCardId();
@@ -256,6 +262,7 @@ public class DraftService {
 		
 		deck.setMainDeckCards(mainDeckCards);
 		deck.setSideBoardCards(sideBoardCards);
+		deck.setDraftId(theDeck.getDraftId());
 		
 		return deck;
 	}	
@@ -468,6 +475,12 @@ public class DraftService {
 		}
 		
 		jsonDraft.setPacks(jsonPacks);
+		
+		final Deck deck = draft.getDeck();
+		
+		if(deck != null) {
+			jsonDraft.setDeckId(deck.getId());
+		}
 		
 		return jsonDraft;
 	}	

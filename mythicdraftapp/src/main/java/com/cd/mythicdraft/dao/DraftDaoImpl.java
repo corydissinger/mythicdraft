@@ -318,12 +318,12 @@ public class DraftDaoImpl extends AbstractDAO implements DraftDAO {
 	@Override
 	@Transactional(readOnly = true)		
 	public Collection<Player> getPlayersSearch(String searchString) {
-		Criteria criteria = getCurrentSession().createCriteria(Player.class)
-											   .add(Restrictions.like("name", searchString, MatchMode.START))
-											   .setMaxResults(20)
-											   .addOrder(Order.asc("name"));
-		
-		List<Player> players = criteria.list();
+		Query query = getCurrentSession().createSQLQuery("SELECT * FROM Player WHERE UPPER(NAME) LIKE UPPER(:searchString) ORDER BY NAME ASC")
+				 							 .addEntity(Player.class)
+				 						     .setString("searchString", searchString + "%")
+				 						     .setMaxResults(20);		
+				
+		List<Player> players = query.list();
 		
 		return players;
 	}	
@@ -342,7 +342,7 @@ public class DraftDaoImpl extends AbstractDAO implements DraftDAO {
 
 	@Override
 	@Transactional
-	public void addDeck(Deck deck) throws DuplicateDraftException {
+	public Integer addDeck(Deck deck) throws DuplicateDraftException {
 		Session session = getCurrentSession();
 		
 		session.persist(deck);
@@ -350,6 +350,8 @@ public class DraftDaoImpl extends AbstractDAO implements DraftDAO {
 		for(DeckCard deckCard : deck.getDeckCards()) {
 			session.persist(deckCard);
 		}
+		
+		return deck.getId();
 	}
 
 	@Override
@@ -380,10 +382,10 @@ public class DraftDaoImpl extends AbstractDAO implements DraftDAO {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Deck getDeckByDraftId(Integer draftId) {
+	public Deck getDeckById(Integer deckId) {
 		Criteria crit = getCurrentSession().createCriteria(Deck.class);
 		
-		crit.add(Restrictions.eq("draftId", draftId));
+		crit.add(Restrictions.eq("id", deckId));
 		
 		final Deck deck = (Deck) crit.uniqueResult();
 		

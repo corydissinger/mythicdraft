@@ -11,8 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
@@ -34,12 +34,11 @@ public class Deck implements Serializable {
 			updatable = false)
 	private Integer draftId;	
 	
-	@ManyToOne(optional = false)
+	@OneToOne(optional = false)
 	@JoinColumn(name = "DRAFT_ID")
 	private Draft draft;
 
 	@OneToMany(mappedBy = "deck", fetch = FetchType.LAZY)
-	@Fetch(FetchMode.JOIN)
 	private Set<DeckCard> deckCards;	
 	
 	public void addDeckCard(DeckCard deckCard) {

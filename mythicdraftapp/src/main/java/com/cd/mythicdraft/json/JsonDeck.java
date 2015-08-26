@@ -9,6 +9,7 @@ public class JsonDeck implements Serializable {
 	
 	private List<JsonCard> mainDeckCards;
 	private List<JsonCard> sideBoardCards;
+	private Integer draftId;
 	
 	public List<JsonCard> getMainDeckCards() {
 		return mainDeckCards;
@@ -21,5 +22,11 @@ public class JsonDeck implements Serializable {
 	}
 	public void setSideBoardCards(List<JsonCard> sideBoardCards) {
 		this.sideBoardCards = sideBoardCards;
+	}
+	public Integer getDraftId() {
+		return draftId;
+	}
+	public void setDraftId(Integer draftId) {
+		this.draftId = draftId;
 	}
 }

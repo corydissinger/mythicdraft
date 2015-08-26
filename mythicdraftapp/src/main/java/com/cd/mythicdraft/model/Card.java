@@ -25,6 +25,15 @@ public class Card implements Serializable {
 	@Column(name = "NAME")
 	private String cardName;
 	
+	@Column(name = "CMC")
+	private Integer cmc;
+	
+	@Column(name = "IS_CREATURE")
+	private Boolean isCreature;
+	
+	@Column(name = "IS_NON_CREATURE")
+	private Boolean isNonCreature;
+	
 	@Column(name = "SET_ID",
 			insertable = false,
 			updatable = false)
@@ -69,5 +78,29 @@ public class Card implements Serializable {
 	@Override
 	public String toString() {
 		return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}
+
+	public Integer getCmc() {
+		return cmc;
+	}
+
+	public void setCmc(Integer cmc) {
+		this.cmc = cmc;
+	}
+
+	public Boolean getIsCreature() {
+		return isCreature;
+	}
+
+	public void setIsCreature(Boolean isCreature) {
+		this.isCreature = isCreature;
+	}
+
+	public Boolean getIsNonCreature() {
+		return isNonCreature;
+	}
+
+	public void setIsNonCreature(Boolean isNonCreature) {
+		this.isNonCreature = isNonCreature;
 	}
 }

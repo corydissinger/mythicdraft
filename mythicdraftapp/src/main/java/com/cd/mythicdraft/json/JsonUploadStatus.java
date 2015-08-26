@@ -10,6 +10,7 @@ public class JsonUploadStatus implements Serializable {
 	private boolean isDraftInvalid = false;
 	private boolean isDeckInvalid = false;
 	private int draftId = 0;
+	private int deckId = 0;
 	
 	public boolean isDraftDuplicate() {
 		return isDraftDuplicate;
@@ -34,5 +35,11 @@ public class JsonUploadStatus implements Serializable {
 	}
 	public void setDraftId(int draftId) {
 		this.draftId = draftId;
+	}
+	public int getDeckId() {
+		return deckId;
+	}
+	public void setDeckId(int deckId) {
+		this.deckId = deckId;
 	}
 }

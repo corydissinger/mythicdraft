@@ -62,9 +62,9 @@ public class DraftController {
 		return draftService.getPlayersSearch(name);
 	}	
 	
-	@RequestMapping(value = "/draft/{draftId}/deck")
-	public @ResponseBody JsonDeck getDeckByDraftId(@PathVariable final Integer draftId) {
-		return draftService.getDeckByDraftId(draftId);
+	@RequestMapping(value = "/draft/{deckId}/deck")
+	public @ResponseBody JsonDeck getDeckById(@PathVariable final Integer deckId) {
+		return draftService.getDeckById(deckId);
 	}
 }
 

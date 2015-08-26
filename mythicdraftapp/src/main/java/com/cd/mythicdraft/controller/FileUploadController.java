@@ -30,7 +30,7 @@ public class FileUploadController {
 										  				@RequestParam Integer wins,
 									  					@RequestParam Integer losses,
 									  					@RequestParam MultipartFile file,
-									  					@RequestParam MultipartFile deck) {
+									  					@RequestParam(required = false) MultipartFile deck) {
 		JsonUploadStatus uploadStatus = new JsonUploadStatus();
 		
 		//Draft logs should be text and should not be huge
@@ -51,7 +51,15 @@ public class FileUploadController {
 								  			     losses);
 			
 			if(deck != null) {
-				uploadStatus.setDeckInvalid(draftService.addDeck(uploadStatus.getDraftId(), deck.getInputStream()));
+				final Integer deckId = draftService.addDeck(uploadStatus.getDraftId(), deck.getInputStream());
+				
+				if(deckId != null && !deckId.equals(0)) {
+					uploadStatus.setDeckInvalid(false);
+					uploadStatus.setDeckId(deckId);
+				} else {
+					uploadStatus.setDeckInvalid(true);
+				}
+				
 			}
 			
 		} catch (IOException e) {
@@ -72,7 +80,13 @@ public class FileUploadController {
 		}
 		
 		try {
-			uploadStatus.setDeckInvalid(draftService.addDeck(draftId, deck.getInputStream()));
+			final Integer deckId = draftService.addDeck(draftId, deck.getInputStream());
+					
+			if(deckId != null && !deckId.equals(0)) {
+				uploadStatus.setDeckId(deckId);	
+			} else {
+				uploadStatus.setDeckInvalid(true);
+			}			
 		} catch (IOException e) {
 			uploadStatus.setDeckInvalid(true);
 		}

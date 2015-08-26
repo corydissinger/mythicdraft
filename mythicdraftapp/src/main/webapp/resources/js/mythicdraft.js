@@ -25,26 +25,30 @@ var UploadForm = React.createClass({
 		var comp = this;		
 
 		comp.setState({isSubmitDisabled: true});
-		
+				
 		var draftFile = e.target[0].files[0];
 		var deckFile = e.target[1].files[0];
 			
-		request.post('/upload')
-			.attach('file', draftFile, draftFile.name)		
-			.attach('deck', deckFile, deckFile.name)
-			.field('name', this.refs.draftName.getDOMNode().value)
-			.field('wins', this.refs.draftWins.getDOMNode().value)
-			.field('losses', this.refs.draftLosses.getDOMNode().value)
-			.end(function(err, resp) {
-				if(!resp.body.draftInvalid && !resp.body.draftDuplicate) {
-					comp.props.navbar.closeUploadModal();
-				} else {
-					comp.setState({isSubmitDisabled: false,
-								   isDraftDuplicate: resp.body.draftDuplicate,
-								   isDraftInvalid: resp.body.draftInvalid,
-								   isDeckInvalid: resp.body.deckInvalid});
-				}				
-			});		
+		var req = request.post('/upload')
+						 .attach('file', draftFile, draftFile.name)					
+						 .field('name', this.refs.draftName.getDOMNode().value)
+						 .field('wins', this.refs.draftWins.getDOMNode().value)
+						 .field('losses', this.refs.draftLosses.getDOMNode().value)
+			
+		if(deckFile) {
+			req.attach('deck', deckFile, deckFile.name);
+		}
+			
+		req.end(function(err, resp) {
+			if(!resp.body.draftInvalid && !resp.body.draftDuplicate) {
+				comp.props.navbar.closeUploadModal();
+			} else {
+				comp.setState({isSubmitDisabled: false,
+							   isDraftDuplicate: resp.body.draftDuplicate,
+							   isDraftInvalid: resp.body.draftInvalid,
+							   isDeckInvalid: resp.body.deckInvalid});
+			}				
+		});		
 	},
 
 	render: function(){
@@ -79,8 +83,8 @@ var UploadForm = React.createClass({
 						</div>
 
 						<div className={hasError ? "form-group has-error" : "form-group"}>
-							<label htmlFor="deck">Deck to Upload</label>
-							<input type="file" name="deck" ref="deckFile" required></input>
+							<label htmlFor="deck">Deck to Upload (Optional)</label>
+							<input type="file" name="deck" ref="deckFile"></input>
 							<p className="help-block">This file should be the deck exported in text from the MTGO freeform log.</p>
 						</div>
 						
@@ -98,6 +102,79 @@ var UploadForm = React.createClass({
 							<label htmlFor="losses">Rounds Lost</label>
 							<input className="form-control" type="number" name="losses" ref="draftLosses" required></input>					
 						</div>					
+											
+						<button type="submit" className="btn btn-default" disabled={this.state.isSubmitDisabled}>Submit</button>					
+						<span className={hasError ? 'text-danger margin-left' : ''}>{errorText}</span>
+					</form>					
+				</div>
+			</div>
+		);
+	}
+});
+
+var UploadDeckForm = React.createClass({
+	getInitialState: function() {
+		return {isSubmitDisabled: false,
+			    isDraftDuplicate: false,
+			    isDraftInvalid: false};
+	},
+
+	handleSubmit: function(e) {
+		e.preventDefault();			
+		var comp = this;		
+
+		comp.setState({isSubmitDisabled: true});
+		
+		var deckFile = e.target[0].files[0];
+			
+		request.post('/upload/deck')
+			.attach('deck', deckFile, deckFile.name)
+			.field('draftId', this.props.draftId)
+			.end(function(err, resp) {
+				if(!resp.body.draftInvalid && !resp.body.draftDuplicate) {
+					comp.props.draftTable.closeUploadModal();
+					window.location.href = "#/deck/" + resp.body.deckId;
+				} else {
+					comp.setState({isSubmitDisabled: false,
+								   isDraftDuplicate: resp.body.draftDuplicate,
+								   isDraftInvalid: resp.body.draftInvalid,
+								   isDeckInvalid: resp.body.deckInvalid});
+				}				
+			});		
+	},
+
+	render: function(){
+		var hasError = this.state.isDraftInvalid || this.state.isDraftDuplicate || this.state.isDeckInvalid;
+		var draftName = this.props.draftName;
+		var errorText = '';
+		
+		if(hasError) {
+			if(this.state.isDraftDuplicate) {
+				errorText = 'You have already uploaded this draft.';
+			} else  if(this.state.isDraftInvalid) {
+				errorText = 'The file uploaded is not a valid MTGO draft log.';
+			} else {
+				errorText = 'The deck file uploaded contains cards not drafted, or is not a valid MTGO deck file in text form.';
+			}
+		}
+	
+		return (
+			<div className="modal-content">
+				<div className="modal-header">
+					<button type="button" className="close" onClick={this.props.draftTable.closeUploadModal}>
+						<span aria-hidden="true" className="glyphicon glyphicon-remove"></span>
+						<span className="sr-only margin-left">Close</span>
+					</button>
+					<h4 className="modal-title">Upload Deck for Draft {draftName}</h4>				
+				</div>
+				<div className="modal-body">
+					<form encType="multipart/form-data" onSubmit={this.handleSubmit} ref="uploadDeckForm">
+
+						<div className={hasError ? "form-group has-error" : "form-group"}>
+							<label htmlFor="deck">Deck to Upload</label>
+							<input type="file" name="deck" ref="deckFile" required></input>
+							<p className="help-block">This file should be the deck exported in text from the MTGO freeform log.</p>
+						</div>
 											
 						<button type="submit" className="btn btn-default" disabled={this.state.isSubmitDisabled}>Submit</button>					
 						<span className={hasError ? 'text-danger margin-left' : ''}>{errorText}</span>
@@ -156,7 +233,10 @@ var RecentDrafts = React.createClass({
 						</td>
 						<td>
 							Losses
-						</td>						
+						</td>	
+						<td>
+							Deck
+						</td>
 					</tr>				
 				</thead>
 				<tbody>
@@ -170,6 +250,19 @@ var RecentDrafts = React.createClass({
 });
 
 var RecentDraft = React.createClass({
+	getInitialState: function() {
+		return { uploadModalIsOpen: false };
+	},
+
+	openUploadModal: function() {
+		this.setState({ uploadModalIsOpen: true });
+	},
+
+	closeUploadModal: function() {
+		this.setState({ uploadModalIsOpen: false });
+		
+	},
+
 	render: function() {
 		var packsString = "";
 		var packsJson = JSON.stringify(this.props.data.packs);
@@ -177,6 +270,14 @@ var RecentDraft = React.createClass({
 		this.props.data.packs.map(function(aPack) {
 			packsString += aPack.setCode + " ";
 		});
+	
+		var uploadCell;
+		
+		if(this.props.data.deckId) {
+			uploadCell = <Link className="btn btn-xs btn-primary" to={"/deck/" + this.props.data.deckId}><span className="glyphicon glyphicon-eye-open"></span><span className="margin-left">View Deck</span></Link>;
+		} else {
+			uploadCell = <UploadDeckButton data={this.props.data} draftTable={this} />;
+		}
 	
 		return (
 			<tr>
@@ -203,9 +304,73 @@ var RecentDraft = React.createClass({
 				<td>
 					{this.props.data.losses}
 				</td>				
+				<td>
+					{uploadCell}
+				</td>
 			</tr>
 		);
 	}
+});
+
+var UploadDeckButton = React.createClass({
+
+	render: function() {
+		return (
+			<span>
+				<a className="btn btn-xs btn-warning" href="#" role="button" onClick={this.props.draftTable.openUploadModal} >
+					<span className="glyphicon glyphicon-upload"></span><span className="margin-left">Upload Deck</span>
+				</a>
+				<ReactModal className="Modal__Bootstrap modal-dialog" 
+							isOpen={this.props.draftTable.state.uploadModalIsOpen}
+							onRequestClose={this.props.draftTable.closeUploadModal}>
+					<UploadDeckForm draftTable={this.props.draftTable} draftId={this.props.data.id} draftName={this.props.data.name}/>
+				</ReactModal>		
+			</span>
+		);
+	}
+
+})
+
+var Deck = React.createClass({
+	contextTypes: {
+		router: React.PropTypes.func
+	},
+
+	_updateState: function(props) {
+		var comp = this;
+		
+		request
+			.get("/draft/" + props.params.deckId + "/deck")
+			.end(function(err, resp) {
+				comp.setState({data: resp.body});
+			});	
+	},
+
+	getInitialState: function() {
+		return { data: {
+				mainDeckCards: [],
+				sideBoardCards: [],
+				draftId: 0
+			}
+		};
+	},
+	
+	componentDidMount: function() {
+		this._updateState(this.props);
+	},
+	
+	componentWillReceiveProps: function(nextProps) {
+		this._updateState(nextProps);
+	},
+
+	render: function() {
+		return (
+			<div className="row">
+			
+			</div>
+		);
+	}
+
 });
 
 var PlayerDrafts = React.createClass({
@@ -711,6 +876,8 @@ var routes = (
 	
 	<Route name="player" path="draft/player/:playerId" handler={PlayerDrafts} />
 
+	<Route name="deck" path="deck/:deckId" handler={Deck} />
+	
     <DefaultRoute handler={RecentDrafts}/>
   </Route>
 );

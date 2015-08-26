@@ -15,10 +15,12 @@ public class JsonDraft implements Serializable {
 	private String created;
 	private Integer wins;
 	private Integer losses;
+	private Integer deckId;
 	
 	private JsonPlayer activePlayer;
 	private List<JsonPlayer> players;
 	private List<JsonPack> packs;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -78,6 +80,12 @@ public class JsonDraft implements Serializable {
 	}
 	public void setPacks(List<JsonPack> packs) {
 		this.packs = packs;
+	}
+	public Integer getDeckId() {
+		return deckId;
+	}
+	public void setDeckId(Integer deckId) {
+		this.deckId = deckId;
 	}	
 	
 }

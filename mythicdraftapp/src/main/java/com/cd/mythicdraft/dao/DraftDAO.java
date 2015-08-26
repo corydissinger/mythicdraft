@@ -46,9 +46,9 @@ public interface DraftDAO {
 	
 	public Player getPlayerById(final Integer playerId);
 
-	public void addDeck(Deck convertRawDeck) throws DuplicateDraftException;
+	public Integer addDeck(Deck convertRawDeck) throws DuplicateDraftException;
 
 	public Map<Integer, Card> getTempCardIdToCardMap(Map<String, Integer> cardNameToTempIdMap, Collection<String> setCodes);
 
-	public Deck getDeckByDraftId(Integer draftId);
+	public Deck getDeckById(Integer deckId);
 }
