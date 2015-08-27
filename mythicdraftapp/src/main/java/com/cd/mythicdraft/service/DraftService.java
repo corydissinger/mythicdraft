@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import com.cd.mythicdraft.dao.CardDao;
 import com.cd.mythicdraft.dao.DraftDAO;
 import com.cd.mythicdraft.domain.RawCard;
 import com.cd.mythicdraft.domain.RawDeck;
@@ -60,6 +61,13 @@ public class DraftService {
     public void setDraftDao(final DraftDAO draftDao) {
         this.draftDao = draftDao;
     }
+    
+	private CardDao cardDao;
+
+    @Autowired
+    public void setCardDao(final CardDao cardDao) {
+        this.cardDao = cardDao;
+    }    
 
     @Autowired
 	private MtgoDraftParserService mtgoDraftParserService;
@@ -223,7 +231,7 @@ public class DraftService {
 		}
 		
 		try {
-			Map<Integer, Card> tempIdToCardMap = draftDao.getTempCardIdToCardMap(rawDeck.getCardNameToTempIdMap(), setCodes);
+			Map<Integer, Card> tempIdToCardMap = cardDao.getTempCardIdToCardMap(rawDeck.getCardNameToTempIdMap(), setCodes);
 			
 			if(isDeckInvalid(draftId, tempIdToCardMap)) {
 				return 0;
@@ -368,8 +376,8 @@ public class DraftService {
 	private List<DraftPack> createDraftPacks(RawDraft aRawDraft) {
 		List<DraftPack> draftPacks = new ArrayList<DraftPack>(3);
 		
-		final Map<String, Card> cardNameToCardMap = draftDao.getCardNameToCardMap(createCardNameToCardSetMap(aRawDraft));
-		final List<Set> packSets = draftDao.getSetsByName(aRawDraft.getPackSets());
+		final Map<String, Card> cardNameToCardMap = cardDao.getCardNameToCardMap(createCardNameToCardSetMap(aRawDraft));
+		final List<Set> packSets = cardDao.getSetsByName(aRawDraft.getPackSets());
 		
 		for(int i = 0; i < aRawDraft.getPackSets().size(); i++) {
 			String aSetName = aRawDraft.getPackSets().get(i);

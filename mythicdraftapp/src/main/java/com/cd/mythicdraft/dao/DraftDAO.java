@@ -16,16 +16,6 @@ public interface DraftDAO {
 	
 	public void addDraft(Draft draft) throws DuplicateDraftException;
 	
-	public Map<String, Card> getCardNameToCardMap(final Map<String, String> cardNameToCardSetCode);
-	
-	public List<Set> getAvailableSets();
-	
-	public void persistSets(final List<Set> sets);
-
-	public void persistCards(final List<Card> cardsInSet);
-
-	public List<Set> getSetsByName(final Collection<String> setNames);
-
 	public Map<String, Player> getPlayersByName(final Collection<String> playerNames);
 
 	public boolean isDraftAlreadySaved(final Draft draft);
@@ -47,8 +37,6 @@ public interface DraftDAO {
 	public Player getPlayerById(final Integer playerId);
 
 	public Integer addDeck(Deck convertRawDeck) throws DuplicateDraftException;
-
-	public Map<Integer, Card> getTempCardIdToCardMap(Map<String, Integer> cardNameToTempIdMap, Collection<String> setCodes);
 
 	public Deck getDeckById(Integer deckId);
 }

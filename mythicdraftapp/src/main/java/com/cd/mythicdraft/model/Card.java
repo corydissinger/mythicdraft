@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -33,6 +35,10 @@ public class Card implements Serializable {
 	
 	@Column(name = "IS_NON_CREATURE")
 	private Boolean isNonCreature;
+	
+	@Column(name = "COLOR")
+	@Enumerated(EnumType.STRING)
+	private Color color;
 	
 	@Column(name = "SET_ID",
 			insertable = false,
@@ -102,5 +108,13 @@ public class Card implements Serializable {
 
 	public void setIsNonCreature(Boolean isNonCreature) {
 		this.isNonCreature = isNonCreature;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 }
