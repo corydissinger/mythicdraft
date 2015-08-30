@@ -55,6 +55,7 @@
 		<c:when test="${development}">
 			<script type="text/jsx" src="resources/js/mythicdraft.js"></script>
 			<script src="resources/js/bootstrap-toggle-shim.js"></script>
+			<script src="resources/js/card-deck-organizer.js"></script>
 		</c:when>
 		<c:otherwise>
 			<script src="resources/js/app.js"></script>		

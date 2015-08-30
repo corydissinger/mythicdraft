@@ -259,8 +259,7 @@ var RecentDraft = React.createClass({
 	},
 
 	closeUploadModal: function() {
-		this.setState({ uploadModalIsOpen: false });
-		
+		this.setState({ uploadModalIsOpen: false });	
 	},
 
 	render: function() {
@@ -342,7 +341,7 @@ var Deck = React.createClass({
 		request
 			.get("/draft/" + props.params.deckId + "/deck")
 			.end(function(err, resp) {
-				comp.setState({data: resp.body});
+				comp.setState({data: CardDeckOrganizer.sortCards(resp.body) });
 			});	
 	},
 
@@ -407,7 +406,7 @@ var PlayerDrafts = React.createClass({
 	render: function() {
 		var drafts = this.state.data.drafts;		
 		var player = this.state.data.player;		
-		var winPercentage = this.state.data.winPercentage;
+		var winPercentage = this.state.data.winPercentage;		
 		
 		return (
 			<div className="container-fluid">
@@ -449,6 +448,9 @@ var PlayerDrafts = React.createClass({
 									<td>
 										Losses
 									</td>						
+									<td>
+										Deck
+									</td>															
 								</tr>				
 							</thead>
 							<tbody>
@@ -465,6 +467,18 @@ var PlayerDrafts = React.createClass({
 });
 
 var PlayerDraft = React.createClass({
+	getInitialState: function() {
+		return { uploadModalIsOpen: false };
+	},
+
+	openUploadModal: function() {
+		this.setState({ uploadModalIsOpen: true });
+	},
+
+	closeUploadModal: function() {
+		this.setState({ uploadModalIsOpen: false });	
+	},
+
 	render: function() {
 		var packsString = "";
 		var packsJson = JSON.stringify(this.props.data.packs);
@@ -472,6 +486,14 @@ var PlayerDraft = React.createClass({
 		this.props.data.packs.map(function(aPack) {
 			packsString += aPack.setCode + " ";
 		});
+	
+		var uploadCell;
+	
+		if(this.props.data.deckId) {
+			uploadCell = <Link className="btn btn-xs btn-primary" to={"/deck/" + this.props.data.deckId}><span className="glyphicon glyphicon-eye-open"></span><span className="margin-left">View Deck</span></Link>;
+		} else {
+			uploadCell = <UploadDeckButton data={this.props.data} draftTable={this} />;
+		}			
 	
 		return (
 			<tr>
@@ -490,7 +512,10 @@ var PlayerDraft = React.createClass({
 				</td>
 				<td>
 					{this.props.data.losses}
-				</td>				
+				</td>		
+				<td>
+					{uploadCell}
+				</td>
 			</tr>
 		);
 	}

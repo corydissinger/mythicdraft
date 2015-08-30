@@ -22,7 +22,9 @@ module.exports = function(grunt) {
  	    uglify: {
 			dist: {
 				files: {
-					'target/mythic-draft/resources/js/app.js': ['target/mythic-draft/resources/js/mythicdraft-babeled.js', 'src/main/webapp/resources/js/bootstrap-toggle-shim.js']
+					'target/mythic-draft/resources/js/app.js': ['target/mythic-draft/resources/js/mythicdraft-babeled.js', 
+																'src/main/webapp/resources/js/bootstrap-toggle-shim.js',
+																'src/main/webapp/resources/js/card-deck-organizer.js']
 				}
 			}
 		}		

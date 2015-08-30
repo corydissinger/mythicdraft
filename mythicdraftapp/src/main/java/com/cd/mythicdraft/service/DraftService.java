@@ -253,13 +253,18 @@ public class DraftService {
 		Deck theDeck = draftDao.getDeckById(deckId);
 		
 		for(DeckCard aCard : theDeck.getDeckCards()) {
-			final Integer multiverseId = aCard.getCardId();
+			final Card theCard = aCard.getCard();
+			final Integer multiverseId = theCard.getId();
 			final String id = multiverseId + "_" + uniqueCardCount++;
 			
 			final JsonCard jsonCard = new JsonCard();
 			
 			jsonCard.setId(id);
 			jsonCard.setMultiverseId(multiverseId);
+			jsonCard.setCmc(theCard.getCmc());
+			jsonCard.setColor(theCard.getColor());
+			jsonCard.setIsCreature(theCard.getIsCreature());
+			jsonCard.setIsNonCreature(theCard.getIsNonCreature());
 			
 			if(aCard.getIsMainDeck()) {
 				mainDeckCards.add(jsonCard);
