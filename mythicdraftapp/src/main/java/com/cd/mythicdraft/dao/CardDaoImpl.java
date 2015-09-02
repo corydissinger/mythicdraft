@@ -136,5 +136,15 @@ public class CardDaoImpl extends AbstractDAO implements CardDao {
 		
 		return cardNameToCardMap;
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Card getCardByName(String cardName) {
+		Criteria crit = getCurrentSession().createCriteria(Card.class);
+		
+		crit.add(Restrictions.eq("cardName", cardName));
+		
+		return (Card) crit.list().get(0);
+	}
 	
 }

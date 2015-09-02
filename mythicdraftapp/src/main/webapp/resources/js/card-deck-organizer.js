@@ -10,7 +10,10 @@ var CardDeckOrganizer = CardDeckOrganizer || {
 				var cardObject = unsortedCardsArray[i];
 				
 				if(!cardObject.isCreature && !cardObject.isNonCreature) {
-					sortedCardsObject.land.push(cardObject);
+					for(var j = 0; j < cardObject.count; j++) {
+						sortedCardsObject.land.push(cardObject);
+					}
+					
 					continue;
 				}
 				

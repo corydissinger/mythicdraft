@@ -96,12 +96,11 @@ public class DraftService {
 		if(aDraft != null && !uploadStatus.isDraftInvalid()) {
 			try {
 				draftDao.addDraft(theDraft);
+				uploadStatus.setDraftId(theDraft.getId());
 			} catch (DuplicateDraftException e) {
 				uploadStatus.setDraftDuplicate(true);
-			}	
-		}
-		
-		uploadStatus.setDraftId(theDraft.getId());
+			}
+		}		
 		
 		return uploadStatus;
 	}
@@ -120,6 +119,7 @@ public class DraftService {
 		return jsonDraft;
 	}
 	
+	@Transactional(readOnly = true)
 	public JsonPackPick getPackByIdAndPick(final Integer draftId,
 										   final Integer draftPackId, 
 										   final Integer pickId) {
@@ -284,11 +284,11 @@ public class DraftService {
 	private Deck convertRawDeck(final RawDeck rawDeck, final Draft draft, final Map<Integer, Card> tempCardIdToCardMap) {
 		Deck deck = new Deck();
 		
-		for(DeckCard aDeckCard : createDeckCards(rawDeck.getListOfMainDeckCards(), true, tempCardIdToCardMap)) {
+		for(DeckCard aDeckCard : createDeckCards(rawDeck, true, tempCardIdToCardMap)) {
 			deck.addDeckCard(aDeckCard);
 		}
 		
-		for(DeckCard aDeckCard : createDeckCards(rawDeck.getListOfSideBoardCards(), false, tempCardIdToCardMap)) {
+		for(DeckCard aDeckCard : createDeckCards(rawDeck, false, tempCardIdToCardMap)) {
 			deck.addDeckCard(aDeckCard);
 		}
 		
@@ -298,15 +298,33 @@ public class DraftService {
 		return deck;
 	}
 
-	private List<DeckCard> createDeckCards(final List<MutablePair<Integer, Integer>> listOfCards, 
+	private List<DeckCard> createDeckCards(final RawDeck rawDeck, 
 										   final boolean isMainDeck, 
 										   final Map<Integer, Card> tempCardIdToCardMap) {
+		
+		final List<MutablePair<Integer, Integer>> listOfCards;
+		
+		if(isMainDeck) {
+			listOfCards = rawDeck.getListOfMainDeckCards();
+		} else {
+			listOfCards = rawDeck.getListOfSideBoardCards();
+		}
 		
 		List<DeckCard> deckCards = new ArrayList<DeckCard>(listOfCards.size());
 		
 		for(MutablePair<Integer, Integer> cardIdToCardCount : listOfCards) {
 			DeckCard deckCard = new DeckCard();
 			Card card = tempCardIdToCardMap.get(cardIdToCardCount.getLeft());
+			
+			//Edge case for basics lands in small sets and special promo cards in large sets
+			if(card == null) {
+				for(Map.Entry<String, Integer> nameToTempId : rawDeck.getCardNameToTempIdMap().entrySet()) {
+					if(nameToTempId.getValue().equals(cardIdToCardCount.getLeft())) {
+						card = cardDao.getCardByName(nameToTempId.getKey());
+						break;
+					}
+				}
+			}
 			
 			deckCard.setIsMainDeck(isMainDeck);
 			deckCard.setCard(card);

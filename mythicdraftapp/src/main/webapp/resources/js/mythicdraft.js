@@ -58,7 +58,7 @@ var UploadForm = React.createClass({
 		if(hasError) {
 			if(this.state.isDraftDuplicate) {
 				errorText = 'You have already uploaded this draft.';
-			} else  if(this.state.isDraftInvalid) {
+			} else if(this.state.isDraftInvalid) {
 				errorText = 'The file uploaded is not a valid MTGO draft log.';
 			} else {
 				errorText = 'The deck file uploaded contains cards not drafted, or is not a valid MTGO deck file in text form.';
@@ -76,16 +76,16 @@ var UploadForm = React.createClass({
 				</div>
 				<div className="modal-body">
 					<form encType="multipart/form-data" onSubmit={this.handleSubmit} ref="uploadForm">
-						<div className={hasError ? "form-group has-error" : "form-group"}>
+						<div className="form-group">
 							<label htmlFor="file">Draft to Upload</label>
 							<input type="file" name="file" ref="draftFile" required></input>
 							<p className="help-block">This file should be the MTGO draft log.</p>
 						</div>
 
-						<div className={hasError ? "form-group has-error" : "form-group"}>
+						<div className="form-group">
 							<label htmlFor="deck">Deck to Upload (Optional)</label>
 							<input type="file" name="deck" ref="deckFile"></input>
-							<p className="help-block">This file should be the deck exported in text from the MTGO freeform log.</p>
+							<p className="help-block">This file should be the deck exported in <span className="text-warning">.TXT</span> from the MTGO freeform log.</p>
 						</div>
 						
 						<div className="form-group">
@@ -173,7 +173,7 @@ var UploadDeckForm = React.createClass({
 						<div className={hasError ? "form-group has-error" : "form-group"}>
 							<label htmlFor="deck">Deck to Upload</label>
 							<input type="file" name="deck" ref="deckFile" required></input>
-							<p className="help-block">This file should be the deck exported in text from the MTGO freeform log.</p>
+							<p className="help-block">This file should be the deck exported in <span className="text-warning">.TXT</span> from the MTGO freeform log.</p>
 						</div>
 											
 						<button type="submit" className="btn btn-default" disabled={this.state.isSubmitDisabled}>Submit</button>					
@@ -384,7 +384,7 @@ var Deck = React.createClass({
 
 });
 
-DeckPanel = React.createClass({
+var DeckPanel = React.createClass({
 
 	render: function() {
 		var cmcArrays = [];
@@ -411,7 +411,7 @@ DeckPanel = React.createClass({
 
 });
 
-CardColumn = React.createClass({
+var CardColumn = React.createClass({
 
 	render: function() {
 		var cards = [];
@@ -799,6 +799,7 @@ var DraftControls = React.createClass({
 		var nextDisabled = Number(this.props.draft.state.pickNumber) == currentPackSize - 1 && Number(this.props.draft.state.currentPack) == 2 ? 'disabled' : '';
 	
 		var draftId = this.props.draft.state.data.draftMetaData.id;
+		var deckId = this.props.draft.state.data.draftMetaData.deckId;
 		var nextPickNumber = Number(this.props.draft.state.pickNumber) + 1;
 		var previousPickNumber = Number(this.props.draft.state.pickNumber) - 1;
 		var packs = this.props.draft.state.packs;
@@ -817,34 +818,43 @@ var DraftControls = React.createClass({
 			previousPackId = packs[currentPack - 1].id;
 			previousPickNumber = packs[currentPack - 1].packSize - 1;
 		} 	
-	
+
+		var viewDeckLink;
+		
+		if(deckId) {
+			viewDeckLink = <Link className="btn btn-sm btn-primary" to={"/deck/" + deckId}><span className="glyphicon glyphicon-eye-open"></span><span className="margin-left">View Deck</span></Link>;
+		}
+		
 		return (
 			<div className="row">
-				<div className="col-md-1 col-md-offset-3 col-xs-4">
+				<div className="col-md-3 col-md-offset-1 col-xs-12">
 					<Link className={previousDisabled ? "visibility-hidden btn btn-sm btn-warning" : "btn btn-sm btn-warning"}
 						  to={"/draft/" + draftId + "/pack/" + previousPackId + "/pick/" + previousPickNumber} >
-						Previous
+						Previous Pick
 					</Link>
-				</div>
-				<div className="col-md-1 col-xs-4">					
+
 					<button type="button" 
 							onClick={this.showPick}
-							className="btn btn-sm btn-info">
+							className="margin-left btn btn-sm btn-info">
 						Show Pick
 					</button>			
-				</div>
-				<div className="col-md-1 col-xs-4">										
-					<Link className={nextDisabled ? "visibility-hidden btn btn-sm btn-success" : "btn btn-sm btn-success"}
+
+					<Link className={nextDisabled ? "margin-left visibility-hidden btn btn-sm btn-success" : "margin-left btn btn-sm btn-success"}
 						  to={"/draft/" + draftId + "/pack/" + nextPackId + "/pick/" + nextPickNumber} >
-						Next
+						Next Pick
 					</Link>										
 				</div>
-				<div className="col-md-3 col-md-offset-0 col-xs-10 col-xs-offset-1">
+				
+				<div className="col-md-3 col-xs-9">
 					<div onClick={this.linkHandler} className="input-group input-group-sm">
 						<span className="input-group-addon glyphicon glyphicon-share"></span>
 						<input ref="shareLink" type="text" className="form-control" aria-describedby="basic-addon1" value={linkToThis}/>						
 					</div>											
 				</div>																	
+				
+				<div className="col-md-3 col-xs-3">
+					{viewDeckLink}
+				</div>
 			</div>
 		);
 	}
