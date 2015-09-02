@@ -1,12 +1,11 @@
 var CardDeckOrganizer = CardDeckOrganizer || {
 
 	sortCards: function(unsortedCards) {
-		var sortedDeck = { mainDeckCards: {}, sideBoardCards: {} };
+		var sortedDeck = { mainDeckCards: {}, sideBoardCards: {} };	
 	
-		var mainDeckCards = { land: [], cmcArrays: [] };
-		var sideBoardCards = { land: [], cmcArrays: [] };
-	
-		var cardSortingFunction = function(unsortedCardsArray, sortedCardsObject) {
+		var cardSortingFunction = function(unsortedCardsArray) {
+			var sortedCardsObject = { land: [], cmcArrays: [] };
+		
 			for(var i = 0; i < unsortedCardsArray.length; i++) {
 				var cardObject = unsortedCardsArray[i];
 				
@@ -21,14 +20,18 @@ var CardDeckOrganizer = CardDeckOrganizer || {
 					cmcArray = [];
 				}
 				
-				cmcArray.push(cardObject);
+				for(var j = 0; j < cardObject.count; j++) {
+					cmcArray.push(cardObject);
+				}				
 				
 				sortedCardsObject.cmcArrays[cardObject.cmc] = cmcArray;
 			}		
+			
+			return sortedCardsObject;
 		};		
 	
-		cardSortingFunction(unsortedCards.mainDeckCards, mainDeckCards);
-		cardSortingFunction(unsortedCards.sideBoardCards, sideBoardCards);
+		sortedDeck.mainDeckCards = cardSortingFunction(unsortedCards.mainDeckCards);
+		sortedDeck.sideBoardCards = cardSortingFunction(unsortedCards.sideBoardCards);
 	
 		return sortedDeck;
 	}

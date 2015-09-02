@@ -265,6 +265,7 @@ public class DraftService {
 			jsonCard.setColor(theCard.getColor());
 			jsonCard.setIsCreature(theCard.getIsCreature());
 			jsonCard.setIsNonCreature(theCard.getIsNonCreature());
+			jsonCard.setCount(aCard.getCount());
 			
 			if(aCard.getIsMainDeck()) {
 				mainDeckCards.add(jsonCard);

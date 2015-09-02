@@ -71,3 +71,47 @@
   padding-right:0;
   padding-left:0;
 }
+
+/* X Small Stuff */
+@media all and (max-width: 767px) {
+	.deck-card-column {
+		margin-top: 90px;
+	}
+
+	.deck-card {
+		margin-top: -90px;
+	}
+}
+
+/* Small Stuff */
+@media all and (min-width: 768px) {
+	.deck-card-column {
+		margin-top: 140px;
+	}
+
+	.deck-card {
+		margin-top: -140px;
+	}
+}
+
+/* Medium Stuff */
+@media all and (min-width: 992px) {
+	.deck-card-column {
+		margin-top: 160px;
+	}
+
+	.deck-card {
+		margin-top: -160px;
+	}
+}
+
+/* Big stuff */
+@media all and (min-width: 1200px) {
+	.deck-card-column {
+		margin-top: 250px;
+	}
+
+	.deck-card {
+		margin-top: -250px;
+	}
+}

@@ -20,7 +20,7 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/1.2.0/superagent.js"></script>		
 			<script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
 			
-			<link rel="stylesheet" href="resources/css/mythicdraft.css"/>
+			<link rel="stylesheet" media="all" href="resources/css/mythicdraft.css"/>
 		</c:when>
 		<c:otherwise>
 			<script src="https://fb.me/react-with-addons-0.13.3.min.js"></script>
@@ -29,7 +29,7 @@
 			
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/1.2.0/superagent.min.js"></script>					
 					
-			<link rel="stylesheet" href="resources/css/app.css"/>
+			<link rel="stylesheet" media="all" href="resources/css/app.css"/>
 
 			<%-- Analytics --%>
 			<script>

@@ -30,8 +30,6 @@ public class MtgoDeckParserService {
 		List<String> fileLines = IOUtils.readLines(mtgoDeck, StandardCharsets.UTF_8);
 		
 		for(String aLine : fileLines) {
-			System.out.println(aLine);
-			
 			final String[] lineParts = aLine.split(" ");
 
 			if(lineParts.length == 1) {
