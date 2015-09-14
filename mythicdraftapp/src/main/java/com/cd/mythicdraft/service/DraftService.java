@@ -277,6 +277,7 @@ public class DraftService {
 		deck.setMainDeckCards(mainDeckCards);
 		deck.setSideBoardCards(sideBoardCards);
 		deck.setDraftId(theDeck.getDraftId());
+		deck.setDraftMetaData(getJsonDraftFromDraft(theDeck.getDraft()));
 		
 		return deck;
 	}	

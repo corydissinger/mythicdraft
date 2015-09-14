@@ -341,7 +341,11 @@ var Deck = React.createClass({
 		request
 			.get("/draft/" + props.params.deckId + "/deck")
 			.end(function(err, resp) {
-				comp.setState({data: CardDeckOrganizer.sortCards(resp.body) });
+				var state = {data: CardDeckOrganizer.sortCards(resp.body) };
+				
+				state.data.draftMetaData = resp.body.draftMetaData;
+				
+				comp.setState(state);
 			});	
 	},
 
@@ -349,7 +353,7 @@ var Deck = React.createClass({
 		return { data: {
 				mainDeckCards: { land: [], cmcArrays: [ [] ] },
 				sideBoardCards: { land: [], cmcArrays: [ [] ] },
-				draftId: 0
+				draftMetaData: { packs: [{ id: 0 }], id: 0 }
 			}
 		};
 	},
@@ -363,11 +367,20 @@ var Deck = React.createClass({
 	},
 
 	render: function() {
+		var draftId = this.state.data.draftMetaData.id;
+		var firstPackId = this.state.data.draftMetaData.packs[0].id;
+	
 		return (
 			<div className="container-fluid">		
 				<div className="row">
 					<div className="col-xs-12">
-						<h1>Main Deck</h1>
+						<Link className="btn btn-sm btn-primary" to={"/draft/" + draftId + "/pack/" + firstPackId + "/pick/0"}><span className="glyphicon glyphicon-eye-open"></span><span className="margin-left">View Draft</span></Link>
+					</div>
+				</div>						
+			
+				<div className="row">
+					<div className="col-xs-12">
+						<h1>Main Deck</h1>						
 					</div>
 				</div>
 				<DeckPanel deck={this.state.data.mainDeckCards} />

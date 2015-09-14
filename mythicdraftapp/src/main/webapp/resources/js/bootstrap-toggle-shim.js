@@ -1,7 +1,4 @@
 function bindNavbarToggle() {
-	// Remove so we don't double up
-	window.removeEventListener('resize');
-
 	// Navbar and dropdowns
 	var toggle = document.getElementsByClassName('navbar-toggle')[0],
 		collapse = document.getElementsByClassName('navbar-collapse')[0],
@@ -44,6 +41,9 @@ function bindNavbarToggle() {
 		}
 	}
 
+	// Remove so we don't double up
+	window.removeEventListener('resize', closeMenusOnResize);	
+	
 	// Event listeners
 	window.addEventListener('resize', closeMenusOnResize, false);
 	toggle.addEventListener('click', toggleMenu, false);
