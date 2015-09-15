@@ -881,7 +881,7 @@ var CardRow = React.createClass({
 		var counter = 0;
 		
 		return (
-			<div className="row top-buffer no-pad">				
+			<div className="row top-buffer no-pad well">				
 				{cards.map(function(aCard) {
 					
 					return <div className={counter++ % 5 == 0 ? "col-md-offset-1 col-md-2 col-sm-3 col-xs-4" : "col-md-2 col-sm-3 col-xs-4"}>
@@ -923,7 +923,9 @@ var Card = React.createClass({
 
 var AllPlayerPicks = React.createClass({
 	getInitialState: function() {
-		return { allCards: [] , picksInOrder: []};
+		return { allCards: [] , 
+				 picksInOrder: [],
+				 draftMetaData: {isPick: false, isPickShown:true} };
 	},
 
 	componentDidMount: function() {
@@ -932,21 +934,32 @@ var AllPlayerPicks = React.createClass({
 		
 		request.get('/draft/' + draftId + '/all')
 			.end(function(err, resp) {							
-				comp.setState({allCards: resp.body.allCards, picksInOrder: resp.body.picksInOrder});
+				comp.setState(resp.body);
 			});		
 	},
 
 	render: function() {
 		var pickIdsInOrder = this.state.picksInOrder;
 		var cardIds = this.state.allCards;
-		var packNumber = this.props.packNumber;
-		var pickNumber = this.props.pickNumber;
+		var packNumber = this.props.packNumber;	
+		var pickNumber = this.props.pickNumber;		
+		var currentPick = 0;
+		
+		for(var i = 0; i < packNumber; i++) {
+			currentPick += this.state.draftMetaData.packs[i].packSize;
+		}
+		
+		currentPick += pickNumber;
 		
 		return (
-			<div className="row">
+			<div className="row top-buffer no-pad well">
 				{pickIdsInOrder.map(function(aCardId, index) {
+					var isPick = index <= currentPick;
+					
 					return  <div className="col-md-1 col-xs-3">
 								<Card multiverseId={aCardId} 
+									  isPick={isPick}
+									  isPickShown={true}
 									  key={aCardId + index} />
 							</div>;
 				})}

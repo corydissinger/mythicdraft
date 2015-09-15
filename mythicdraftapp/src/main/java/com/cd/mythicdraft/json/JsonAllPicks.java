@@ -9,6 +9,8 @@ public class JsonAllPicks implements Serializable {
 
 	private List<Integer> allCards;
 	private List<Integer> picksInOrder;
+	private JsonDraft draftMetaData;
+	
 	public List<Integer> getAllCards() {
 		return allCards;
 	}
@@ -20,6 +22,12 @@ public class JsonAllPicks implements Serializable {
 	}
 	public void setPicksInOrder(List<Integer> picksInOrder) {
 		this.picksInOrder = picksInOrder;
+	}
+	public JsonDraft getDraftMetaData() {
+		return draftMetaData;
+	}
+	public void setDraftMetaData(JsonDraft draftMetaData) {
+		this.draftMetaData = draftMetaData;
 	}
 	
 }

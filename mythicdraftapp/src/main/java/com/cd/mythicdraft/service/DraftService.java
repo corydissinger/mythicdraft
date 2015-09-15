@@ -203,6 +203,8 @@ public class DraftService {
 		picks.setAllCards(allCards);
 		picks.setPicksInOrder(picksInOrder);
 		
+		picks.setDraftMetaData(getJsonDraftFromDraft(draftDao.getDraftById(draftId)));
+		
 		return picks;
 	}
 	
