@@ -3,7 +3,11 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<title>Mythic Draft</title>
+	
+	<meta content="mtg, magic the gathering, draft, mtgo" name="keywords">	
+	<meta content="Mythic Draft - Upload your MTGO draft logs and decks for review later!" name="description">	
+	
+	<title>Mythic Draft - Upload MTGO draft logs and decks</title>
 	
 	<%-- Metas - down with raredraft --%>
 	<meta name="viewport" content="width=device-width, initial-scale=1">

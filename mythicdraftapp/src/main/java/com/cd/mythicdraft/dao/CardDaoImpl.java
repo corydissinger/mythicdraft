@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.cd.mythicdraft.model.Card;
+import com.cd.mythicdraft.model.PairedSets;
 import com.cd.mythicdraft.model.Set;
 
 @Repository(value = "cardDao")
@@ -26,7 +27,7 @@ public class CardDaoImpl extends AbstractDAO implements CardDao {
 		Map<String, Card> cardNameToCardMap = new HashMap<String, Card>(cardNameToCardSetCode.size());
 		java.util.Set<String> setCodes = new HashSet<String>();
 
-		setCodes.addAll(cardNameToCardSetCode.values());		
+		setCodes.addAll(PairedSets.getAllPairedSetCodes(cardNameToCardSetCode.values()));		
 		
 		Criteria crit = getCurrentSession().createCriteria(Card.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		
@@ -118,7 +119,7 @@ public class CardDaoImpl extends AbstractDAO implements CardDao {
 		List<String> cardList = new ArrayList<String>();
 		cardList.addAll(cardNameToTempIdMap.keySet());
 
-		List<Set> sets = getSetsByName(setCodes);
+		List<Set> sets = getSetsByName(PairedSets.getAllPairedSetCodes(setCodes));
 		
 		Criteria crit = getCurrentSession().createCriteria(Card.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		
