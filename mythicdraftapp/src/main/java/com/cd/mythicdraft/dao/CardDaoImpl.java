@@ -23,11 +23,11 @@ public class CardDaoImpl extends AbstractDAO implements CardDao {
 
 	@Override
 	@Transactional	
-	public Map<String, Card> getCardNameToCardMap(final Map<String, String> cardNameToCardSetCode) {
+	public Map<String, Card> getCardNameToCardMap(Map<String, String> cardNameToCardSetCode) {
 		Map<String, Card> cardNameToCardMap = new HashMap<String, Card>(cardNameToCardSetCode.size());
 		java.util.Set<String> setCodes = new HashSet<String>();
 
-		setCodes.addAll(PairedSets.getAllPairedSetCodes(cardNameToCardSetCode.values()));		
+		setCodes.addAll(PairedSets.getAllPairedSetCodes(new ArrayList<String>(cardNameToCardSetCode.values())));		
 		
 		Criteria crit = getCurrentSession().createCriteria(Card.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		

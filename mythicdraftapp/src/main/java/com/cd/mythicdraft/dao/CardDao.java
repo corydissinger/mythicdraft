@@ -9,7 +9,7 @@ import com.cd.mythicdraft.model.Set;
 
 public interface CardDao {
 
-	public Map<String, Card> getCardNameToCardMap(final Map<String, String> cardNameToCardSetCode);
+	public Map<String, Card> getCardNameToCardMap(Map<String, String> cardNameToCardSetCode);
 	
 	public List<Set> getAvailableSets();
 	
