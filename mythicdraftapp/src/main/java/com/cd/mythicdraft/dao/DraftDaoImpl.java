@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -12,15 +11,13 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import com.cd.mythicdraft.exception.DuplicateDraftException;
-import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Deck;
 import com.cd.mythicdraft.model.DeckCard;
 import com.cd.mythicdraft.model.Draft;
@@ -28,7 +25,6 @@ import com.cd.mythicdraft.model.DraftPack;
 import com.cd.mythicdraft.model.DraftPackPick;
 import com.cd.mythicdraft.model.DraftPlayer;
 import com.cd.mythicdraft.model.Player;
-import com.cd.mythicdraft.model.Set;
 
 @Repository(value = "draftDao")
 public class DraftDaoImpl extends AbstractDAO implements DraftDAO {
@@ -88,15 +84,28 @@ public class DraftDaoImpl extends AbstractDAO implements DraftDAO {
 
 	@Override
 	@Transactional(readOnly = true)	
-	public Collection<Draft> getRecentDrafts(final Integer numberOfDrafts) {
+	public Collection<Draft> getRecentDrafts(final Integer numberOfDrafts, final Integer pageNumber) {
 		Query query = getCurrentSession().createSQLQuery("SELECT ID, NAME, CREATED, EVENT_ID, EVENT_DATE, WINS, LOSSES FROM DRAFT ORDER BY CREATED DESC").addEntity(Draft.class);
 		
 		query.setMaxResults(numberOfDrafts);
+		query.setFirstResult(pageNumber * 10);
 		
 		final Collection<Draft> drafts = new ArrayList<Draft>(query.list());
 		
 		return drafts;
 	}	
+
+	@Override
+	@Transactional(readOnly = true)
+	public Integer getRecentDraftPages() {
+		Criteria crit = getCurrentSession().createCriteria(Draft.class);
+		
+		crit.setProjection(Projections.rowCount());
+		
+		Number rows = (Number) crit.uniqueResult();
+		
+		return (int) Math.ceil((double)rows.intValue() / 10);
+	}
 	
 	@Override
 	@Transactional(readOnly = true)

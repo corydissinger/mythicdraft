@@ -16,6 +16,7 @@ import com.cd.mythicdraft.json.JsonDraft;
 import com.cd.mythicdraft.json.JsonPackPick;
 import com.cd.mythicdraft.json.JsonPlayer;
 import com.cd.mythicdraft.json.JsonPlayerStats;
+import com.cd.mythicdraft.json.JsonRecentDrafts;
 import com.cd.mythicdraft.service.DraftService;
 
 @Controller
@@ -24,9 +25,9 @@ public class DraftController {
 	@Autowired
 	private DraftService draftService;
 	
-	@RequestMapping(value = "/draft/recent")
-	public @ResponseBody List<JsonDraft> getRecentDrafts() {
-		return draftService.getRecentDrafts(10);
+	@RequestMapping(value = "/draft/recent/page/{pageNumber}")
+	public @ResponseBody JsonRecentDrafts getRecentDrafts(@PathVariable final Integer pageNumber) {
+		return draftService.getRecentDrafts(10, pageNumber);
 	}
 	
 	@RequestMapping(value = "/draft/{draftId}",

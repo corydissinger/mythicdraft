@@ -191,17 +191,17 @@ var RecentDrafts = React.createClass({
 	},
 
 	_updateState: function(props) {
-		var comp = this;
+		var comp = this;			
 		
 		request
-			.get("/draft/recent")
+			.get("/draft/recent/page/" + this.state.pageNumber)
 			.end(function(err, resp) {
-				comp.setState({data: resp.body});
+				comp.setState(resp.body);
 			});	
 	},
 
 	getInitialState: function() {
-		return {data: []};
+		return { recentDrafts: [], pages: 0, pageNumber: 0};
 	},
 	
 	componentDidMount: function() {
@@ -213,38 +213,103 @@ var RecentDrafts = React.createClass({
 	},
 	
 	render: function() {
-		var drafts = this.state.data;		
+		var drafts = this.state.recentDrafts;		
+		var pages = this.state.pages;
 		
 		return (
-			<table className="table table-hover">
-				<thead>
-					<tr>
-						<td>
-							Draft Name
-						</td>
-						<td>
-							Active Player
-						</td>						
-						<td>
-							Format
-						</td>
-						<td>
-							Wins
-						</td>
-						<td>
-							Losses
-						</td>	
-						<td>
-							Deck
-						</td>
-					</tr>				
-				</thead>
-				<tbody>
-					{drafts.map(function(draft) {
-						return <RecentDraft data={draft} />;
+			<div>
+				<table className="table table-hover">
+					<thead>
+						<tr>
+							<td>
+								Draft Name
+							</td>
+							<td>
+								Active Player
+							</td>						
+							<td>
+								Format
+							</td>
+							<td>
+								Wins
+							</td>
+							<td>
+								Losses
+							</td>	
+							<td>
+								Deck
+							</td>
+						</tr>				
+					</thead>
+					<tbody>
+						{drafts.map(function(draft) {
+							return <RecentDraft data={draft} />;
+						})}
+					</tbody>
+				</table>
+				<RecentDraftsFooter recentDrafts={this} pages={pages} />
+			</div>			
+		);
+	}
+});
+
+var RecentDraftsFooter = React.createClass({
+	handlePagination: function(pageNo) {
+		this.props.recentDrafts.setState({pageNumber: pageNumber});		
+	},
+	
+	getDefaultProps: function() {
+		return { pageNo: 0, pages: 0 };
+	},
+	
+	_updateState: function(props) {
+		var comp = this;				
+	},
+
+	componentWillReceiveProps: function(nextProps) {
+		nextProps.isPickShown = false;
+		this._updateState(nextProps);
+	},
+	
+	contextTypes: {
+		router: React.PropTypes.func
+	},
+	
+	getInitialState: function() {
+		return {data: []};
+	},
+	
+	componentDidMount: function() {
+		this._updateState(this.props);
+	},
+	
+	render: function() {
+		var pages = [];
+	
+		for(var i = 0; i < this.props.pages; i++) {
+			pages.push(i);
+		}
+	
+		return (
+			<nav>
+				<ul className="pagination">
+				    <li>
+						<a href="#" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					
+					{pages.map(function(aPageNo, index) {
+						return <li><Link to={"/draft/recent/" + aPageNo}> {aPageNo} </Link></li>;
 					})}
-				</tbody>
-			</table>
+					
+					<li>
+						<a href="#" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>					
+				</ul>
+			</nav>
 		);
 	}
 });
@@ -984,6 +1049,19 @@ var App = React.createClass({
 			<div>
 				<NavBar app={this}/>
 				<RouteHandler />
+				<Footer />
+			</div>
+		);
+	}
+});
+
+var Footer = React.createClass({	
+	render: function() {
+		return (
+			<div>
+				<p>Magic the Gathering, FNM is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved. This site is unaffiliated. Articles and comments are user-submitted and do not represent official endorsements of this site. </p>
+
+				<p>This site © 2015 MythicDraft.com </p>
 			</div>
 		);
 	}
@@ -1001,6 +1079,8 @@ var routes = (
 	<Route name="player" path="draft/player/:playerId" handler={PlayerDrafts} />
 
 	<Route name="deck" path="deck/:deckId" handler={Deck} />
+	
+	<Route name="recent" path="recent/:pageNo" handler={RecentDrafts} />	
 	
     <DefaultRoute handler={RecentDrafts}/>
   </Route>

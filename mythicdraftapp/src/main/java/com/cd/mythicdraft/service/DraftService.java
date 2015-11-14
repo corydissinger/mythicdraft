@@ -38,6 +38,7 @@ import com.cd.mythicdraft.json.JsonPack;
 import com.cd.mythicdraft.json.JsonPackPick;
 import com.cd.mythicdraft.json.JsonPlayer;
 import com.cd.mythicdraft.json.JsonPlayerStats;
+import com.cd.mythicdraft.json.JsonRecentDrafts;
 import com.cd.mythicdraft.json.JsonUploadStatus;
 import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Deck;
@@ -163,11 +164,19 @@ public class DraftService {
 		return jsonPackPick;
 	}
 	
-	public List<JsonDraft> getRecentDrafts(final Integer numberOfDrafts) {
-		return draftDao.getRecentDrafts(numberOfDrafts)
-				.stream()
-				.map(this::getJsonDraftFromDraft)
-				.collect(Collectors.toList());
+	@Transactional(readOnly = true)
+	public JsonRecentDrafts getRecentDrafts(final Integer numberOfDrafts, final Integer pageNumber) {
+		List<JsonDraft> recentDrafts = draftDao.getRecentDrafts(numberOfDrafts, pageNumber)
+											   .stream()
+											   .map(this::getJsonDraftFromDraft)
+											   .collect(Collectors.toList()); 
+		
+		final JsonRecentDrafts jsonRecentDrafts = new JsonRecentDrafts();
+		
+		jsonRecentDrafts.setRecentDrafts(recentDrafts);
+		jsonRecentDrafts.setPages(draftDao.getRecentDraftPages());
+		
+		return jsonRecentDrafts; 
 	}
 	
 	public JsonPlayerStats getDraftsByPlayerId(final Integer playerId) {

@@ -24,7 +24,9 @@ public interface DraftDAO {
 
 	public DraftPackPick getPackByIdAndPick(final Integer draftPackId, final Integer pickId);
 
-	public Collection<Draft> getRecentDrafts(final Integer numberOfDrafts);
+	public Collection<Draft> getRecentDrafts(final Integer numberOfDrafts, final Integer pageNumber);
+	
+	public Integer getRecentDraftPages();	
 
 	public List<Integer> getDistinctMultiverseIdsForDraft(Integer draftId);
 	
