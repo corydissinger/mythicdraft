@@ -190,11 +190,16 @@ var RecentDrafts = React.createClass({
 		router: React.PropTypes.func
 	},
 
+	getDefaultProps: function() {
+		return { params: { pageNo: 0} };
+	},	
+	
 	_updateState: function(props) {
-		var comp = this;			
+		var comp = this;					
+		var pageNo = props.params.pageNo ? props.params.pageNo : 0;
 		
 		request
-			.get("/draft/recent/page/" + this.state.pageNumber)
+			.get("/draft/recent/page/" + pageNo)
 			.end(function(err, resp) {
 				comp.setState(resp.body);
 			});	
@@ -1080,7 +1085,7 @@ var routes = (
 
 	<Route name="deck" path="deck/:deckId" handler={Deck} />
 	
-	<Route name="recent" path="recent/:pageNo" handler={RecentDrafts} />	
+	<Route name="recent" path="draft/recent/:pageNo" handler={RecentDrafts} />	
 	
     <DefaultRoute handler={RecentDrafts}/>
   </Route>
