@@ -8,7 +8,7 @@ public class JsonRecentDrafts implements Serializable {
 	private static final long serialVersionUID = -8485990059723271817L;
 	
 	private List<JsonDraft> recentDrafts;
-	private Integer pages;
+	private Integer totalPages;
 	
 	public List<JsonDraft> getRecentDrafts() {
 		return recentDrafts;
@@ -16,10 +16,10 @@ public class JsonRecentDrafts implements Serializable {
 	public void setRecentDrafts(List<JsonDraft> recentDrafts) {
 		this.recentDrafts = recentDrafts;
 	}
-	public Integer getPages() {
-		return pages;
+	public Integer getTotalPages() {
+		return totalPages;
 	}
-	public void setPages(Integer pages) {
-		this.pages = pages;
+	public void setTotalPages(Integer pages) {
+		this.totalPages = pages;
 	}
 }

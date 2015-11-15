@@ -191,22 +191,22 @@ var RecentDrafts = React.createClass({
 	},
 
 	getDefaultProps: function() {
-		return { params: { pageNo: 0} };
+		return { params: { pageNumber: 0} };
 	},	
 	
 	_updateState: function(props) {
 		var comp = this;					
-		var pageNo = props.params.pageNo ? props.params.pageNo : 0;
+		var pageNumber = props.params.pageNumber ? props.params.pageNumber : 0;
 		
 		request
-			.get("/draft/recent/page/" + pageNo)
+			.get("/draft/recent/page/" + pageNumber)
 			.end(function(err, resp) {
 				comp.setState(resp.body);
 			});	
 	},
 
 	getInitialState: function() {
-		return { recentDrafts: [], pages: 0, pageNumber: 0};
+		return { recentDrafts: [], totalPages: 0, pageNumber: 0};
 	},
 	
 	componentDidMount: function() {
@@ -219,52 +219,60 @@ var RecentDrafts = React.createClass({
 	
 	render: function() {
 		var drafts = this.state.recentDrafts;		
-		var pages = this.state.pages;
+		var totalPages = this.state.totalPages;
 		
 		return (
-			<div>
-				<table className="table table-hover">
-					<thead>
-						<tr>
-							<td>
-								Draft Name
-							</td>
-							<td>
-								Active Player
-							</td>						
-							<td>
-								Format
-							</td>
-							<td>
-								Wins
-							</td>
-							<td>
-								Losses
-							</td>	
-							<td>
-								Deck
-							</td>
-						</tr>				
-					</thead>
-					<tbody>
-						{drafts.map(function(draft) {
-							return <RecentDraft data={draft} />;
-						})}
-					</tbody>
-				</table>
-				<RecentDraftsFooter recentDrafts={this} pages={pages} />
+			<div className="container-fluid">
+				<div className="row">
+					<div className="col-xs-12">
+						<table className="table table-hover">
+							<thead>
+								<tr>
+									<td>
+										Draft Name
+									</td>
+									<td>
+										Active Player
+									</td>						
+									<td>
+										Format
+									</td>
+									<td>
+										Wins
+									</td>
+									<td>
+										Losses
+									</td>	
+									<td>
+										Deck
+									</td>
+								</tr>				
+							</thead>
+							<tbody>
+								{drafts.map(function(draft) {
+									return <RecentDraft data={draft} />;
+								})}
+							</tbody>
+						</table>
+					</div>						
+				</div>
+				<div className="row">
+					<div className="col-xs-12">				
+						<RecentDraftsFooter recentDrafts={this} totalPages={totalPages} pageNumber={this.props.params.pageNumber} />
+					</div>
+				</div>
 			</div>			
 		);
 	}
 });
 
 var RecentDraftsFooter = React.createClass({
-	handlePagination: function(pageNo) {
+	handlePagination: function(pageNumber) {
 		this.props.recentDrafts.setState({pageNumber: pageNumber});		
 	},
 	
 	getDefaultProps: function() {
-		return { pageNo: 0, pages: 0 };
+		return { pageNumber: 0, totalPages: 0 };
 	},
 	
 	_updateState: function(props) {
@@ -290,28 +298,44 @@ var RecentDraftsFooter = React.createClass({
 	
 	render: function() {
 		var pages = [];
+		var pageNumber = this.props.pageNumber;
+		var offsetPage;
 	
-		for(var i = 0; i < this.props.pages; i++) {
+		if(pageNumber < 5) {
+			offsetPage = 0;
+		} else if (pageNumber < this.props.totalPages - 5) {
+			offsetPage = pageNumber - 5;
+		} else {
+			offsetPage = this.props.totalPages - 10;
+		}
+	
+		for(var i = offsetPage; i < offsetPage + 10; i++) {
 			pages.push(i);
 		}
 	
+		var previousPageButtonClass = pageNumber == 0 ? "disabled" : "";		
+		var nextPageButtonClass = pageNumber == this.props.totalPages - 1 ? "disabled" : "";
+		
+		var previousLinkRoute = pageNumber != 0 ? "/draft/recent/" + Number(Number(pageNumber) - 1) : "/draft/recent/" + pageNumber;
+		var nextLinkRoute = pageNumber != this.props.totalPages - 1 ? "/draft/recent/" + (Number(pageNumber) + 1) : "/draft/recent/" + pageNumber;
+	
 		return (
-			<nav>
+			<nav className="text-center">
 				<ul className="pagination">
-				    <li>
-						<a href="#" aria-label="Previous">
-							<span aria-hidden="true">&laquo;</span>
-						</a>
+				    <li className={previousPageButtonClass}>
+						<Link to={previousLinkRoute} aria-label="Previous">
+							<span aria-hidden="true">{String.fromCharCode(8592)}</span>
+						</Link>
 					</li>
 					
-					{pages.map(function(aPageNo, index) {
-						return <li><Link to={"/draft/recent/" + aPageNo}> {aPageNo} </Link></li>;
+					{pages.map(function(aPageNumber, index) {						
+						return <li className={aPageNumber == pageNumber ? "active" : ""}><Link to={"/draft/recent/" + aPageNumber}> {aPageNumber + 1} </Link></li>;
 					})}
 					
-					<li>
-						<a href="#" aria-label="Next">
-							<span aria-hidden="true">&raquo;</span>
-						</a>
+					<li className={nextPageButtonClass} onClick={this.handleNext}>
+						<Link to={nextLinkRoute} aria-label="Next">
+							<span aria-hidden="true">{String.fromCharCode(8594)}</span>
+						</Link>
 					</li>					
 				</ul>
 			</nav>
@@ -1063,10 +1087,16 @@ var App = React.createClass({
 var Footer = React.createClass({	
 	render: function() {
 		return (
-			<div>
-				<p>Magic the Gathering, FNM is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved. This site is unaffiliated. Articles and comments are user-submitted and do not represent official endorsements of this site. </p>
+			<div className="container-fluid">
+				<div className="row">
+					<div className="col-xs-12">
+						<footer>
+							<p>Magic the Gathering, FNM is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved. This site is unaffiliated. Articles and comments are user-submitted and do not represent official endorsements of this site. </p>
 
-				<p>This site © 2015 MythicDraft.com </p>
+							<p>This site © 2015 MythicDraft.com </p>
+						</footer>
+					</div>					
+				</div>
 			</div>
 		);
 	}
@@ -1085,7 +1115,7 @@ var routes = (
 
 	<Route name="deck" path="deck/:deckId" handler={Deck} />
 	
-	<Route name="recent" path="draft/recent/:pageNo" handler={RecentDrafts} />	
+	<Route name="recent" path="draft/recent/:pageNumber" handler={RecentDrafts} />	
 	
     <DefaultRoute handler={RecentDrafts}/>
   </Route>

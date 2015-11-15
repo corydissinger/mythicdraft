@@ -174,7 +174,7 @@ public class DraftService {
 		final JsonRecentDrafts jsonRecentDrafts = new JsonRecentDrafts();
 		
 		jsonRecentDrafts.setRecentDrafts(recentDrafts);
-		jsonRecentDrafts.setPages(draftDao.getRecentDraftPages());
+		jsonRecentDrafts.setTotalPages(draftDao.getRecentDraftPages());
 		
 		return jsonRecentDrafts; 
 	}
