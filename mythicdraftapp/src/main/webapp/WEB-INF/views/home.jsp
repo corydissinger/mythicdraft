@@ -45,7 +45,8 @@
 			  ga('create', 'UA-65898926-1', 'auto');
 			  ga('send', 'pageview');
 
-			</script>			
+			</script>		
+
 		</c:otherwise>
 	</c:choose>
 	

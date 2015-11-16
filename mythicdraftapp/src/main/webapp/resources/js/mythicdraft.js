@@ -794,6 +794,8 @@ var NavBar = React.createClass({
 	},
 	
 	render: function() {
+		var adProps = {display: "inline-block", width:"728px", height:"90px"};
+		
 		return (
 			<nav className="navbar navbar-default">
 				<div className="container-fluid">
@@ -827,7 +829,14 @@ var NavBar = React.createClass({
 						<PlayerSearch />
 						
 						<ul className="nav navbar-nav navbar-right visible-md-block visible-lg-block">
-							<img className="navbar-ad" src="http://placehold.it/728x90" alt="Leaderboard Ad" />											
+							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+							<ins className="adsbygoogle"
+								 style={adProps}
+								 data-ad-client="ca-pub-2254619448324918"
+								 data-ad-slot="1012777982"></ins>
+							<script>
+							(adsbygoogle = window.adsbygoogle || []).push({});
+							</script>			
 						</ul>
 					</div>									
 				</div>								
