@@ -5,8 +5,8 @@ var Link = Router.Link;
 var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
 
-var navElement = document.getElementById("navContainer");
-var appElement = document.getElementById("container");
+var navElement = document.getElementById("nav-container");
+var appElement = document.getElementById("app-container");
 
 var nextDummyValue = 0; //shame
 
@@ -262,7 +262,7 @@ var RecentDrafts = React.createClass({
 					</div>
 				</div>
 			</div>			
-		);
+		);		
 	}
 });
 
@@ -315,6 +315,8 @@ var RecentDraftsFooter = React.createClass({
 	
 		var previousPageButtonClass = pageNumber == 0 ? "disabled" : "";		
 		var nextPageButtonClass = pageNumber == this.props.totalPages - 1 ? "disabled" : "";
+		var firstPageButtonClass = previousPageButtonClass;
+		var lastPageButtonClass = nextPageButtonClass;
 		
 		var previousLinkRoute = pageNumber != 0 ? "/draft/recent/" + Number(Number(pageNumber) - 1) : "/draft/recent/" + pageNumber;
 		var nextLinkRoute = pageNumber != this.props.totalPages - 1 ? "/draft/recent/" + (Number(pageNumber) + 1) : "/draft/recent/" + pageNumber;
@@ -322,6 +324,12 @@ var RecentDraftsFooter = React.createClass({
 		return (
 			<nav className="text-center">
 				<ul className="pagination">
+				    <li className={firstPageButtonClass}>
+						<Link to="/draft/recent/0" aria-label="First">
+							<span aria-hidden="true">{String.fromCharCode(8656)}</span>
+						</Link>
+					</li>				
+					
 				    <li className={previousPageButtonClass}>
 						<Link to={previousLinkRoute} aria-label="Previous">
 							<span aria-hidden="true">{String.fromCharCode(8592)}</span>
@@ -337,6 +345,12 @@ var RecentDraftsFooter = React.createClass({
 							<span aria-hidden="true">{String.fromCharCode(8594)}</span>
 						</Link>
 					</li>					
+					
+				    <li className={lastPageButtonClass}>
+						<Link to={"/draft/recent/" + Number(this.props.totalPages - 1)} aria-label="Last">
+							<span aria-hidden="true">{String.fromCharCode(8658)}</span>
+						</Link>
+					</li>									
 				</ul>
 			</nav>
 		);
@@ -1091,7 +1105,7 @@ var Footer = React.createClass({
 				<div className="row">
 					<div className="col-xs-12">
 						<footer>
-							<p>Magic the Gathering, FNM is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved. This site is unaffiliated. Articles and comments are user-submitted and do not represent official endorsements of this site. </p>
+							<p>Magic the Gathering, FNM is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved. This site is unaffiliated. </p>
 
 							<p>This site © 2015 MythicDraft.com </p>
 						</footer>

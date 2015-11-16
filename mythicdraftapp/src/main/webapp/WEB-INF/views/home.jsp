@@ -52,8 +52,8 @@
 </head>
 <body>
 
-	<div id="navContainer"></div>	
-	<div id="container"></div>
+	<div id="nav-container"></div>	
+	<div id="app-container"></div>
 	
 	<c:choose>
 		<c:when test="${development}">
