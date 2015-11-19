@@ -48,6 +48,7 @@ import com.cd.mythicdraft.model.DraftPack;
 import com.cd.mythicdraft.model.DraftPackAvailablePick;
 import com.cd.mythicdraft.model.DraftPackPick;
 import com.cd.mythicdraft.model.DraftPlayer;
+import com.cd.mythicdraft.model.IgnorableCards;
 import com.cd.mythicdraft.model.Player;
 import com.cd.mythicdraft.model.Set;
 
@@ -333,9 +334,15 @@ public class DraftService {
 				for(Map.Entry<String, Integer> nameToTempId : rawDeck.getCardNameToTempIdMap().entrySet()) {
 					if(nameToTempId.getValue().equals(cardIdToCardCount.getLeft())) {
 						card = cardDao.getCardByName(nameToTempId.getKey());
-						break;
+						if(card != null) {
+							break;	
+						}						
 					}
 				}
+			}
+			
+			if(card == null) {
+				continue;
 			}
 			
 			deckCard.setIsMainDeck(isMainDeck);
@@ -458,6 +465,12 @@ public class DraftService {
 			for(Integer availablePickTempId : pickToAvailablePicks.getRight()) {
 				DraftPackAvailablePick availablePick = new DraftPackAvailablePick();
 				Card available = cardNameToCardMap.get(tempIdToCardNameMap.get(availablePickTempId));
+				
+				//Part of the hack to facilitate split cards. They'll have two entries and only one will work
+				if(available == null) {
+					continue;
+				}
+				
 				availablePick.setCard(available);
 				availablePick.setDraftPackPick(packPick);
 				availablePick.setCardId(available.getId());
@@ -578,6 +591,10 @@ public class DraftService {
 		final Collection<Card> distinctDeckCards = tempIdToCardMap.values();
 		
 		for(Card deckCard : distinctDeckCards) {
+			if(IgnorableCards.isIgnorable(deckCard.getCardName(), deckCard.getSet().getName())) {
+				continue;
+			}
+			
 			if(!allDraftPicks.contains(deckCard.getId())) {
 				return true;
 			}

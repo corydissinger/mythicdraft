@@ -22,7 +22,7 @@ CARD_NAME: CARD_NAME_PART (CARD_NAME_SEPARATOR CARD_NAME)*;
 USER_NAME: ('a'..'z' | '\'' | ',' | 'A'..'Z' | '0'..'9' | '_' | '.' | '\u00C6' | 'Æ' | '-')+;
 
 //Split so that it can recognize one pronoun | or a sequence of pronouns and nouns... ugh
-fragment CARD_NAME_PART: ('a'..'z' | '\'' | ',' | 'A'..'Z' | '_' | '.' | '\u00C6' | 'Æ' | CARD_NUMBER)+;
+fragment CARD_NAME_PART: ('a'..'z' | '\'' | ',' | 'A'..'Z' | '_' | '.' | '\u00C6' | 'Æ' | '/' | CARD_NUMBER)+;
 fragment CARD_NAME_SEPARATOR: (' ' | '-' | '/');
 
 //Super rare edge cases, hopefully

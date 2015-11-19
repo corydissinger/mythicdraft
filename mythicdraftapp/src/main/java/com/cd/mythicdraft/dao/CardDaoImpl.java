@@ -145,7 +145,11 @@ public class CardDaoImpl extends AbstractDAO implements CardDao {
 		
 		crit.add(Restrictions.eq("cardName", cardName));
 		
-		return (Card) crit.list().get(0);
+		if(crit.list().isEmpty()) {
+			return null;
+		} else {
+			return (Card) crit.list().get(0);	
+		}			
 	}
 	
 }

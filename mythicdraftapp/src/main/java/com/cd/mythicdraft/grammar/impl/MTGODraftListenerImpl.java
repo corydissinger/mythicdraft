@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import com.cd.mythicdraft.domain.RawCard;
 import com.cd.mythicdraft.grammar.MTGODraftParser;
@@ -125,16 +126,14 @@ public class MTGODraftListenerImpl extends MTGODraftParserBaseListener {
 	
 	@Override 
 	public void enterPick(PickContext ctx) {
-		Integer cardId = getCardIdAndAddCardName(ctx.getText());
+		Integer cardId = getCardIdAndAddCardName(ctx.getText()).get(0);
 	
 		currentPairOfPickToAvailablePicks.setLeft(cardId);
 	}
 	
 	@Override 
 	public void enterAvailablePick(AvailablePickContext ctx) {
-		Integer cardId = getCardIdAndAddCardName(ctx.getText());
-		
-		currentAvailablePicks.add(cardId);
+		currentAvailablePicks.addAll(getCardIdAndAddCardName(ctx.getText()));
 	}	
 
 	public List<String> getOtherPlayers() {
@@ -165,18 +164,31 @@ public class MTGODraftListenerImpl extends MTGODraftParserBaseListener {
 		return packToListOfPickToAvailablePicksMap;
 	}	
 	
-	private Integer getCardIdAndAddCardName(String aRawCardName) {
-		String cardName = aRawCardName.split("/")[0];
+	private List<Integer> getCardIdAndAddCardName(String aRawCardName) {
+		List<Integer> tempIds = new ArrayList<Integer>(2);
+		//Sinister hack. The split cards, unfortunately, are inconsistently entered with either the left or right half.
+		String [] cardNames = aRawCardName.split("/");
+		final List<RawCard> rawCards = new ArrayList<RawCard>(cardNames.length);
 		
-		RawCard rawCard = cardNameToRawCardMap.get(cardName);
+		for(String cardName : cardNames) {
+			RawCard rawCard = cardNameToRawCardMap.get(cardName);
+			
+			if(rawCard != null) {						
+				rawCards.add(rawCard);
+				tempIds.add(rawCard.getTempId());
+			}
+		}		
 		
-		if(rawCard == null) {
-			rawCard = new RawCard(uniqueCardCount, packSets.get(currentPackNumber));
-			cardNameToRawCardMap.put(cardName, rawCard);
-			tempIdToCardNameMap.put(uniqueCardCount++, cardName);
+		if(CollectionUtils.isEmpty(rawCards)) {
+			for(String cardName : cardNames) {
+				RawCard rawCard = new RawCard(uniqueCardCount, packSets.get(currentPackNumber));
+				cardNameToRawCardMap.put(cardName, rawCard);
+				tempIdToCardNameMap.put(uniqueCardCount++, cardName);
+				tempIds.add(rawCard.getTempId());
+			}
 		}
 		
-		return rawCard.getTempId();
+		return tempIds;
 	}
 
 	public Map<Integer, String> getTempIdToCardNameMap() {

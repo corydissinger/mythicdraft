@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.springframework.stereotype.Service;
 
@@ -40,33 +41,52 @@ public class MtgoDeckParserService {
 			final StringBuilder cardNameBuilder = new StringBuilder();
 			final Integer cardCount = Integer.parseInt(lineParts[0]);
 			
-			for(int i = 1; i < lineParts.length; i++) {
-				cardNameBuilder.append(lineParts[i]);
-				
-				if(i + 1 != lineParts.length) {
-					cardNameBuilder.append(" ");
+			final String cardName;
+			Integer cardId;			
+			
+			final List<MutablePair<Integer, Integer>> newCardIdToCounts = new ArrayList<MutablePair<Integer, Integer>>(2);			
+			
+			if(StringUtils.contains("/", lineParts[0])) {
+				for(String aSplitCardName : lineParts[0].split("/")) {
+					if(cardNameToTempIdMap.containsKey(aSplitCardName)) {
+						cardId = cardNameToTempIdMap.get(aSplitCardName);
+					} else {
+						cardNameToTempIdMap.put(aSplitCardName, uniqueCardCount);
+						cardId = uniqueCardCount++;
+					}							
+					
+					newCardIdToCounts.add(new MutablePair<Integer, Integer>(cardId, cardCount));
 				}
-			}
-			
-			//Figure out the temporary card ID and jazz
-			final String cardName = cardNameBuilder.toString();
-			final Integer cardId;
-			
-			if(cardNameToTempIdMap.containsKey(cardName)) {
-				cardId = cardNameToTempIdMap.get(cardName);
 			} else {
-				cardNameToTempIdMap.put(cardName, uniqueCardCount);
-				cardId = uniqueCardCount++;
-			}
+				for(int i = 1; i < lineParts.length; i++) {
+					cardNameBuilder.append(lineParts[i]);
+					
+					if(i + 1 != lineParts.length) {
+						cardNameBuilder.append(" ");
+					}
+				}
+				
+				//Figure out the temporary card ID and jazz
+				cardName = cardNameBuilder.toString();				
+				
+				if(cardNameToTempIdMap.containsKey(cardName)) {
+					cardId = cardNameToTempIdMap.get(cardName);
+				} else {
+					cardNameToTempIdMap.put(cardName, uniqueCardCount);
+					cardId = uniqueCardCount++;
+				}				
+				
+				newCardIdToCounts.add(new MutablePair<Integer, Integer>(cardId, cardCount));
+			}			
 			
 			//Figure out which list it should be in
-			final MutablePair<Integer, Integer> newCardIdToCount = new MutablePair<Integer, Integer>(cardId, cardCount);
-			
-			if(isMainDeck) {
-				listOfMainDeckCards.add(newCardIdToCount);
-			} else {
-				listOfSideBoardCards.add(newCardIdToCount);
-			}
+			for(MutablePair<Integer, Integer> newCardIdToCount : newCardIdToCounts) {
+				if(isMainDeck) {
+					listOfMainDeckCards.add(newCardIdToCount);
+				} else {
+					listOfSideBoardCards.add(newCardIdToCount);
+				}
+			}			
 		}
 		
 		builder.setCardNameToTempIdMap(cardNameToTempIdMap)
