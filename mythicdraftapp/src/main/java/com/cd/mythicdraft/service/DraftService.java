@@ -246,6 +246,9 @@ public class DraftService {
 			Map<Integer, Card> tempIdToCardMap = cardDao.getTempCardIdToCardMap(rawDeck.getCardNameToTempIdMap(), setCodes);
 			
 			if(isDeckInvalid(draftId, tempIdToCardMap)) {
+				logger.error("Deck was marked as invalid with the following cards: ");
+				logger.error(tempIdToCardMap.toString());
+				logger.error("Draft id: " + draft.getId());				
 				return 0;
 			}
 			
