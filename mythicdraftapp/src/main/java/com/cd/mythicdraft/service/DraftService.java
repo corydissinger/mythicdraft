@@ -599,6 +599,7 @@ public class DraftService {
 			}
 			
 			if(!allDraftPicks.contains(deckCard.getId())) {
+				logger.error("The card that was marked as invalid is: " + deckCard.toString());
 				return true;
 			}
 		}
