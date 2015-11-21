@@ -4,11 +4,11 @@ import org.apache.commons.lang3.ArrayUtils;
 
 
 public enum IgnorableCards {
-	PLAINS("Plains", new String [] {"C15"}),
-	ISLAND("Island", new String [] {"C15"}),
-	SWAMP("Swamp", new String [] {"C15"}),
-	MOUNTAIN("Mountain", new String [] {"C15"}),
-	FOREST("Forest", new String [] {"C15"});
+	PLAINS("Plains", new String [] {""}),
+	ISLAND("Island", new String [] {""}),
+	SWAMP("Swamp", new String [] {""}),
+	MOUNTAIN("Mountain", new String [] {""}),
+	FOREST("Forest", new String [] {""});
 	
 	private IgnorableCards(final String name, final String [] setCodes) {
 		this.name = name;

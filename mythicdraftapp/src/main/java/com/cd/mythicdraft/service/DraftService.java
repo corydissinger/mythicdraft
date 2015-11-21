@@ -188,7 +188,11 @@ public class DraftService {
 											   .collect(Collectors.toList()); 
 		
 		stats.setDrafts(drafts);
-		stats.setPlayer(getJsonPlayerFromPlayer(draftDao.getPlayerById(playerId)));
+		
+		Player player = draftDao.getPlayerById(playerId);
+		JsonPlayer jsonPlayer = getJsonPlayerFromPlayer(player);
+		
+		stats.setPlayer(jsonPlayer);
 		
 		Integer gamesPlayed = 0;
 		Integer gamesWon = 0;
@@ -459,7 +463,9 @@ public class DraftService {
 		for(int i = 0; i < listOfPicksToAvailablePicks.size(); i++) {
 			Pair<Integer, List<Integer>> pickToAvailablePicks = listOfPicksToAvailablePicks.get(i);
 			DraftPackPick packPick = new DraftPackPick();
-			Card pick = cardNameToCardMap.get(tempIdToCardNameMap.get(pickToAvailablePicks.getLeft()));
+			Integer tempId = pickToAvailablePicks.getLeft();
+			String cardName = tempIdToCardNameMap.get(tempId);
+			Card pick = cardNameToCardMap.get(cardName);
 			
 			packPick.setCard(pick);
 			packPick.setCardId(pick.getId());
