@@ -1,5 +1,6 @@
 package com.cd.mythicdraft.service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,45 +10,40 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.TokenStream;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.stereotype.Service;
 
 import com.cd.mythicdraft.domain.RawDraft;
 import com.cd.mythicdraft.domain.RawDraftBuilder;
-import com.cd.mythicdraft.grammar.MTGODraftLexer;
-import com.cd.mythicdraft.grammar.MTGODraftParser;
 import com.cd.mythicdraft.grammar.impl.MTGODraftListenerImpl;
 
 @Service(value = "mtgoDraftParserService")
-public class MtgoDraftParserService {
+public class MtgoDraftParserService implements BeanFactoryAware {
 
 	private static final Logger logger = Logger.getLogger(MtgoDraftParserService.class);	
 	
-	@Autowired
-	private MTGODraftListenerImpl mtgoDraftListener;
+	private BeanFactory beanFactory;
 	
 	public RawDraft parse(InputStream mtgoDraft) throws IOException {
-		ANTLRInputStream input = new ANTLRInputStream(new InputStreamReader(mtgoDraft, StandardCharsets.UTF_8));
-		TokenStream tokens = new CommonTokenStream(new MTGODraftLexer(input));
-		MTGODraftParser parser = new MTGODraftParser(tokens);
-
-		ParseTreeWalker walker = new ParseTreeWalker();
+		BufferedReader br = new BufferedReader(new InputStreamReader(mtgoDraft, StandardCharsets.UTF_8));
 		
+		MTGODraftListenerImpl mtgoDraftListener = beanFactory.getBean(MTGODraftListenerImpl.class);
 		mtgoDraftListener.reset();
-		walker.walk(mtgoDraftListener, parser.file());
+		
+		for(String line = br.readLine(); line != null; line = br.readLine()){
+			mtgoDraftListener.handleLine(line);
+		}
 		
 		RawDraftBuilder builder = new RawDraftBuilder();
 		
-		builder.setEventDate(createEventDate())
+		builder.setEventDate(createEventDate(mtgoDraftListener.getEventDate()))
 			.setEventId(Integer.parseInt(mtgoDraftListener.getEventId()))
 			.setCardNameToRawCardMap(mtgoDraftListener.getCardNameToTempIdMap())
 			.setPackToListOfPickToAvailablePicksMap(mtgoDraftListener.getPackToListOfPickToAvailablePicksMap())
@@ -55,17 +51,15 @@ public class MtgoDraftParserService {
 			.setOtherPlayers(mtgoDraftListener.getOtherPlayers())
 			.setPackSets(mtgoDraftListener.getPackSets())
 			.setTempIdToCardNameMap(mtgoDraftListener.getTempIdToCardNameMap())
-			.setPackSizes(determinePackSizes());
+			.setPackSizes(determinePackSizes(mtgoDraftListener.getPackToListOfPickToAvailablePicksMap()));
 		
 		mtgoDraftListener.cleanup();
 		
 		return builder.build();
 	}
 	
-	private List<Integer> determinePackSizes() {
+	private List<Integer> determinePackSizes(Map<Integer, List<MutablePair<Integer, List<Integer>>>> packPickMap) {
 		final List<Integer> packSizes = new ArrayList<Integer>(3);
-		
-		Map<Integer, List<MutablePair<Integer, List<Integer>>>> packPickMap = mtgoDraftListener.getPackToListOfPickToAvailablePicksMap();
 		
 		for(List<MutablePair<Integer, List<Integer>>> packPicks : packPickMap.values()) {
 			packSizes.add(packPicks.size());
@@ -74,15 +68,18 @@ public class MtgoDraftParserService {
 		return packSizes;
 	}
 
-	private Date createEventDate() throws IOException {
-		final String eventDateString = mtgoDraftListener.getEventDate();
-		
-		if(eventDateString.length() < 10){
+	private Date createEventDate(String rawDate) throws IOException {
+		if(rawDate.length() < 10){
 			throw new IOException();
 		}
 		
 		DateTimeFormatter dtf = DateTimeFormat.forPattern("MM/dd/yyyy h:mm:ss aa");
-		DateTime eventDate = dtf.parseDateTime(eventDateString);
+		DateTime eventDate = dtf.parseDateTime(rawDate);
 		return eventDate.toDate();
+	}
+
+	@Override
+	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+		this.beanFactory = beanFactory;		
 	}	
 }

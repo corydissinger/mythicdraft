@@ -197,14 +197,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- ANTLR -->
-		<dependency>
-			<groupId>org.antlr</groupId>
-			<artifactId>antlr4</artifactId>
-			<version>4.5</version>
-		</dependency>
-
-
 	</dependencies>
 	<repositories>
 		<!-- For testing against latest Spring snapshots -->
@@ -326,19 +318,6 @@
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.2.11.M0</version>
-			</plugin>
-			<plugin>
-				<groupId>org.antlr</groupId>
-				<artifactId>antlr4-maven-plugin</artifactId>
-				<version>4.5</version>
-
-				<executions>
-					<execution>
-						<goals>
-							<goal>antlr4</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

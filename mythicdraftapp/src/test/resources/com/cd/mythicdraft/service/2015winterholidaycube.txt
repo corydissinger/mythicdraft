@@ -1,0 +1,574 @@
+Event #: 9150521
+Time:    12/16/2015 10:48:20 PM
+Players:
+    jawsthehobo
+    duhaimination
+    Deunan
+    Snuck
+--> baronvonfonz
+    Baskingben
+    msalzman
+    fatlikepig
+
+--: Umezawa's Jitte
+
+--: Umezawa's Jitte
+
+------ C03 ------ 
+
+Pack 1 pick 1:
+    Student of Warfare
+    Banishing Light
+    Pestermite
+    Ponder
+    Damnation
+    Anticipate
+    Seething Song
+    Dismember
+    Harmonize
+    Roast
+    Rakdos Signet
+    Tropical Island
+--> Umezawa's Jitte
+    Dromoka's Command
+    Kuldotha Forgemaster
+
+--: Hymn to Tourach
+
+--: Spirit of the Labyrinth
+
+Pack 1 pick 2:
+    Mardu Woe-Reaper
+    Land Tax
+    Phantasmal Image
+    Mind's Desire
+    Hymn to Tourach
+    Sheoldred, Whispering One
+    Through the Breach
+--> Spirit of the Labyrinth
+    Search for Tomorrow
+    Nature's Claim
+    Hallowed Fountain
+    Mystic Snake
+    Wurmcoil Engine
+    Fire/Ice
+
+--: Flickerwisp
+
+Pack 1 pick 3:
+--> Flickerwisp
+    Elesh Norn, Grand Cenobite
+    Daze
+    Gifts Ungiven
+    Skinrender
+    Chain Lightning
+    Joraga Treespeaker
+    Woodfall Primus
+    Temple of Malice
+    Temple of Triumph
+    Stomping Ground
+    Isochron Scepter
+    Maelstrom Pulse
+
+--: Lingering Souls
+
+Pack 1 pick 4:
+--> Lingering Souls
+    Academy Ruins
+    Palinchron
+    Thoughtseize
+    Terastodon
+    Searing Spear
+    Kargan Dragonlord
+    Fyndhorn Elves
+    Thrun, the Last Troll
+    Breeding Pool
+    Utter End
+    Watery Grave
+
+--: Stoneforge Mystic
+
+Pack 1 pick 5:
+--> Stoneforge Mystic
+    Path to Exile
+    Brainstorm
+    Hypnotic Specter
+    Inferno Titan
+    Green Sun's Zenith
+    Beast Within
+    Hinterland Harbor
+    Taiga
+    Savannah
+    Woodland Cemetery
+
+--: Spectral Procession
+
+Pack 1 pick 6:
+--> Spectral Procession
+    Zealous Conscripts
+    Mesmeric Fiend
+    Brimstone Volley
+    Goblin Guide
+    Arbor Elf
+    Garruk, Caller of Beasts
+    Plateau
+    Temple of Abandon
+    Pentad Prism
+
+--: Brimaz, King of Oreskos
+
+Pack 1 pick 7:
+--> Brimaz, King of Oreskos
+    Lightning Strike
+    Chandra's Phoenix
+    Regrowth
+    Deranged Hermit
+    Dragonskull Summit
+    Winter Orb
+    Isolated Chapel
+    Overgrown Tomb
+
+--: Phyrexian Revoker
+
+Pack 1 pick 8:
+    Seeker of the Way
+    Disfigure
+    Crater's Claws
+    Monastery Swiftspear
+    Rofellos, Llanowar Emissary
+    Sacred Foundry
+    Sin Collector
+--> Phyrexian Revoker
+
+--: Student of Warfare
+
+Pack 1 pick 9:
+--> Student of Warfare
+    Anticipate
+    Dismember
+    Harmonize
+    Roast
+    Dromoka's Command
+    Kuldotha Forgemaster
+
+--: Hymn to Tourach
+
+Pack 1 pick 10:
+    Mardu Woe-Reaper
+    Phantasmal Image
+--> Hymn to Tourach
+    Through the Breach
+    Nature's Claim
+    Mystic Snake
+
+--: Skinrender
+
+Pack 1 pick 11:
+--> Skinrender
+    Chain Lightning
+    Woodfall Primus
+    Isochron Scepter
+    Maelstrom Pulse
+
+--: Thrun, the Last Troll
+
+Pack 1 pick 12:
+    Academy Ruins
+    Searing Spear
+    Kargan Dragonlord
+--> Thrun, the Last Troll
+
+--: Savannah
+
+Pack 1 pick 13:
+    Beast Within
+    Hinterland Harbor
+--> Savannah
+
+--: Arbor Elf
+
+Pack 1 pick 14:
+    Brimstone Volley
+--> Arbor Elf
+
+--: Deranged Hermit
+
+Pack 1 pick 15:
+--> Deranged Hermit
+
+--: Blade Splicer
+
+------ C03 ------ 
+
+Pack 2 pick 1:
+--> Blade Splicer
+    Baneslayer Angel
+    Counterspell
+    Careful Study
+    Hero's Downfall
+    Animate Dead
+    Lightning Mauler
+    Wildfire
+    Primeval Titan
+    Thragtusk
+    Tundra
+    Kiora, the Crashing Wave
+    Scrubland
+    Tezzeret, Agent of Bolas
+    Sundering Titan
+
+--: Parallax Wave
+
+Pack 2 pick 2:
+    Cloudgoat Ranger
+--> Parallax Wave
+    Mana Leak
+    Shriekmaw
+    Buried Alive
+    Sneak Attack
+    Magus of the Moon
+    Birds of Paradise
+    Whisperwood Elemental
+    Dreadbore
+    Ulamog, the Infinite Gyre
+    Coalition Relic
+    Spellskite
+    Deathrite Shaman
+
+--: Strip Mine
+
+Pack 2 pick 3:
+    Isamaru, Hound of Konda
+    Jace Beleren
+    Dig Through Time
+    Inquisition of Kozilek
+    Rishadan Port
+    Young Pyromancer
+--> Strip Mine
+    Wolfir Silverheart
+    Venser, the Sojourner
+    Simic Signet
+    Dragonlord Atarka
+    Scroll Rack
+    Ral Zarek
+
+--: Leonin Arbiter
+
+Pack 2 pick 4:
+--> Leonin Arbiter
+    Honor of the Pure
+    Sower of Temptation
+    Repeal
+    Dark Petition
+    Massacre Wurm
+    Outpost Siege
+    Sakura-Tribe Elder
+    Mishra's Factory
+    Bloodbraid Elf
+    Hangarback Walker
+    Pernicious Deed
+
+--: Mana Vault
+
+Pack 2 pick 5:
+    Porcelain Legionnaire
+    Jace, Vryn's Prodigy
+    Turnabout
+    Vampire Nighthawk
+    Splinter Twin
+    Opposition
+--> Mana Vault
+    Emrakul, the Aeons Torn
+    Gruul Signet
+    Pithing Needle
+    Dack Fayden
+
+--: Balance
+
+Pack 2 pick 6:
+    Ranger of Eos
+--> Balance
+    Jace, Architect of Thought
+    Gitaxian Probe
+    Brain Maggot
+    Living Death
+    Eidolon of the Great Revel
+    Garruk Relentless
+    Dragonlord Dromoka
+    Sphinx of the Steel Wind
+
+--: Karakas
+
+Pack 2 pick 7:
+    Soldier of the Pantheon
+--> Karakas
+    The Abyss
+    Imperial Seal
+    Dualcaster Mage
+    Siege-Gang Commander
+    Supreme Verdict
+    Rootbound Crag
+    Duplicant
+
+--: Tangle Wire
+
+Pack 2 pick 8:
+    Reveillark
+    Tezzeret the Seeker
+    Liliana, Heretical Healer
+    Searing Blaze
+    Elves of Deep Shadow
+    Vengevine
+--> Tangle Wire
+    Drowned Catacomb
+
+--: Scrubland
+
+Pack 2 pick 9:
+    Baneslayer Angel
+    Hero's Downfall
+    Lightning Mauler
+    Primeval Titan
+    Thragtusk
+--> Scrubland
+    Tezzeret, Agent of Bolas
+
+--: Buried Alive
+
+Pack 2 pick 10:
+    Cloudgoat Ranger
+    Shriekmaw
+--> Buried Alive
+    Magus of the Moon
+    Whisperwood Elemental
+    Dreadbore
+
+--: Rishadan Port
+
+Pack 2 pick 11:
+    Isamaru, Hound of Konda
+    Inquisition of Kozilek
+--> Rishadan Port
+    Venser, the Sojourner
+    Scroll Rack
+
+--: Massacre Wurm
+
+Pack 2 pick 12:
+    Honor of the Pure
+--> Massacre Wurm
+    Mishra's Factory
+    Bloodbraid Elf
+
+--: Porcelain Legionnaire
+
+Pack 2 pick 13:
+--> Porcelain Legionnaire
+    Turnabout
+    Vampire Nighthawk
+
+--: Brain Maggot
+
+Pack 2 pick 14:
+--> Brain Maggot
+    Dragonlord Dromoka
+
+--: The Abyss
+
+Pack 2 pick 15:
+--> The Abyss
+
+--: Batterskull
+
+------ C03 ------ 
+
+Pack 3 pick 1:
+    Exalted Angel
+    Council's Judgment
+    Deceiver Exarch
+    Heartbeat of Spring
+    Toxic Deluge
+    Liliana of the Veil
+    Goblin Welder
+    Jackal Pup
+    Oracle of Mul Daya
+    Den Protector
+    Geist of Saint Traft
+    Kozilek, Butcher of Truth
+--> Batterskull
+    Memory Jar
+    Bayou
+
+--: Ravages of War
+
+--: Ravages of War
+
+Pack 3 pick 2:
+    Mirran Crusader
+--> Ravages of War
+    Venser, Shaper Savant
+    Gush
+    Nezumi Shortfang
+    Firebolt
+    Stromkirk Noble
+    Sylvan Library
+    Wall of Blossoms
+    Tolarian Academy
+    Mutavault
+    Sword of Feast and Famine
+    Shadowmage Infiltrator
+    Abrupt Decay
+
+--: Gideon Jura
+
+--: Ophiomancer
+
+--: Ophiomancer
+
+Pack 3 pick 3:
+    Banisher Priest
+    Sun Titan
+    Augur of Bolas
+    Gideon Jura
+--> Ophiomancer
+    Guttersnipe
+    Stormbreath Dragon
+    Pattern of Rebirth
+    Terminate
+    Clifftop Retreat
+    Lotus Bloom
+    Temple Garden
+    Temple of Malady
+
+--: Sword of Fire and Ice
+
+Pack 3 pick 4:
+    War Priest of Thune
+    Unexpectedly Absent
+    Man-o'-War
+    Ultimate Price
+    Yawgmoth's Bargain
+    Mizzium Mortars
+    Thundermaw Hellkite
+    Master of the Wild Hunt
+    Lodestone Golem
+--> Sword of Fire and Ice
+    Polluted Delta
+    Izzet Signet
+
+--: Elspeth, Knight-Errant
+
+Pack 3 pick 5:
+    Ajani, Caller of the Pride
+--> Elspeth, Knight-Errant
+    True-Name Nemesis
+    Nekrataal
+    Rift Bolt
+    Flametongue Kavu
+    Avacyn's Pilgrim
+    Tarmogoyf
+    Temple of Enlightenment
+    Trygon Predator
+    Mindslaver
+
+--: Journey to Nowhere
+
+Pack 3 pick 6:
+    Secure the Wastes
+--> Journey to Nowhere
+    Meloku the Clouded Mirror
+    Gatekeeper of Malakir
+    Shallow Grave
+    Magma Jet
+    Natural Order
+    Acidic Slime
+    Boros Reckoner
+    Xenagos, the Reveler
+
+--: Armageddon
+
+Pack 3 pick 7:
+    Wall of Omens
+--> Armageddon
+    Lifebane Zombie
+    Koth of the Hammer
+    Yavimaya Elder
+    Avenger of Zendikar
+    Brago, King Eternal
+    Vindicate
+    Temple of Plenty
+
+--: Smokestack
+
+Pack 3 pick 8:
+    Weathered Wayfarer
+    Moat
+    Puppeteer Clique
+    Managorger Hydra
+    Indrik Stomphowler
+--> Smokestack
+    Dragonlord Silumgar
+    Izzet Charm
+
+--: Exalted Angel
+
+Pack 3 pick 9:
+--> Exalted Angel
+    Council's Judgment
+    Heartbeat of Spring
+    Toxic Deluge
+    Liliana of the Veil
+    Goblin Welder
+    Jackal Pup
+
+--: Mirran Crusader
+
+--: Nezumi Shortfang
+
+--: Mirran Crusader
+
+--: Nezumi Shortfang
+
+Pack 3 pick 10:
+    Mirran Crusader
+--> Nezumi Shortfang
+    Stromkirk Noble
+    Sylvan Library
+    Mutavault
+    Shadowmage Infiltrator
+
+--: Banisher Priest
+
+Pack 3 pick 11:
+--> Banisher Priest
+    Sun Titan
+    Guttersnipe
+    Pattern of Rebirth
+    Temple Garden
+
+--: Unexpectedly Absent
+
+Pack 3 pick 12:
+    War Priest of Thune
+--> Unexpectedly Absent
+    Master of the Wild Hunt
+    Lodestone Golem
+
+--: Tarmogoyf
+
+Pack 3 pick 13:
+    Ajani, Caller of the Pride
+    Avacyn's Pilgrim
+--> Tarmogoyf
+
+--: Boros Reckoner
+
+Pack 3 pick 14:
+    Gatekeeper of Malakir
+--> Boros Reckoner
+
+--: Lifebane Zombie
+
+Pack 3 pick 15:
+--> Lifebane Zombie
+

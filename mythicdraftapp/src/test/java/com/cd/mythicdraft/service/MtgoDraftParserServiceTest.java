@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -25,18 +26,19 @@ public class MtgoDraftParserServiceTest {
 	@Configuration
 	static class ContextConfiguration {
 		@Bean
-		public MtgoDraftParserService mtgoDraftParserService() {
-			MtgoDraftParserService mtgoDraftParserService = new MtgoDraftParserService();
-			return mtgoDraftParserService;
-		}
-		
-		@Bean
+		@Scope("prototype")
 		public MTGODraftListenerImpl mtgoDraftListener() {
 			MTGODraftListenerImpl mtgoDraftListener = new MTGODraftListenerImpl();
 			return mtgoDraftListener;
 		}
-	}
-	
+		
+		@Bean
+		public MtgoDraftParserService mtgoDraftParserService() {
+			MtgoDraftParserService ps = new MtgoDraftParserService();
+			return ps;
+		}
+	}	
+
 	@Autowired
 	private MtgoDraftParserService mtgoDraftParserService;
 	
@@ -64,10 +66,6 @@ public class MtgoDraftParserServiceTest {
 		assertTrue(!aDraft.getActivePlayer().isEmpty());
 		assertTrue(aDraft.getPackSets().size() == 3);
 		assertTrue(aDraft.getEventId() == 8305539);		
-		
-		String shouldBeFrf = aDraft.getPackSets().get(2);
-		
-		assertTrue("FRF".equals(shouldBeFrf));
 		
 		System.out.println(aDraft.toString());		
 	}	
@@ -114,6 +112,20 @@ public class MtgoDraftParserServiceTest {
 		
 		System.out.println(aDraft.toString());		
 	}	
+
+	@Test	
+	public void testBuggedHolidayCube() throws Exception{
+		InputStream holidayCubeDraftStream = loadResource("2015winterholidaycube.txt");
+		
+		RawDraft aDraft = mtgoDraftParserService.parse(holidayCubeDraftStream);
+		
+		assertTrue(aDraft.getOtherPlayers().size() == 7);
+		assertTrue(!aDraft.getActivePlayer().isEmpty());
+		assertTrue(aDraft.getPackSets().size() == 3);
+		assertTrue(aDraft.getEventId() == 9150521);		
+		
+		System.out.println(aDraft.toString());		
+	}		
 	
 	private InputStream loadResource(String resourceName) throws IOException {
 		return this.getClass().getResourceAsStream(resourceName);
