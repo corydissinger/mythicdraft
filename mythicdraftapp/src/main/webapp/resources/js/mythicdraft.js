@@ -894,17 +894,26 @@ var Draft = React.createClass({
 		} 
 	
 		var pick = this.state.data.pick;	
-		var isPickShown = this.state.isPickShown;
-		var available = this.state.data.available;
+		var isPickShown = this.state.isPickShown;		
 		var pickNumber = this.state.pickNumber;
 		var packNumber = this.state.currentPack;
 		var packs = this.state.packs;
+		
+		var available = this.state.data.available.slice(0, 5);
+		var availableSecond = this.state.data.available.slice(5, 10);		
+		var availableThird = this.state.data.available.slice(10, 15);				
 		
 		return (
 			<div className="container-fluid">
 				<DraftControls draft={this} />
 				<h1>Pack {Number(packNumber) + 1} Pick {Number(pickNumber) + 1}</h1>
-				<CardRow ref="cardRow" cards={available} pick={pick} isPickShown={isPickShown} />
+				
+				<div className="well">
+					<CardRow ref="cardRow" cards={available} pick={pick} isPickShown={isPickShown} />
+					<CardRow ref="cardTwo" cards={availableSecond} pick={pick} isPickShown={isPickShown} />				
+					<CardRow ref="cardThree" cards={availableThird} pick={pick} isPickShown={isPickShown} />								
+				</div>
+				
 				<h1>All Player Picks</h1>
 				<AllPlayerPicks pickNumber={pickNumber} packNumber={packNumber} draftId={this.props.params.draftId} packs={packs} />
 			</div>
@@ -998,7 +1007,7 @@ var CardRow = React.createClass({
 		var counter = 0;
 		
 		return (
-			<div className="row top-buffer no-pad well">				
+			<div className="row top-buffer no-pad">				
 				{cards.map(function(aCard) {
 					
 					return <div className={counter++ % 5 == 0 ? "col-md-offset-1 col-md-2 col-sm-3 col-xs-4" : "col-md-2 col-sm-3 col-xs-4"}>
@@ -1015,17 +1024,13 @@ var CardRow = React.createClass({
 
 var Card = React.createClass({
 	render: function() {
-		var classString;
+		var classString = 'img-responsive card-img';				
 	
 		if(this.props.isPickShown) {
-			if(this.props.isPick) {
-				classString = 'img-responsive';
-			} else {
-				classString = 'img-responsive card-not-picked-animation';
+			if(!this.props.isPick) {
+				classString = 'img-responsive card-img card-not-picked-animation';
 			}
-		} else {
-			classString = 'img-responsive';
-		}
+		} 
 	
 		if(this.props.extraClass) {
 			classString += ' ' + this.props.extraClass;
@@ -1077,6 +1082,7 @@ var AllPlayerPicks = React.createClass({
 								<Card multiverseId={aCardId} 
 									  isPick={isPick}
 									  isPickShown={true}
+									  extraClass="card-img-small"
 									  key={aCardId + index} />
 							</div>;
 				})}

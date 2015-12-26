@@ -72,6 +72,20 @@
   padding-left:0;
 }
 
+.card-img {
+  border: none;
+  border-radius: 13px;
+  -webkit-border-radius: 13px;
+  -moz-border-radius: 13px;
+}
+
+.card-img-small {
+  border: none;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+}
+
 /* X Small Stuff */
 @media all and (max-width: 767px) {
 	.deck-card-column {
