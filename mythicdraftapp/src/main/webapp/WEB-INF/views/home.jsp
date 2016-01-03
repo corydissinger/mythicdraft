@@ -33,7 +33,7 @@
 			
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/1.2.0/superagent.min.js"></script>					
 					
-			<link rel="stylesheet" media="all" href="resources/css/app.css"/>
+			<link rel="stylesheet" media="all" href="resources/css/app-${projectVersion}.css"/>
 
 			<%-- Analytics --%>
 			<script>
@@ -58,12 +58,16 @@
 	
 	<c:choose>
 		<c:when test="${development}">
-			<script type="text/jsx" src="resources/js/mythicdraft.js"></script>
+			<script type="text/jsx" src="resources/js/draft-gui.js"></script>
+			<script type="text/jsx" src="resources/js/deck-gui.js"></script>
+			<script type="text/jsx" src="resources/js/player-gui.js"></script>
+			<script type="text/jsx" src="resources/js/mythicdraft.js"></script>			
+												
 			<script src="resources/js/bootstrap-toggle-shim.js"></script>
 			<script src="resources/js/card-deck-organizer.js"></script>
 		</c:when>
 		<c:otherwise>
-			<script src="resources/js/app.js"></script>		
+			<script src="resources/js/app-${projectVersion}.js"></script>		
 		</c:otherwise>
 	</c:choose>	
 	

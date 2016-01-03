@@ -8,7 +8,10 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				files: {
-					'target/mythic-draft/resources/js/mythicdraft-babeled.js': 'src/main/webapp/resources/js/mythicdraft.js'
+					'target/mythic-draft/resources/js/mythicdraft-babeled.js': 'src/main/webapp/resources/js/mythicdraft.js',
+					'target/mythic-draft/resources/js/deck-gui-babeled.js': 'src/main/webapp/resources/js/deck-gui.js',
+					'target/mythic-draft/resources/js/draft-gui-babeled.js': 'src/main/webapp/resources/js/draft-gui.js',
+					'target/mythic-draft/resources/js/player-gui-babeled.js': 'src/main/webapp/resources/js/player-gui.js'
 				}
 			}
 		},
@@ -22,7 +25,10 @@ module.exports = function(grunt) {
  	    uglify: {
 			dist: {
 				files: {
-					'target/mythic-draft/resources/js/app.js': ['target/mythic-draft/resources/js/mythicdraft-babeled.js', 
+					'target/mythic-draft/resources/js/app.js': ['target/mythic-draft/resources/js/player-gui-babeled.js',
+																'target/mythic-draft/resources/js/deck-gui-babeled.js',
+																'target/mythic-draft/resources/js/draft-gui-babeled.js',
+																'target/mythic-draft/resources/js/mythicdraft-babeled.js', 
 																'src/main/webapp/resources/js/bootstrap-toggle-shim.js',
 																'src/main/webapp/resources/js/card-deck-organizer.js']
 				}

@@ -2,9 +2,11 @@ package com.cd.mythicdraft.config;
 
 import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -20,6 +22,9 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(basePackages = "com.cd.mythicdraft")
 public class AppConfig extends WebMvcConfigurerAdapter {
 
+	@Autowired
+	private Environment environment;	
+	
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -48,6 +53,15 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     	interceptor.setCacheMappings(cacheMappings);
 		return interceptor;
 	}    
+    
+    @Bean
+    public ApplicationProperties appProperties() {
+    	ApplicationProperties appProperties = new ApplicationProperties();
+    	
+    	appProperties.setProjectVersion(environment.getRequiredProperty("project.version"));
+    	
+    	return appProperties;
+    }
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
