@@ -89,43 +89,43 @@
 /* X Small Stuff */
 @media all and (max-width: 767px) {
 	.deck-card-column {
-		margin-top: 90px;
+		margin-top: 190px;
 	}
 
 	.deck-card {
-		margin-top: -90px;
+		margin-top: -190px;
 	}
 }
 
 /* Small Stuff */
 @media all and (min-width: 768px) {
 	.deck-card-column {
-		margin-top: 140px;
+		margin-top: 240px;
 	}
 
 	.deck-card {
-		margin-top: -140px;
+		margin-top: -240px;
 	}
 }
 
 /* Medium Stuff */
 @media all and (min-width: 992px) {
 	.deck-card-column {
-		margin-top: 160px;
+		margin-top: 260px;
 	}
 
 	.deck-card {
-		margin-top: -160px;
+		margin-top: -260px;
 	}
 }
 
 /* Big stuff */
 @media all and (min-width: 1200px) {
 	.deck-card-column {
-		margin-top: 250px;
+		margin-top: 350px;
 	}
 
 	.deck-card {
-		margin-top: -250px;
+		margin-top: -350px;
 	}
 }

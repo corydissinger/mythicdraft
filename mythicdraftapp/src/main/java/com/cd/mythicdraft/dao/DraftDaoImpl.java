@@ -11,6 +11,7 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -24,10 +25,12 @@ import com.cd.mythicdraft.model.Draft;
 import com.cd.mythicdraft.model.DraftPack;
 import com.cd.mythicdraft.model.DraftPackPick;
 import com.cd.mythicdraft.model.DraftPlayer;
+import com.cd.mythicdraft.model.Format;
 import com.cd.mythicdraft.model.Player;
+import com.cd.mythicdraft.model.Set;
 
 @Repository(value = "draftDao")
-public class DraftDaoImpl extends AbstractDAO implements DraftDAO {
+public class DraftDaoImpl extends AbstractDao implements DraftDao {
 
 	@Override
 	@Transactional
@@ -61,6 +64,14 @@ public class DraftDaoImpl extends AbstractDAO implements DraftDAO {
 			session.persist(draftPack);
 		}
 	}
+
+	@Override
+	@Transactional
+	public void updateDraft(Draft draft) {
+		Session session = getCurrentSession();
+		
+		session.merge(draft);
+	}	
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -282,6 +293,30 @@ public class DraftDaoImpl extends AbstractDAO implements DraftDAO {
 		final Deck deck = (Deck) crit.uniqueResult();
 		
 		return deck;
+	}
+
+	@Override
+	public Format getFormatByPacks(Set firstPack, Set secondPack, Set thirdPack) {
+		Session session = getCurrentSession();
+		
+		Query query = session.createSQLQuery("SELECT F.ID, F.FIRST_PACK, F.SECOND_PACK, F.THIRD_PACK "
+				 										 + "FROM FORMAT F "
+				 										+ "WHERE F.FIRST_PACK = :firstPack AND F.SECOND_PACK = :secondPack AND F.THIRD_PACK = :thirdPack")
+				 										.addEntity(Format.class)
+				 										.setInteger("firstPack", firstPack.getId())
+				 										.setInteger("secondPack", secondPack.getId())
+				 										.setInteger("thirdPack", thirdPack.getId());
+		
+		Format theFormat = (Format) query.uniqueResult();
+		
+		return theFormat;
+	}
+
+	@Override
+	public void addFormat(Format format) {
+		Session session = getCurrentSession();
+		
+		session.persist(format);
 	}	
 	
 }

@@ -66,7 +66,11 @@ public class Draft implements Serializable {
 	
 	@OneToOne(mappedBy = "draft", optional = true)
 	private Deck deck;
-	
+
+	//Attempted to make this ManyToOne, but Hibernate is a garbage JPA provider that I need to move away from
+	@Column(name = "FORMAT_ID")
+	private Integer formatId;
+
 	public Integer getId() {
 		return id;
 	}
@@ -160,5 +164,14 @@ public class Draft implements Serializable {
 
 	public void setDeck(Deck deck) {
 		this.deck = deck;
-	}	
+	}
+
+	public Integer getFormatId() {
+		return formatId;
+	}
+
+	public void setFormatId(Integer formatId) {
+		this.formatId = formatId;
+	}
+
 }

@@ -5,16 +5,18 @@ import java.util.List;
 import java.util.Map;
 
 import com.cd.mythicdraft.exception.DuplicateDraftException;
-import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Deck;
 import com.cd.mythicdraft.model.Draft;
 import com.cd.mythicdraft.model.DraftPackPick;
+import com.cd.mythicdraft.model.Format;
 import com.cd.mythicdraft.model.Player;
 import com.cd.mythicdraft.model.Set;
 
-public interface DraftDAO {
+public interface DraftDao {
 	
 	public void addDraft(Draft draft) throws DuplicateDraftException;
+	
+	public void updateDraft(Draft draft);
 	
 	public Map<String, Player> getPlayersByName(final Collection<String> playerNames);
 
@@ -41,4 +43,8 @@ public interface DraftDAO {
 	public Integer addDeck(Deck convertRawDeck) throws DuplicateDraftException;
 
 	public Deck getDeckById(Integer deckId);
+	
+	public Format getFormatByPacks(Set packeOne, Set packTwo, Set packThree);
+
+	public void addFormat(Format format);
 }

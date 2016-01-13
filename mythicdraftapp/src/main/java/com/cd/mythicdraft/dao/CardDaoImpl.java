@@ -19,7 +19,7 @@ import com.cd.mythicdraft.model.PairedSets;
 import com.cd.mythicdraft.model.Set;
 
 @Repository(value = "cardDao")
-public class CardDaoImpl extends AbstractDAO implements CardDao {
+public class CardDaoImpl extends AbstractDao implements CardDao {
 
 	@Override
 	@Transactional	

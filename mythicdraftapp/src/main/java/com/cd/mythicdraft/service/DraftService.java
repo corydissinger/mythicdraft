@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.cd.mythicdraft.dao.CardDao;
-import com.cd.mythicdraft.dao.DraftDAO;
+import com.cd.mythicdraft.dao.DraftDao;
 import com.cd.mythicdraft.domain.RawCard;
 import com.cd.mythicdraft.domain.RawDeck;
 import com.cd.mythicdraft.domain.RawDraft;
@@ -57,10 +57,10 @@ public class DraftService {
 
 	private static final Logger logger = Logger.getLogger(DraftService.class);	
 	
-	private DraftDAO draftDao;
+	private DraftDao draftDao;
 
     @Autowired
-    public void setDraftDao(final DraftDAO draftDao) {
+    public void setDraftDao(final DraftDao draftDao) {
         this.draftDao = draftDao;
     }
     

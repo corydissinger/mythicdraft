@@ -35,7 +35,7 @@ var CardColumn = React.createClass({
 		}
 	
 		return (
-			<div className="col-xs-4 col-md-2 deck-card-column">
+			<div className="col-xs-3 col-md-1 deck-card-column">
 				{cards.map(function(aCard) {
 					return <Card multiverseId={aCard.multiverseId} extraClass={"deck-card"} />;
 				})}
