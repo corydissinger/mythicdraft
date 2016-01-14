@@ -14,15 +14,8 @@ import com.cd.mythicdraft.model.FormatPickStats;
 public class StatsDaoImpl extends AbstractDao implements StatsDao {
 
 	@Override
-	public void addFormat(Format aFormat) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void addFormatPickStats(FormatPickStats aFormatPickStats) {
-		// TODO Auto-generated method stub
-		
+		getCurrentSession().persist(aFormatPickStats);
 	}
 
 	@Override
@@ -37,11 +30,9 @@ public class StatsDaoImpl extends AbstractDao implements StatsDao {
 													   + "   AND D.FORMAT_ID = :formatId").setInteger("cardId", aCard.getId())
 													   									  .setInteger("formatId", aFormat.getId());
 		
-		List<Double> theAverage = query.list();
+		BigDecimal theAverage = (BigDecimal) query.uniqueResult();
 		
-		BigDecimal theValue = new BigDecimal(theAverage.get(0));
-		
-		return theValue;
+		return theAverage;
 	}
 
 }

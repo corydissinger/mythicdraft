@@ -2,6 +2,7 @@ package com.cd.mythicdraft.config;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -21,12 +22,17 @@ import org.springframework.context.annotation.Configuration;
 
 import com.cd.mythicdraft.batch.DraftFormatProcessor;
 import com.cd.mythicdraft.batch.DraftFormatWriter;
+import com.cd.mythicdraft.batch.StatsProcessor;
 import com.cd.mythicdraft.batch.FormatProcessor;
 import com.cd.mythicdraft.batch.FormatWriter;
+import com.cd.mythicdraft.batch.StatsWriter;
 import com.cd.mythicdraft.batch.jdbc.DraftRowMapper;
+import com.cd.mythicdraft.batch.jdbc.StatsRowMapper;
 import com.cd.mythicdraft.dao.StatsSql;
+import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Draft;
 import com.cd.mythicdraft.model.Format;
+import com.cd.mythicdraft.model.FormatPickStats;
 
 @Configuration
 @EnableBatchProcessing
@@ -111,5 +117,41 @@ public class StatsConfig {
     @Bean
     protected ItemWriter<Draft> migrateDraftWriter() {
 		return new DraftFormatWriter();
-	}    
+	}
+    
+    //End Format Migration
+
+    @Bean
+    protected Job statsJob() {
+    	return jobs.get("statsJob").start(statsStep()).build();
+    }
+    
+    @Bean
+    protected Step statsStep() {
+    	return steps.get("statsStep")
+    			.<ImmutablePair<Card, Format>, FormatPickStats> chunk(10)
+    			.reader(statsReader())
+    			.processor(statsProcessor())
+    			.writer(statsWriter())
+    			.build();
+    }    
+    
+	@Bean
+    protected ItemReader<ImmutablePair<Card, Format>> statsReader() {
+    	JdbcCursorItemReader<ImmutablePair<Card, Format>> itemReader = new JdbcCursorItemReader<ImmutablePair<Card, Format>>();
+    	itemReader.setDataSource(dataSource);
+    	itemReader.setSql(StatsSql.GET_FORMATS_AND_CARDS);
+    	itemReader.setRowMapper(new StatsRowMapper());
+    	return itemReader;
+    }    
+    
+	@Bean
+    protected ItemProcessor<ImmutablePair<Card, Format>, FormatPickStats> statsProcessor() {
+    	return new StatsProcessor();
+    }
+	
+	@Bean
+	protected ItemWriter<FormatPickStats> statsWriter() {
+		return new StatsWriter();
+	}
 }

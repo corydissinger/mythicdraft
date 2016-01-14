@@ -1,5 +1,7 @@
 package com.cd.mythicdraft.batch;
 
+import java.math.BigDecimal;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +13,25 @@ import com.cd.mythicdraft.model.Format;
 import com.cd.mythicdraft.model.FormatPickStats;
 
 @Component("draftStatsProcessor")
-public class DraftStatsProcessor implements ItemProcessor<ImmutablePair<Card, Format>, FormatPickStats> {
+public class StatsProcessor implements ItemProcessor<ImmutablePair<Card, Format>, FormatPickStats> {
 
 	@Autowired
 	private StatsDao statsDao;
 	
 	@Override
 	public FormatPickStats process(ImmutablePair<Card, Format> aCardAndFormat) throws Exception {
+		final BigDecimal theAverage = statsDao.getCardFormatAverage(aCardAndFormat.getLeft(), aCardAndFormat.getRight());
+		
+		if(theAverage != null) {
+			FormatPickStats stats = new FormatPickStats();
+			
+			stats.setAvgPick(theAverage);
+			stats.setCard(aCardAndFormat.getLeft());
+			stats.setFormat(aCardAndFormat.getRight());
+			
+			return stats;
+		}
+		
 		return null;
 	}
 

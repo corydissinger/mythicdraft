@@ -8,8 +8,6 @@ import com.cd.mythicdraft.model.FormatPickStats;
 
 public interface StatsDao {
 
-	public void addFormat(final Format aFormat);
-	
 	public void addFormatPickStats(final FormatPickStats aFormatPickStats);
 	
 	public BigDecimal getCardFormatAverage(final Card aCard, final Format aFormat);
