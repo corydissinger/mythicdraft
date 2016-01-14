@@ -11,7 +11,6 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -96,7 +95,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	@Override
 	@Transactional(readOnly = true)	
 	public Collection<Draft> getRecentDrafts(final Integer numberOfDrafts, final Integer pageNumber) {
-		Query query = getCurrentSession().createSQLQuery("SELECT ID, NAME, CREATED, EVENT_ID, EVENT_DATE, WINS, LOSSES FROM DRAFT ORDER BY CREATED DESC").addEntity(Draft.class);
+		Query query = getCurrentSession().createSQLQuery("SELECT ID, NAME, CREATED, EVENT_ID, EVENT_DATE, WINS, LOSSES, FORMAT_ID FROM DRAFT ORDER BY CREATED DESC").addEntity(Draft.class);
 		
 		query.setMaxResults(numberOfDrafts);
 		query.setFirstResult(pageNumber * 10);

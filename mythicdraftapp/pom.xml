@@ -58,13 +58,6 @@
 			<version>${org.springframework.batch.version}</version>
 		</dependency>
 
-		<!-- Quartz -->
-		<dependency>
-			<groupId>org.quartz-scheduler</groupId>
-			<artifactId>quartz</artifactId>
-			<version>2.2.1</version>
-		</dependency>
-
 		<!-- Hibernate and Database stuff -->
 		<dependency>
 			<groupId>org.hibernate</groupId>

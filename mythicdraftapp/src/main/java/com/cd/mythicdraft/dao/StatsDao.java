@@ -11,4 +11,6 @@ public interface StatsDao {
 	public void addFormatPickStats(final FormatPickStats aFormatPickStats);
 	
 	public BigDecimal getCardFormatAverage(final Card aCard, final Format aFormat);
+	
+	public FormatPickStats getFormatPickStats(final Card aCard, final Format aFormat);
 }

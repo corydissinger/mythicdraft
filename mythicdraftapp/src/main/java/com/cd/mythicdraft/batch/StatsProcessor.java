@@ -20,14 +20,21 @@ public class StatsProcessor implements ItemProcessor<ImmutablePair<Card, Format>
 	
 	@Override
 	public FormatPickStats process(ImmutablePair<Card, Format> aCardAndFormat) throws Exception {
-		final BigDecimal theAverage = statsDao.getCardFormatAverage(aCardAndFormat.getLeft(), aCardAndFormat.getRight());
+		Card theCard = aCardAndFormat.getLeft();
+		Format theFormat = aCardAndFormat.getRight();
+		
+		final BigDecimal theAverage = statsDao.getCardFormatAverage(theCard, theFormat);
+		
+		FormatPickStats stats = statsDao.getFormatPickStats(theCard, theFormat);
 		
 		if(theAverage != null) {
-			FormatPickStats stats = new FormatPickStats();
+			if(stats == null || stats.getId() == null || stats.getId() < 1) {
+				stats = new FormatPickStats();				
+			}
 			
 			stats.setAvgPick(theAverage);
-			stats.setCard(aCardAndFormat.getLeft());
-			stats.setFormat(aCardAndFormat.getRight());
+			stats.setCard(theCard);
+			stats.setFormat(theFormat);
 			
 			return stats;
 		}

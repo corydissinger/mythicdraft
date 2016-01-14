@@ -1,9 +1,10 @@
 package com.cd.mythicdraft.dao;
 
 import java.math.BigDecimal;
-import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.cd.mythicdraft.model.Card;
@@ -15,7 +16,12 @@ public class StatsDaoImpl extends AbstractDao implements StatsDao {
 
 	@Override
 	public void addFormatPickStats(FormatPickStats aFormatPickStats) {
-		getCurrentSession().persist(aFormatPickStats);
+		if(aFormatPickStats.getId() == null || aFormatPickStats.getId() == 0) {
+			getCurrentSession().persist(aFormatPickStats);	
+		} else {
+			getCurrentSession().merge(aFormatPickStats);
+		}
+		
 	}
 
 	@Override
@@ -33,6 +39,16 @@ public class StatsDaoImpl extends AbstractDao implements StatsDao {
 		BigDecimal theAverage = (BigDecimal) query.uniqueResult();
 		
 		return theAverage;
+	}
+
+	@Override
+	public FormatPickStats getFormatPickStats(Card aCard, Format aFormat) {
+		Criteria crit = getCurrentSession().createCriteria(FormatPickStats.class);
+
+		crit.add(Restrictions.eq("cardId", aCard.getId()));
+		crit.add(Restrictions.eq("formatId", aFormat.getId()));
+				
+		return (FormatPickStats) crit.uniqueResult();
 	}
 
 }
