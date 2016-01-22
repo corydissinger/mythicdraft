@@ -1,11 +1,13 @@
 package com.cd.mythicdraft.dao;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Format;
@@ -49,6 +51,35 @@ public class StatsDaoImpl extends AbstractDao implements StatsDao {
 		crit.add(Restrictions.eq("formatId", aFormat.getId()));
 				
 		return (FormatPickStats) crit.uniqueResult();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Format> getFormats() {
+		Query query = getCurrentSession().createSQLQuery("SELECT DISTINCT FORMAT.ID, FORMAT.FIRST_PACK, FORMAT.SECOND_PACK, FORMAT.THIRD_PACK "
+														+ " FROM FORMAT FORMAT").addEntity(Format.class);
+		
+		List<Format> formats = (List<Format>) query.list();
+		
+		return formats;
+	}
+
+	@Override
+	public Format getFormat(int formatId) {
+		Criteria crit = getCurrentSession().createCriteria(Format.class);
+
+		crit.add(Restrictions.eq("id", formatId));
+				
+		return (Format) crit.uniqueResult();
+	}
+
+	@Override
+	public List<FormatPickStats> getFormatPickStats(int formatId) {
+		Criteria crit = getCurrentSession().createCriteria(FormatPickStats.class);
+
+		crit.add(Restrictions.eq("formatId", formatId));
+				
+		return (List<FormatPickStats>) crit.list();
 	}
 
 }

@@ -229,7 +229,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	@Override
 	@Transactional(readOnly = true)	
 	public Collection<Draft> getDraftsByPlayerId(Integer playerId) {
-		Query query = getCurrentSession().createSQLQuery("SELECT D.ID, D.NAME, D.CREATED, D.EVENT_ID, D.EVENT_DATE, D.WINS, D.LOSSES "
+		Query query = getCurrentSession().createSQLQuery("SELECT D.ID, D.NAME, D.CREATED, D.EVENT_ID, D.EVENT_DATE, D.WINS, D.LOSSES, D.FORMAT_ID "
 														 + "FROM DRAFT D "
 														 + "INNER JOIN DRAFT_PLAYER P "
 														 + "   ON P.DRAFT_ID = D.ID "

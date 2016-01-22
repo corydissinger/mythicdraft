@@ -61,6 +61,7 @@
 			<script type="text/jsx" src="resources/js/draft-gui.js"></script>
 			<script type="text/jsx" src="resources/js/deck-gui.js"></script>
 			<script type="text/jsx" src="resources/js/player-gui.js"></script>
+			<script type="text/jsx" src="resources/js/stats-gui.js"></script>			
 			<script type="text/jsx" src="resources/js/mythicdraft.js"></script>			
 												
 			<script src="resources/js/bootstrap-toggle-shim.js"></script>

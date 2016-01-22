@@ -15,6 +15,7 @@ public class JsonCard implements Serializable {
 	private Boolean isCreature;
 	private Boolean isNonCreature;
 	private Integer count;
+	private String name;
 	
 	public Integer getMultiverseId() {
 		return multiverseId;
@@ -70,6 +71,14 @@ public class JsonCard implements Serializable {
 
 	public void setCount(Integer count) {
 		this.count = count;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}	
 	
 }

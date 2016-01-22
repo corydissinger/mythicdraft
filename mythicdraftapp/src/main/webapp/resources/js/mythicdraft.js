@@ -556,7 +556,7 @@ var PlayerSearch = React.createClass({
 		var players = this.state.players;
 	
 		return (
-			<form className="navbar-form navbar-left" role="search">
+			<form className="navbar-form navbar-left" role="playersSearch" name="players">
 				<div className="form-group">
 					<input type="text" 
 						   className="form-control" 
@@ -574,6 +574,83 @@ var PlayerSearch = React.createClass({
 						}, this)}
 					</datalist>
 				</div>
+			</form>
+		);
+	}
+});
+
+var FormatSearch = React.createClass({
+	getInitialState: function() {
+		return { data: {formats: []}, searchDisabled: false };
+	},
+	
+	contextTypes: {
+		router: React.PropTypes.func
+	},
+
+	_updateState: function(props) {
+		var comp = this;
+		
+		request
+			.get("/formats/")
+			.end(function(err, resp) {
+				var state = {data: {formats: resp.body} };				
+				
+				comp.setState(state);
+			});	
+	},
+	
+	componentDidMount: function() {
+		this._updateState(this.props);
+	},
+	
+	componentWillReceiveProps: function(nextProps) {
+		this._updateState(nextProps);
+	},			
+	
+	handleKeyPress: function(event) {				
+		if(event.keyCode == 13) {
+			var formatId = 0;
+			var selectedFormatName = React.findDOMNode(this.refs.formatInput).value;
+			var formatsList = React.findDOMNode(this.refs.formatsList).children;
+			
+			for(var i = 0; i < formatsList.length; i++){
+				var formatNode = formatsList[i];
+				
+				if(formatNode.value == selectedFormatName){
+					formatId = formatNode.dataset.formatId;
+					break;
+				}
+			}
+			
+			window.location.hash = "#/format/" + formatId + "/stats";
+			event.preventDefault();			
+		}		
+	},	
+	
+	render: function() {
+		var formats = this.state.data.formats;
+	
+		return (
+			<form className="navbar-form navbar-left" role="formatsSearch" name="formats">
+				<div className="form-group">
+					<input type="text" 
+						   className="form-control" 
+						   placeholder="Format Stats Search" 
+						   onKeyDown={this.handleKeyPress}
+						   ref="formatInput"
+						   list="formats" />
+					<datalist onChange={this.handleFormatSelect} id="formats" ref="formatsList">
+						{formats.map(function(aFormat, idx) {
+							var fullFormatName = new String(aFormat.sets[0].trim() + " " + aFormat.sets[1].trim() + " " + aFormat.sets[2].trim()).trim();
+						
+							return <option key={aFormat.id} 
+										   data-format-id={aFormat.id}
+										   value={fullFormatName}>
+								   </option>;
+						}, this)}
+					</datalist>
+				</div>				
 			</form>
 		);
 	}
@@ -631,6 +708,8 @@ var NavBar = React.createClass({
 						</ul>
 						
 						<PlayerSearch />
+						
+						<FormatSearch />						
 						
 						<ul className="nav navbar-nav navbar-right visible-md-block visible-lg-block">
 							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -695,7 +774,7 @@ var Footer = React.createClass({
 						<footer>
 							<p>Magic the Gathering, FNM is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved. This site is unaffiliated. </p>
 
-							<p>This site © 2015 MythicDraft.com </p>
+							<p>This site {String.fromCharCode(169)} 2016 MythicDraft.com </p>
 						</footer>
 					</div>					
 				</div>
@@ -714,6 +793,8 @@ var routes = (
 	</Route>
 	
 	<Route name="player" path="draft/player/:playerId" handler={PlayerDrafts} />
+	
+	<Route name="stats" path="format/:formatId/stats" handler={FormatStats} />	
 
 	<Route name="deck" path="deck/:deckId" handler={Deck} />
 	
