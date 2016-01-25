@@ -77,7 +77,7 @@ public class MTGODraftListenerImpl {
 				return;
 			} else if(line.startsWith("------")) {
 				final String setCode = line.split("------")[1];
-				packSets.add(setCode);
+				packSets.add(setCode.trim());
 			} else if(line.startsWith("Pack ")) {
 				final String packNumberPick = line.split("Pack ")[1];
 				currentPackNumber = Integer.parseInt(packNumberPick.substring(0, 1)) - 1;

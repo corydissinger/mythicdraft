@@ -56,8 +56,11 @@ public class StatsDaoImpl extends AbstractDao implements StatsDao {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Format> getFormats() {
-		Query query = getCurrentSession().createSQLQuery("SELECT DISTINCT FORMAT.ID, FORMAT.FIRST_PACK, FORMAT.SECOND_PACK, FORMAT.THIRD_PACK "
-														+ " FROM FORMAT FORMAT").addEntity(Format.class);
+		Query query = getCurrentSession().createSQLQuery("SELECT DISTINCT FORMAT.ID, FORMAT.FIRST_PACK, FORMAT.SECOND_PACK, FORMAT.THIRD_PACK, S.NAME "
+														+ " FROM FORMAT FORMAT "
+														+ " JOIN SET S "
+														+ "   ON S.ID = FORMAT.FIRST_PACK"
+														+ " ORDER BY S.NAME ASC ").addEntity(Format.class);
 		
 		List<Format> formats = (List<Format>) query.list();
 		
