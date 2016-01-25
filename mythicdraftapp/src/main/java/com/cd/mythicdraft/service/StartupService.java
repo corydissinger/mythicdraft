@@ -44,6 +44,9 @@ public class StartupService implements ApplicationListener<ContextRefreshedEvent
 	@Autowired
 	private JobLauncher jobLauncher;
 	
+	@Autowired
+	private Job statsJob;	
+	
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent contextRefreshed) {
 		try {
