@@ -123,7 +123,7 @@ public class StatsConfig {
 
     @Bean
     protected Job statsJob() {
-    	return jobs.get("statsJob").start(statsStep()).build();
+    	return jobs.get("statsJob").start(createFormats()).next(migrateDrafts()).next(statsStep()).build();
     }
     
     @Bean

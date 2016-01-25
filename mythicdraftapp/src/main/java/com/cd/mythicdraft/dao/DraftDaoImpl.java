@@ -300,7 +300,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	public void addFormat(Format format) {
 		Session session = getCurrentSession();
 		
-		session.persist(format);
+		session.merge(format);
 	}	
 	
 }

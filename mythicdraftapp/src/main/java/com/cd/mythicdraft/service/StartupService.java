@@ -44,17 +44,11 @@ public class StartupService implements ApplicationListener<ContextRefreshedEvent
 	@Autowired
 	private JobLauncher jobLauncher;
 	
-	@Autowired
-	private Job draftFormatMigration;	
-	
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent contextRefreshed) {
 		try {
 			//Get sets from mtgjson.com
 			updateSets();
-			
-			//Now create formats from existing drafts that lack any
-			jobLauncher.run(draftFormatMigration, new JobParameters());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

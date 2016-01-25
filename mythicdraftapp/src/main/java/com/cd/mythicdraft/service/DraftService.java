@@ -406,8 +406,6 @@ public class DraftService {
 			theFormat.setFirstPack(packOne.getId());
 			theFormat.setSecondPack(packTwo.getId());
 			theFormat.setThirdPack(packThree.getId());
-			
-			draftDao.addFormat(theFormat);
 		}
 		
 		return theFormat.getId();
