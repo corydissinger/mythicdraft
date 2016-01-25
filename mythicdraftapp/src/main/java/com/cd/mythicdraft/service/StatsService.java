@@ -17,6 +17,7 @@ import com.cd.mythicdraft.model.Format;
 import com.cd.mythicdraft.model.FormatPickStats;
 
 @Service("statsService")
+@Transactional
 public class StatsService {
 
 	@Autowired

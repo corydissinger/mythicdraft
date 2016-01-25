@@ -48,11 +48,13 @@ import com.cd.mythicdraft.model.DraftPack;
 import com.cd.mythicdraft.model.DraftPackAvailablePick;
 import com.cd.mythicdraft.model.DraftPackPick;
 import com.cd.mythicdraft.model.DraftPlayer;
+import com.cd.mythicdraft.model.Format;
 import com.cd.mythicdraft.model.IgnorableCards;
 import com.cd.mythicdraft.model.Player;
 import com.cd.mythicdraft.model.Set;
 
 @Service(value = "draftService")
+@Transactional
 public class DraftService {
 
 	private static final Logger logger = Logger.getLogger(DraftService.class);	
@@ -77,7 +79,6 @@ public class DraftService {
     @Autowired
 	private MtgoDeckParserService mtgoDeckParserService;    
 	
-	@Transactional
 	public JsonUploadStatus addDraft(final InputStream mtgoDraftStream, 
 						 			 final String name, 
 						 			 final Integer wins, 
@@ -107,7 +108,6 @@ public class DraftService {
 		return uploadStatus;
 	}
 
-	@Transactional(readOnly = true)
 	public JsonDraft getDraftById(final Integer draftId) {
 		final Draft draft = draftDao.getDraftById(draftId);
 		final JsonDraft jsonDraft = getJsonDraftFromDraft(draft);
@@ -121,7 +121,6 @@ public class DraftService {
 		return jsonDraft;
 	}
 	
-	@Transactional(readOnly = true)
 	public JsonPackPick getPackByIdAndPick(final Integer draftId,
 										   final Integer draftPackId, 
 										   final Integer pickId) {
@@ -165,7 +164,6 @@ public class DraftService {
 		return jsonPackPick;
 	}
 	
-	@Transactional(readOnly = true)
 	public JsonRecentDrafts getRecentDrafts(final Integer numberOfDrafts, final Integer pageNumber) {
 		List<JsonDraft> recentDrafts = draftDao.getRecentDrafts(numberOfDrafts, pageNumber)
 											   .stream()
@@ -207,7 +205,6 @@ public class DraftService {
 		return stats;
 	}	
 	
-	@Transactional(readOnly = true)
 	public JsonAllPicks getAllPicks(final Integer draftId) {
 		final JsonAllPicks picks = new JsonAllPicks();
 		
@@ -232,11 +229,11 @@ public class DraftService {
 	public Integer addDeck(int draftId, InputStream deck) {
 		final Draft draft = draftDao.getDraftById(draftId);
 		
-		final List<String> setCodes = new ArrayList<String>(3);
+		final List<Set> sets = new ArrayList<Set>(3);
 		RawDeck rawDeck;
 		
 		for(DraftPack aPack : draft.getDraftPacks()) {
-			setCodes.add(aPack.getSet().getName());
+			sets.add(aPack.getSet());
 		}
 		
 		try {
@@ -247,7 +244,7 @@ public class DraftService {
 		}
 		
 		try {
-			Map<Integer, Card> tempIdToCardMap = cardDao.getTempCardIdToCardMap(rawDeck.getCardNameToTempIdMap(), setCodes);
+			Map<Integer, Card> tempIdToCardMap = cardDao.getTempCardIdToCardMap(rawDeck.getCardNameToTempIdMap(), sets);
 			
 			if(isDeckInvalid(draftId, tempIdToCardMap)) {
 				logger.error("Deck was marked as invalid with the following cards: ");
@@ -262,7 +259,6 @@ public class DraftService {
 		}
 	}		
 	
-	@Transactional(readOnly = true)
 	public JsonDeck getDeckById(Integer deckId) {
 		final JsonDeck deck = new JsonDeck();
 		final List<JsonCard> mainDeckCards = new ArrayList<JsonCard>();
@@ -301,7 +297,7 @@ public class DraftService {
 		return deck;
 	}	
 	
-	private Deck convertRawDeck(final RawDeck rawDeck, final Draft draft, final Map<Integer, Card> tempCardIdToCardMap) {
+	public Deck convertRawDeck(final RawDeck rawDeck, final Draft draft, final Map<Integer, Card> tempCardIdToCardMap) {
 		Deck deck = new Deck();
 		
 		for(DeckCard aDeckCard : createDeckCards(rawDeck, true, tempCardIdToCardMap)) {
@@ -318,7 +314,7 @@ public class DraftService {
 		return deck;
 	}
 
-	private List<DeckCard> createDeckCards(final RawDeck rawDeck, 
+	public List<DeckCard> createDeckCards(final RawDeck rawDeck, 
 										   final boolean isMainDeck, 
 										   final Map<Integer, Card> tempCardIdToCardMap) {
 		
@@ -363,7 +359,7 @@ public class DraftService {
 		return deckCards;
 	}
 
-	private Draft convertRawDraft(RawDraft aRawDraft, String name, Integer wins, Integer losses) {
+	public Draft convertRawDraft(RawDraft aRawDraft, String name, Integer wins, Integer losses) {
 		Draft draft = new Draft();
 		
 		draft.setName(name);
@@ -372,19 +368,52 @@ public class DraftService {
 			draft.addDraftPlayer(aPlayer);	
 		}
 
-		for(DraftPack aPack : createDraftPacks(aRawDraft)) {
-			draft.addDraftPack(aPack);	
-		}		
+		List<Set> theSets = createDraftPacks(aRawDraft, draft);
 		
 		draft.setEventDate(aRawDraft.getEventDate());
 		draft.setEventId(aRawDraft.getEventId());
 		draft.setWins(wins);
 		draft.setLosses(losses);
+		draft.setFormatId(getFormatId(theSets));
 		
 		return draft;
 	}
 
-	private List<DraftPlayer> createDraftPlayers(RawDraft aRawDraft) {
+	public Integer getFormatId(List<Set> sets) {
+		Set packOne;
+		Set packTwo;
+		Set packThree;
+		
+		if(sets.size() == 1){
+			packOne = sets.get(0);
+			packTwo = sets.get(0);
+			packThree = sets.get(0);			
+		} else {
+			packOne = sets.get(0);
+			packTwo = sets.get(1);
+			packThree = sets.get(2);			
+		}
+		
+		Format theFormat = draftDao.getFormatByPacks(packOne, packTwo, packThree);
+		
+		if(theFormat == null) {
+			theFormat = new Format();
+			
+			theFormat.setFirstPackSet(packOne);
+			theFormat.setSecondPackSet(packTwo);
+			theFormat.setThirdPackSet(packThree);
+			
+			theFormat.setFirstPack(packOne.getId());
+			theFormat.setSecondPack(packTwo.getId());
+			theFormat.setThirdPack(packThree.getId());
+			
+			draftDao.addFormat(theFormat);
+		}
+		
+		return theFormat.getId();
+	}
+
+	public List<DraftPlayer> createDraftPlayers(RawDraft aRawDraft) {
 		List<DraftPlayer> draftPlayers = new ArrayList<DraftPlayer>(8);
 		
 		List<String> allPlayers = new ArrayList<String>(aRawDraft.getOtherPlayers());
@@ -423,11 +452,17 @@ public class DraftService {
 		return draftPlayers;
 	}
 
-	private List<DraftPack> createDraftPacks(RawDraft aRawDraft) {
+	public List<Set> createDraftPacks(RawDraft aRawDraft, Draft aDraft) {
 		List<DraftPack> draftPacks = new ArrayList<DraftPack>(3);
+
+		//First determine existence of promo packs
+		List<Set> packSets = cardDao.getSetsByName(aRawDraft.getPackSets());
 		
-		final Map<String, Card> cardNameToCardMap = cardDao.getCardNameToCardMap(createCardNameToCardSetMap(aRawDraft));
-		final List<Set> packSets = cardDao.getSetsByName(aRawDraft.getPackSets());
+		if(CollectionUtils.isEmpty(packSets)) {
+			packSets = cardDao.addPromoSets(aRawDraft.getPackSets());
+		}
+		
+		final Map<String, Card> cardNameToCardMap = cardDao.getCardNameToCardMap(createCardNameToCardSetMap(aRawDraft), packSets);
 		
 		for(int i = 0; i < aRawDraft.getPackSets().size(); i++) {
 			String aSetName = aRawDraft.getPackSets().get(i);
@@ -452,10 +487,14 @@ public class DraftService {
 			draftPacks.add(draftPack);
 		}
 		
-		return draftPacks;
+		for(DraftPack aDraftPack : draftPacks) {
+			aDraft.addDraftPack(aDraftPack);			
+		}
+		
+		return packSets;
 	}
 
-	private List<DraftPackPick> createDraftPackPicks(final List<MutablePair<Integer, List<Integer>>> listOfPicksToAvailablePicks,
+	public List<DraftPackPick> createDraftPackPicks(final List<MutablePair<Integer, List<Integer>>> listOfPicksToAvailablePicks,
 													 final Map<String, Card> cardNameToCardMap, 
 													 final Map<Integer, String> tempIdToCardNameMap) {
 		List<DraftPackPick> packPicks = new ArrayList<DraftPackPick>(listOfPicksToAvailablePicks.size());
@@ -493,7 +532,7 @@ public class DraftService {
 		return packPicks;
 	}
 
-	private Map<String, String> createCardNameToCardSetMap(RawDraft aRawDraft) {
+	public Map<String, String> createCardNameToCardSetMap(RawDraft aRawDraft) {
 		Map<String, String> cardNameToCardSetMap = new HashMap<String, String>();
 		
 		for(Map.Entry<String, RawCard> anEntry : aRawDraft.getCardNameToRawCardMap().entrySet()) {
@@ -503,7 +542,7 @@ public class DraftService {
 		return cardNameToCardSetMap;
 	}
 
-	private JsonDraft getJsonDraftFromDraft(final Draft draft) {
+	public JsonDraft getJsonDraftFromDraft(final Draft draft) {
 		final JsonDraft jsonDraft = new JsonDraft();
 		final List<JsonPlayer> otherPlayers = new ArrayList<JsonPlayer>();
 		final List<JsonPack> jsonPacks = new ArrayList<JsonPack>();		
@@ -551,7 +590,7 @@ public class DraftService {
 		return jsonDraft;
 	}	
 	
-	private JsonPlayer getJsonPlayerFromPlayer(final Player aPlayer) {
+	public JsonPlayer getJsonPlayerFromPlayer(final Player aPlayer) {
 		final JsonPlayer jsonPlayer = new JsonPlayer();
 		
 		jsonPlayer.setId(aPlayer.getId());
@@ -560,7 +599,7 @@ public class DraftService {
 		return jsonPlayer;
 	}
 
-	private boolean isDraftInvalid(RawDraft aDraft) {
+	public boolean isDraftInvalid(RawDraft aDraft) {
 		if(aDraft.getPackSets().isEmpty() || 
 		   aDraft.getPackSets().size() < 3) {
 			return true;
@@ -595,7 +634,7 @@ public class DraftService {
 		return false;
 	}
 
-	private boolean isDeckInvalid(Integer draftId, Map<Integer, Card> tempIdToCardMap) {
+	public boolean isDeckInvalid(Integer draftId, Map<Integer, Card> tempIdToCardMap) {
 		final List<Integer> allDraftPicks = draftDao.getDistinctMultiverseIdsForDraft(draftId);
 		final Collection<Card> distinctDeckCards = tempIdToCardMap.values();
 		
@@ -612,6 +651,5 @@ public class DraftService {
 		
 		return false;
 	}
-
 
 }

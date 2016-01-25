@@ -1,17 +1,20 @@
 package com.cd.mythicdraft.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,10 +25,11 @@ import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Color;
 import com.cd.mythicdraft.model.Set;
 
-@Service("mtgJsonService")
-public class MtgJsonService implements ApplicationListener<ContextRefreshedEvent> {
+@Service("startupService")
+@Transactional
+public class StartupService implements ApplicationListener<ContextRefreshedEvent> {
 
-	private static final Logger logger = Logger.getLogger(MtgJsonService.class);	
+	private static final Logger logger = Logger.getLogger(StartupService.class);	
 	
 	private static final String MTG_JSON_COM_ROOT = "http://mtgjson.com/json/";
 	private static final String DOT_JSON = ".json";	
@@ -37,32 +41,45 @@ public class MtgJsonService implements ApplicationListener<ContextRefreshedEvent
 	@Autowired
 	private CardDao cardDao;
 	
+	@Autowired
+	private JobLauncher jobLauncher;
+	
+	@Autowired
+	private Job draftFormatMigration;	
+	
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent contextRefreshed) {
-		RestTemplate restTemplate = new RestTemplate();
-		
 		try {
-			final List<Set> unknownSets = checkSetsToUpdate(restTemplate);
+			//Get sets from mtgjson.com
+			updateSets();
 			
-			cardDao.persistSets(unknownSets);
-			
-			for(Set unknownSet : unknownSets) {
-				List<Card> cardsInSet = getAllCardsInSet(unknownSet, restTemplate);
-				
-				//Skips weird sets like RQS with no multiverse ID
-				if(CollectionUtils.isEmpty(cardsInSet)) {
-					continue;
-				}
-				
-				cardDao.persistCards(cardsInSet);
-			}
-			
+			//Now create formats from existing drafts that lack any
+			jobLauncher.run(draftFormatMigration, new JobParameters());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private List<Set> checkSetsToUpdate(RestTemplate restTemplate) throws Exception {
+	public void updateSets() throws Exception {
+		RestTemplate restTemplate = new RestTemplate();		
+		
+		final List<Set> unknownSets = checkSetsToUpdate(restTemplate);
+		
+		cardDao.persistSets(unknownSets);
+		
+		for(Set unknownSet : unknownSets) {
+			List<Card> cardsInSet = getAllCardsInSet(unknownSet, restTemplate);
+			
+			//Skips weird sets like RQS with no multiverse ID
+			if(CollectionUtils.isEmpty(cardsInSet)) {
+				continue;
+			}
+			
+			cardDao.persistCards(cardsInSet);
+		}
+	}
+
+	public List<Set> checkSetsToUpdate(RestTemplate restTemplate) throws Exception {
 		String[] allSets = restTemplate.getForObject(SET_CODES_JSON, String[].class, Collections.EMPTY_MAP);
 		List<String> unknownSetsList = removeSpecialSets(allSets);
 		
@@ -89,7 +106,7 @@ public class MtgJsonService implements ApplicationListener<ContextRefreshedEvent
 		return setsToAdd; 
 	}	
 	
-	private List<String> removeSpecialSets(String [] allSets) {
+	public List<String> removeSpecialSets(String [] allSets) {
 		List<String> relevantSets = new ArrayList<String>();
 		
 		for(int i = 0; i < allSets.length; i++){
@@ -103,7 +120,7 @@ public class MtgJsonService implements ApplicationListener<ContextRefreshedEvent
 		return relevantSets;
 	}
 	
-	private List<Card> getAllCardsInSet(Set set, RestTemplate restTemplate) {
+	public List<Card> getAllCardsInSet(Set set, RestTemplate restTemplate) {
 		List<Card> cardsInSet = new ArrayList<Card>();
 		
 		MtgJsonSet setJson = restTemplate.getForObject(MTG_JSON_COM_ROOT + set.getName() + DOT_JSON, 

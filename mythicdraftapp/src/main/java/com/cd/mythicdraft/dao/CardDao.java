@@ -9,7 +9,7 @@ import com.cd.mythicdraft.model.Set;
 
 public interface CardDao {
 
-	public Map<String, Card> getCardNameToCardMap(Map<String, String> cardNameToCardSetCode);
+	public Map<String, Card> getCardNameToCardMap(Map<String, String> cardNameToCardSetCode, List<Set> sets);
 	
 	public List<Set> getAvailableSets();
 	
@@ -19,7 +19,9 @@ public interface CardDao {
 
 	public List<Set> getSetsByName(final Collection<String> setNames);	
 
-	public Map<Integer, Card> getTempCardIdToCardMap(Map<String, Integer> cardNameToTempIdMap, Collection<String> setCodes);
+	public Map<Integer, Card> getTempCardIdToCardMap(Map<String, Integer> cardNameToTempIdMap, List<Set> sets);
 
 	public Card getCardByName(final String cardName);
+	
+	public List<Set> addPromoSets(Collection<String> setNames);
 }
