@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 					'target/mythic-draft/resources/js/mythicdraft-babeled.js': 'src/main/webapp/resources/js/mythicdraft.js',
 					'target/mythic-draft/resources/js/deck-gui-babeled.js': 'src/main/webapp/resources/js/deck-gui.js',
 					'target/mythic-draft/resources/js/draft-gui-babeled.js': 'src/main/webapp/resources/js/draft-gui.js',
-					'target/mythic-draft/resources/js/player-gui-babeled.js': 'src/main/webapp/resources/js/player-gui.js'
+					'target/mythic-draft/resources/js/player-gui-babeled.js': 'src/main/webapp/resources/js/player-gui.js',
 					'target/mythic-draft/resources/js/stats-gui-babeled.js': 'src/main/webapp/resources/js/stats-gui.js'
 				}
 			}
