@@ -1,10 +1,13 @@
 package com.cd.mythicdraft.dao;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,12 +22,7 @@ public class StatsDaoImpl extends AbstractDao implements StatsDao {
 	@Override
 	@Transactional
 	public void addFormatPickStats(FormatPickStats aFormatPickStats) {
-		if(aFormatPickStats.getId() == null || aFormatPickStats.getId() == 0) {
-			getCurrentSession().persist(aFormatPickStats);	
-		} else {
-			getCurrentSession().merge(aFormatPickStats);
-		}
-		
+		getCurrentSession().merge(aFormatPickStats);
 	}
 
 	@Override
@@ -71,6 +69,7 @@ public class StatsDaoImpl extends AbstractDao implements StatsDao {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Format getFormat(int formatId) {
 		Criteria crit = getCurrentSession().createCriteria(Format.class);
 
@@ -85,8 +84,40 @@ public class StatsDaoImpl extends AbstractDao implements StatsDao {
 		Criteria crit = getCurrentSession().createCriteria(FormatPickStats.class);
 
 		crit.add(Restrictions.eq("formatId", formatId));
+		
+		crit.addOrder(Order.asc("avgPick"));
 				
 		return (List<FormatPickStats>) crit.list();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<FormatPickStats> getFormatPickStats(Format theFormat) {
+		Query query = getCurrentSession().createSQLQuery("SELECT DPP.CARD_ID, AVG(DPP.SEQUENCE_ID)"
+				   + "  FROM DRAFT_PACK_PICK DPP"
+				   + "  JOIN DRAFT_PACK DP"
+				   + "    ON DPP.DRAFT_PACK_ID = DP.ID"
+				   + "  JOIN DRAFT D"
+				   + "    ON DP.DRAFT_ID = D.ID"
+				   + " WHERE D.FORMAT_ID = :formatId"
+				   + " GROUP BY DPP.CARD_ID").setInteger("formatId", theFormat.getId());
+
+		List<Object[]> theStats = query.list();
+
+		List<FormatPickStats> stats = new ArrayList<FormatPickStats>(theStats.size());
+		
+		for(Object[] rs : theStats) {
+			FormatPickStats newStats = new FormatPickStats();
+			
+			newStats.setCardId((int)rs[0]);
+			newStats.setAvgPick((BigDecimal)rs[1]);
+			newStats.setFormat(theFormat);
+			newStats.setFormatId(theFormat.getId());
+			
+			stats.add(newStats);
+		}
+		
+		return stats;
 	}
 
 }

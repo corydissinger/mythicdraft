@@ -20,4 +20,6 @@ public interface StatsDao {
 	public Format getFormat(int formatId);
 
 	public List<FormatPickStats> getFormatPickStats(int formatId);
+
+	public List<FormatPickStats> getFormatPickStats(Format theFormat);
 }

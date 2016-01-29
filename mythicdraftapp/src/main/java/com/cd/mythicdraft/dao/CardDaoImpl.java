@@ -219,5 +219,14 @@ public class CardDaoImpl extends AbstractDao implements CardDao {
 		
 		return sets;
 	}
+
+	@Override
+	public Card getCardById(Integer cardId) {
+		Criteria crit = getCurrentSession().createCriteria(Card.class);
+		
+		crit.add(Restrictions.eq("id", cardId));
+		
+		return (Card) crit.uniqueResult();	
+	}
 	
 }

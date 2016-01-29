@@ -26,4 +26,6 @@ public interface CardDao {
 	public Card getCardByName(final String cardName);
 	
 	public List<Set> addPromoSets(Collection<String> setNames);
+
+	public Card getCardById(Integer cardId);
 }

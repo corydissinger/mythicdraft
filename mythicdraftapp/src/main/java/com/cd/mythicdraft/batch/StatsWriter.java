@@ -8,15 +8,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.cd.mythicdraft.dao.StatsDao;
 import com.cd.mythicdraft.model.FormatPickStats;
 
-public class StatsWriter implements ItemWriter<FormatPickStats> {
+public class StatsWriter implements ItemWriter<List<FormatPickStats>> {
 
 	@Autowired
 	private StatsDao statsDao;
 
 	@Override
-	public void write(List<? extends FormatPickStats> theFormatPickStats) throws Exception {
-		for(FormatPickStats aFormatPickStats : theFormatPickStats) {
-			statsDao.addFormatPickStats(aFormatPickStats);
+	public void write(List<? extends List<FormatPickStats>> theFormatPickStats) throws Exception {
+		for(List<FormatPickStats> aFormatPickStatsList : theFormatPickStats) {
+			for(FormatPickStats stats : aFormatPickStatsList) {
+				if(stats.getCard() == null){
+					int i = 0;
+					i++;
+				}
+				
+				statsDao.addFormatPickStats(stats);				
+			}
 		}
 	}
 

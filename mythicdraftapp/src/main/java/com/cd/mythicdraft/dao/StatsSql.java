@@ -6,16 +6,7 @@ public class StatsSql {
 														 + "FROM Draft D"
 		   									      		 + " WHERE D.formatId IS NULL";
 	
-	public static final String GET_FORMATS_AND_CARDS = "SELECT DISTINCT F.id AS formatId, C.id AS cardId " 
-														+ "FROM Format F "
-														+ "JOIN DraftPack DP "
-														+ "ON DP.setId = F.firstPack " 
-														+ "OR DP.setId = F.secondPack "
-														+ "OR DP.setId = F.thirdPack "
-														+ "JOIN DraftPackPick DPP "
-														+ "ON DP.id = DPP.draftPackId "
-														+ "JOIN Card C "
-														+ "ON C.id = DPP.cardId"; 
+	public static final String GET_FORMATS = "FROM Format format ";
 	
 	public static final String GET_CARDS_FOR_FORMAT = "SELECT C.id "
 													+ "  FROM Card C "

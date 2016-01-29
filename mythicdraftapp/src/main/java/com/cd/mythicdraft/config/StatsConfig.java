@@ -1,5 +1,7 @@
 package com.cd.mythicdraft.config;
 
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
@@ -15,7 +17,6 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.HibernateCursorItemReader;
-import org.springframework.batch.item.database.HibernatePagingItemReader;
 import org.springframework.batch.support.transaction.ResourcelessTransactionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -147,7 +148,8 @@ public class StatsConfig {
     @Bean
     protected Step statsStep() {
     	return steps.get("statsStep")
-    			.<Object[], FormatPickStats> chunk(10)
+    			.allowStartIfComplete(true)
+    			.<Format, List<FormatPickStats>> chunk(1)
     			.reader(statsReader())
     			.processor(statsProcessor())
     			.writer(statsWriter())
@@ -155,25 +157,24 @@ public class StatsConfig {
     }    
     
 	@Bean
-    protected ItemReader<Object[]> statsReader() {
-		HibernatePagingItemReader<Object[]> itemReader = new HibernatePagingItemReader<Object[]>();
+    protected ItemReader<Format> statsReader() {
+    	HibernateCursorItemReader<Format> itemReader = new HibernateCursorItemReader<Format>();
     	
-    	itemReader.setQueryString(StatsSql.GET_FORMATS_AND_CARDS);
+    	itemReader.setQueryString(StatsSql.GET_FORMATS);
     	itemReader.setUseStatelessSession(true);
     	itemReader.setSaveState(false);
     	itemReader.setSessionFactory(sessionFactory);
-    	itemReader.setPageSize(10);
     	
     	return itemReader;
     }    
     
 	@Bean
-    protected ItemProcessor<Object[], FormatPickStats> statsProcessor() {
+    protected ItemProcessor<Format, List<FormatPickStats>> statsProcessor() {
     	return new StatsProcessor();
     }
 	
 	@Bean
-	protected ItemWriter<FormatPickStats> statsWriter() {
+	protected ItemWriter<List<FormatPickStats>> statsWriter() {
 		return new StatsWriter();
 	}
 }
