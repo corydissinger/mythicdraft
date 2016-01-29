@@ -7,14 +7,12 @@ import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,7 +24,6 @@ import com.cd.mythicdraft.model.Color;
 import com.cd.mythicdraft.model.Set;
 
 @Service("startupService")
-@Transactional
 public class StartupService implements ApplicationListener<ContextRefreshedEvent> {
 
 	private static final Logger logger = Logger.getLogger(StartupService.class);	

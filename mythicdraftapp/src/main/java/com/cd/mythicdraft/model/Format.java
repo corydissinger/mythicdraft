@@ -49,6 +49,14 @@ public class Format implements Serializable {
 	@JoinColumn(name = "THIRD_PACK")
 	private Set thirdPackSet;
 
+	public Format() {}
+	
+	public Format(Integer firstPack, Integer secondPack, Integer thirdPack) {
+		this.firstPack = firstPack;
+		this.secondPack = secondPack;
+		this.thirdPack = thirdPack;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

@@ -22,13 +22,26 @@ public class SchedulerConfig {
 	@Autowired
 	private Job statsJob;
 	
-	@Scheduled(fixedDelay = 120 * 1000)
-	public void statsJob() {
+	@Autowired
+	private Job draftFormatMigration;
+	
+	//Every 30 minutes
+//	@Scheduled(fixedDelay = 30 * 1000, initialDelay = 120 * 1000)
+//	public void statsJob() {
+//		try {
+//			jobLauncher.run(statsJob, new JobParameters());
+//		} catch (Exception e) {
+//			logger.error(ExceptionUtils.getStackTrace(e));
+//		} 
+//	}
+
+	//Easy job, run always
+	@Scheduled(fixedDelay = 15 * 1000)
+	public void draftFormatMigration() {
 		try {
-			jobLauncher.run(statsJob, new JobParameters());
+			jobLauncher.run(draftFormatMigration, new JobParameters());
 		} catch (Exception e) {
 			logger.error(ExceptionUtils.getStackTrace(e));
 		} 
-	}
-	
+	}	
 }

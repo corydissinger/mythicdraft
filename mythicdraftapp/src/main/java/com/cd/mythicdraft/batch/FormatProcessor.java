@@ -5,39 +5,73 @@ import java.util.List;
 
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import com.cd.mythicdraft.dao.CardDao;
 import com.cd.mythicdraft.dao.DraftDao;
-import com.cd.mythicdraft.model.Draft;
-import com.cd.mythicdraft.model.DraftPack;
 import com.cd.mythicdraft.model.Format;
 import com.cd.mythicdraft.model.Set;
 
-public class FormatProcessor implements ItemProcessor<Integer, Format> {
+@Component("formatProcessor")
+public class FormatProcessor implements ItemProcessor<Format, Format> {
 
 	@Autowired
-	private DraftDao draftDao;
+	private CardDao cardDao;
+	
+	@Autowired
+	private DraftDao draftDao;	
 	
 	@Override
-	public Format process(Integer aDraftWithoutAFormat) throws Exception {
-		Draft theDraft = draftDao.getDraftById(aDraftWithoutAFormat);
-		List<DraftPack> draftPacks = new ArrayList<DraftPack>(3);
+	public Format process(Format theFormat) throws Exception {
+		List<Integer> setIds = new ArrayList<Integer>();
 		
-		draftPacks.addAll(theDraft.getDraftPacks());
+		setIds.add(theFormat.getFirstPack());
+		setIds.add(theFormat.getSecondPack());
+		setIds.add(theFormat.getThirdPack());
 		
-		Set firstPack = draftPacks.get(0).getSet();
-		Set secondPack = draftPacks.get(1).getSet();
-		Set thirdPack = draftPacks.get(2).getSet();
+		List<Set> theSets = cardDao.getSetsById(setIds);
 		
-		Format theFormat = new Format();
+		if(theSets.size() == 1) {
+			theFormat.setFirstPackSet(theSets.get(0));
+			theFormat.setSecondPackSet(theSets.get(0));
+			theFormat.setThirdPackSet(theSets.get(0));
+		} else if(theSets.size() == 2) {
+			if(theFormat.getFirstPack().equals(theFormat.getSecondPack())) {
+				for(Set aSet : theSets) {
+					if(aSet.getId().equals(theFormat.getFirstPack())) {
+						theFormat.setFirstPackSet(aSet);
+						theFormat.setSecondPackSet(aSet);
+					} else if(aSet.getId().equals(theFormat.getThirdPack())) {
+						theFormat.setThirdPackSet(aSet);
+					} 
+				}				
+			} else {
+				for(Set aSet : theSets) {
+					if(aSet.getId().equals(theFormat.getFirstPack())) {
+						theFormat.setFirstPackSet(aSet);
+					} else if(aSet.getId().equals(theFormat.getThirdPack())) {
+						theFormat.setSecondPackSet(aSet);						
+						theFormat.setThirdPackSet(aSet);
+					} 
+				}					
+			}
+		} else {
+			for(Set aSet : theSets) {
+				if(aSet.getId().equals(theFormat.getFirstPack())) {
+					theFormat.setFirstPackSet(aSet);
+				} else if(aSet.getId().equals(theFormat.getSecondPack())) {
+					theFormat.setSecondPackSet(aSet);
+				} else if(aSet.getId().equals(theFormat.getThirdPack())) {
+					theFormat.setThirdPackSet(aSet);
+				}
+			}
+		}
 		
-		theFormat.setFirstPack(firstPack.getId());
-		theFormat.setFirstPackSet(firstPack);
+		Format existingFormat = draftDao.getFormatByPacks(theFormat.getFirstPackSet(), theFormat.getSecondPackSet(), theFormat.getThirdPackSet());
 		
-		theFormat.setSecondPack(secondPack.getId());
-		theFormat.setSecondPackSet(secondPack);
-		
-		theFormat.setThirdPack(thirdPack.getId());
-		theFormat.setThirdPackSet(thirdPack);
+		if(existingFormat != null) {
+			return null;
+		}
 		
 		return theFormat;
 	}

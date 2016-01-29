@@ -17,6 +17,7 @@ import com.cd.mythicdraft.model.FormatPickStats;
 public class StatsDaoImpl extends AbstractDao implements StatsDao {
 
 	@Override
+	@Transactional
 	public void addFormatPickStats(FormatPickStats aFormatPickStats) {
 		if(aFormatPickStats.getId() == null || aFormatPickStats.getId() == 0) {
 			getCurrentSession().persist(aFormatPickStats);	
@@ -27,6 +28,7 @@ public class StatsDaoImpl extends AbstractDao implements StatsDao {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public BigDecimal getCardFormatAverage(Card aCard, Format aFormat) {
 		Query query = getCurrentSession().createSQLQuery("SELECT AVG(DPP.SEQUENCE_ID)"
 													   + "  FROM DRAFT_PACK_PICK DPP"
@@ -44,6 +46,7 @@ public class StatsDaoImpl extends AbstractDao implements StatsDao {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public FormatPickStats getFormatPickStats(Card aCard, Format aFormat) {
 		Criteria crit = getCurrentSession().createCriteria(FormatPickStats.class);
 
@@ -77,6 +80,7 @@ public class StatsDaoImpl extends AbstractDao implements StatsDao {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<FormatPickStats> getFormatPickStats(int formatId) {
 		Criteria crit = getCurrentSession().createCriteria(FormatPickStats.class);
 

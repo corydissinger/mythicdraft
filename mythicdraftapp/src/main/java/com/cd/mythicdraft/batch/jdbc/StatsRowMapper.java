@@ -16,7 +16,7 @@ public class StatsRowMapper implements RowMapper<ImmutablePair<Card, Format>> {
 		Card aCard = new Card();
 		Format aFormat = new Format();
 		
-		aCard.setId(rs.getInt("CARD_ID"));
+		aCard.setId(rs.getInt("C.ID"));
 		aFormat.setId(rs.getInt("FORMAT_ID"));
 
 		ImmutablePair<Card, Format> cardFormat = new ImmutablePair<Card, Format>(aCard, aFormat);

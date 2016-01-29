@@ -71,6 +71,12 @@ public class Draft implements Serializable {
 	@Column(name = "FORMAT_ID")
 	private Integer formatId;
 
+	public Draft() {}
+	
+	public Draft(Integer draftId) {
+		id = draftId;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

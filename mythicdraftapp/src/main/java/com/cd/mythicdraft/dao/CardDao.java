@@ -17,7 +17,9 @@ public interface CardDao {
 
 	public void persistCards(final List<Card> cardsInSet);
 
-	public List<Set> getSetsByName(final Collection<String> setNames);	
+	public List<Set> getSetsByName(final Collection<String> setNames);
+	
+	public List<Set> getSetsById(final Collection<Integer> setIds);
 
 	public Map<Integer, Card> getTempCardIdToCardMap(Map<String, Integer> cardNameToTempIdMap, List<Set> sets);
 

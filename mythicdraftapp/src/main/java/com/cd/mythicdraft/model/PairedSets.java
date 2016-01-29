@@ -4,7 +4,8 @@ import java.util.Collection;
 
 public enum PairedSets {
 
-	BFZ(new String [] { "EXP" });
+	BFZ(new String [] { "EXP" }),
+	OGW(new String [] { "EXP" });;
 	
 	private final String [] setsPaired;
 	

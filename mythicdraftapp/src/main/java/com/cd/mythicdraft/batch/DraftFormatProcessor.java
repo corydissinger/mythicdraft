@@ -12,15 +12,16 @@ import com.cd.mythicdraft.model.DraftPack;
 import com.cd.mythicdraft.model.Format;
 import com.cd.mythicdraft.model.Set;
 
-public class DraftFormatProcessor implements ItemProcessor<Integer, Draft> {
+public class DraftFormatProcessor implements ItemProcessor<Draft, Draft> {
 
 	@Autowired
 	private DraftDao draftDao;
 	
 	@Override
-	public Draft process(Integer aDraftWithoutAFormat) throws Exception {
-		Draft theDraft = draftDao.getDraftById(aDraftWithoutAFormat);
+	public Draft process(Draft theDraft) throws Exception {
 		List<DraftPack> draftPacks = new ArrayList<DraftPack>(3);
+		
+		theDraft = draftDao.getDraftById(theDraft.getId());		
 		
 		draftPacks.addAll(theDraft.getDraftPacks());
 		
@@ -28,9 +29,9 @@ public class DraftFormatProcessor implements ItemProcessor<Integer, Draft> {
 		Set secondPack = draftPacks.get(1).getSet();
 		Set thirdPack = draftPacks.get(2).getSet();
 		
-		Format aFormat = draftDao.getFormatByPacks(firstPack, secondPack, thirdPack);
+		Format theFormat = draftDao.getFormatByPacks(firstPack, secondPack, thirdPack);
 		
-		theDraft.setFormatId(aFormat.getId());
+		theDraft.setFormatId(theFormat.getId());
 		
 		return theDraft;
 	}

@@ -13,15 +13,21 @@ import com.cd.mythicdraft.model.Format;
 import com.cd.mythicdraft.model.FormatPickStats;
 
 @Component("draftStatsProcessor")
-public class StatsProcessor implements ItemProcessor<ImmutablePair<Card, Format>, FormatPickStats> {
+public class StatsProcessor implements ItemProcessor<Object[], FormatPickStats> {
 
 	@Autowired
 	private StatsDao statsDao;
 	
 	@Override
-	public FormatPickStats process(ImmutablePair<Card, Format> aCardAndFormat) throws Exception {
-		Card theCard = aCardAndFormat.getLeft();
-		Format theFormat = aCardAndFormat.getRight();
+	public FormatPickStats process(Object[] aCardAndFormat) throws Exception {
+		Integer theCardId = (Integer)aCardAndFormat[0];
+		Integer theFormatId = (Integer)aCardAndFormat[0];
+		
+		Card theCard = new Card();
+		Format theFormat = new Format();
+		
+		theCard.setId(theCardId);
+		theFormat.setId(theFormatId);
 		
 		final BigDecimal theAverage = statsDao.getCardFormatAverage(theCard, theFormat);
 		

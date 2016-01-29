@@ -2,7 +2,7 @@ package com.cd.mythicdraft.config;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.hibernate.SessionFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -14,7 +14,8 @@ import org.springframework.batch.core.repository.support.MapJobRepositoryFactory
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.database.JdbcCursorItemReader;
+import org.springframework.batch.item.database.HibernateCursorItemReader;
+import org.springframework.batch.item.database.HibernatePagingItemReader;
 import org.springframework.batch.support.transaction.ResourcelessTransactionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,14 +23,11 @@ import org.springframework.context.annotation.Configuration;
 
 import com.cd.mythicdraft.batch.DraftFormatProcessor;
 import com.cd.mythicdraft.batch.DraftFormatWriter;
-import com.cd.mythicdraft.batch.StatsProcessor;
 import com.cd.mythicdraft.batch.FormatProcessor;
 import com.cd.mythicdraft.batch.FormatWriter;
+import com.cd.mythicdraft.batch.StatsProcessor;
 import com.cd.mythicdraft.batch.StatsWriter;
-import com.cd.mythicdraft.batch.jdbc.DraftRowMapper;
-import com.cd.mythicdraft.batch.jdbc.StatsRowMapper;
 import com.cd.mythicdraft.dao.StatsSql;
-import com.cd.mythicdraft.model.Card;
 import com.cd.mythicdraft.model.Draft;
 import com.cd.mythicdraft.model.Format;
 import com.cd.mythicdraft.model.FormatPickStats;
@@ -46,6 +44,9 @@ public class StatsConfig {
 	
     @Autowired
     private DataSource dataSource;
+    
+    @Autowired
+    private SessionFactory sessionFactory;
     
     //Probably less than ideal, but currently not requiring logging of the batch jobs
     @Bean
@@ -73,8 +74,9 @@ public class StatsConfig {
     @Bean
     protected Step createFormats() {
     	return steps.get("createFormats")
-    			.<Integer, Format> chunk(10)
-    			.reader(draftReader())
+    			.allowStartIfComplete(true)
+    			.<Format, Format> chunk(10)
+    			.reader(formatReader())
     			.processor(formatProcessor())
     			.writer(formatWriter())
     			.build();
@@ -83,7 +85,8 @@ public class StatsConfig {
     @Bean
     protected Step migrateDrafts() {
     	return steps.get("migrateDrafts")
-    			.<Integer, Draft> chunk(10)
+    			.allowStartIfComplete(true)
+    			.<Draft, Draft> chunk(10)
     			.reader(draftReader())
     			.processor(migrateDraftProcessor())
     			.writer(migrateDraftWriter())
@@ -91,16 +94,31 @@ public class StatsConfig {
     }    
 
 	@Bean
-    protected ItemReader<Integer> draftReader() {
-    	JdbcCursorItemReader<Integer> itemReader = new JdbcCursorItemReader<Integer>();
-    	itemReader.setDataSource(dataSource);
-    	itemReader.setSql(StatsSql.GET_DRAFTS_WITHOUT_FORMAT);
-    	itemReader.setRowMapper(new DraftRowMapper());
+    protected ItemReader<Format> formatReader() {
+		HibernateCursorItemReader<Format> itemReader = new HibernateCursorItemReader<Format>();
+		
+    	itemReader.setQueryString(StatsSql.GET_NEW_FORMATS);
+    	itemReader.setUseStatelessSession(true);
+    	itemReader.setSaveState(false);
+    	itemReader.setSessionFactory(sessionFactory);
+    	
+    	return itemReader;
+    }    
+    
+	@Bean
+    protected ItemReader<Draft> draftReader() {
+		HibernateCursorItemReader<Draft> itemReader = new HibernateCursorItemReader<Draft>();
+		
+    	itemReader.setQueryString(StatsSql.GET_DRAFTS_WITHOUT_FORMAT);
+    	itemReader.setUseStatelessSession(true);
+    	itemReader.setSaveState(false);
+    	itemReader.setSessionFactory(sessionFactory);
+    	
     	return itemReader;
     }
     
     @Bean
-    protected ItemProcessor<Integer, Format> formatProcessor() {
+    protected ItemProcessor<Format, Format> formatProcessor() {
     	return new FormatProcessor();
     }
     
@@ -110,7 +128,7 @@ public class StatsConfig {
 	}
     
     @Bean
-    protected ItemProcessor<Integer, Draft> migrateDraftProcessor() {
+    protected ItemProcessor<Draft, Draft> migrateDraftProcessor() {
     	return new DraftFormatProcessor();
     }
     
@@ -123,13 +141,13 @@ public class StatsConfig {
 
     @Bean
     protected Job statsJob() {
-    	return jobs.get("statsJob").start(createFormats()).next(migrateDrafts()).next(statsStep()).build();
+    	return jobs.get("statsJob").start(statsStep()).build();
     }
     
     @Bean
     protected Step statsStep() {
     	return steps.get("statsStep")
-    			.<ImmutablePair<Card, Format>, FormatPickStats> chunk(10)
+    			.<Object[], FormatPickStats> chunk(10)
     			.reader(statsReader())
     			.processor(statsProcessor())
     			.writer(statsWriter())
@@ -137,16 +155,20 @@ public class StatsConfig {
     }    
     
 	@Bean
-    protected ItemReader<ImmutablePair<Card, Format>> statsReader() {
-    	JdbcCursorItemReader<ImmutablePair<Card, Format>> itemReader = new JdbcCursorItemReader<ImmutablePair<Card, Format>>();
-    	itemReader.setDataSource(dataSource);
-    	itemReader.setSql(StatsSql.GET_FORMATS_AND_CARDS);
-    	itemReader.setRowMapper(new StatsRowMapper());
+    protected ItemReader<Object[]> statsReader() {
+		HibernatePagingItemReader<Object[]> itemReader = new HibernatePagingItemReader<Object[]>();
+    	
+    	itemReader.setQueryString(StatsSql.GET_FORMATS_AND_CARDS);
+    	itemReader.setUseStatelessSession(true);
+    	itemReader.setSaveState(false);
+    	itemReader.setSessionFactory(sessionFactory);
+    	itemReader.setPageSize(10);
+    	
     	return itemReader;
     }    
     
 	@Bean
-    protected ItemProcessor<ImmutablePair<Card, Format>, FormatPickStats> statsProcessor() {
+    protected ItemProcessor<Object[], FormatPickStats> statsProcessor() {
     	return new StatsProcessor();
     }
 	

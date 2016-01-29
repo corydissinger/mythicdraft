@@ -32,6 +32,7 @@ import com.cd.mythicdraft.model.Set;
 public class DraftDaoImpl extends AbstractDao implements DraftDao {
 
 	@Override
+	@Transactional
 	public void addDraft(Draft draft) throws DuplicateDraftException {
 		//le shrug, could be better
 		if(isDraftAlreadySaved(draft)) {
@@ -64,6 +65,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	}
 
 	@Override
+	@Transactional
 	public void updateDraft(Draft draft) {
 		Session session = getCurrentSession();
 		
@@ -71,6 +73,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	}	
 	
 	@Override
+	@Transactional(readOnly = true)
 	public Draft getDraftById(final Integer draftId) {
 		Criteria crit = getCurrentSession().createCriteria(Draft.class);
 
@@ -90,6 +93,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Collection<Draft> getRecentDrafts(final Integer numberOfDrafts, final Integer pageNumber) {
 		Query query = getCurrentSession().createSQLQuery("SELECT ID, NAME, CREATED, EVENT_ID, EVENT_DATE, WINS, LOSSES, FORMAT_ID FROM DRAFT ORDER BY CREATED DESC").addEntity(Draft.class);
 		
@@ -102,6 +106,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	}	
 
 	@Override
+	@Transactional(readOnly = true)
 	public Integer getRecentDraftPages() {
 		Criteria crit = getCurrentSession().createCriteria(Draft.class);
 		
@@ -113,6 +118,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
 	public DraftPackPick getPackByIdAndPick(final Integer draftPackId, final Integer pickId) {
 		Criteria crit = getCurrentSession().createCriteria(DraftPackPick.class);
 
@@ -125,6 +131,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	}	
 
 	@Override
+	@Transactional(readOnly = true)
 	public boolean isDraftAlreadySaved(final Draft draft) {
 		Player activePlayer = null;
 		
@@ -154,6 +161,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
 	public Map<String, Player> getPlayersByName(Collection<String> playerNames) {
 		Map<String, Player> nameToPlayerMap = new HashMap<String, Player>();
 		
@@ -171,6 +179,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
 	public List<Integer> getDistinctMultiverseIdsForDraft(Integer draftId) {
 		Query query = getCurrentSession().createSQLQuery("SELECT DISTINCT PICK.CARD_ID "
 													   + "FROM DRAFT_PACK_PICK PICK "
@@ -196,6 +205,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Integer> getAllPicksInOrder(Integer draftId) {
 		Query query = getCurrentSession().createSQLQuery("SELECT DISTINCT PICK.CARD_ID, PICK.SEQUENCE_ID AS PICK_SEQ, PACK.SEQUENCE_ID AS PACK_SEQ "
 													   + "FROM DRAFT_PACK_PICK PICK "
@@ -217,6 +227,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Collection<Draft> getDraftsByPlayerId(Integer playerId) {
 		Query query = getCurrentSession().createSQLQuery("SELECT D.ID, D.NAME, D.CREATED, D.EVENT_ID, D.EVENT_DATE, D.WINS, D.LOSSES, D.FORMAT_ID "
 														 + "FROM DRAFT D "
@@ -233,6 +244,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Collection<Player> getPlayersSearch(String searchString) {
 		Query query = getCurrentSession().createSQLQuery("SELECT * FROM Player WHERE UPPER(NAME) LIKE UPPER(:searchString) ORDER BY NAME ASC")
 				 							 .addEntity(Player.class)
@@ -245,6 +257,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	}	
 
 	@Override
+	@Transactional(readOnly = true)
 	public Player getPlayerById(final Integer playerId) {
 		Criteria crit = getCurrentSession().createCriteria(Player.class);
 
@@ -256,6 +269,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	}
 
 	@Override
+	@Transactional
 	public Integer addDeck(Deck deck) throws DuplicateDraftException {
 		Session session = getCurrentSession();
 		
@@ -269,6 +283,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Deck getDeckById(Integer deckId) {
 		Criteria crit = getCurrentSession().createCriteria(Deck.class);
 		
@@ -280,6 +295,7 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Format getFormatByPacks(Set firstPack, Set secondPack, Set thirdPack) {
 		Session session = getCurrentSession();
 		
@@ -297,10 +313,11 @@ public class DraftDaoImpl extends AbstractDao implements DraftDao {
 	}
 
 	@Override
+	@Transactional
 	public void addFormat(Format format) {
 		Session session = getCurrentSession();
 		
-		session.merge(format);
+		session.persist(format);
 	}	
 	
 }

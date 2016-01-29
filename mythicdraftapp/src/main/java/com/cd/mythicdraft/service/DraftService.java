@@ -21,7 +21,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.cd.mythicdraft.dao.CardDao;
@@ -54,7 +53,6 @@ import com.cd.mythicdraft.model.Player;
 import com.cd.mythicdraft.model.Set;
 
 @Service(value = "draftService")
-@Transactional
 public class DraftService {
 
 	private static final Logger logger = Logger.getLogger(DraftService.class);	
@@ -374,41 +372,8 @@ public class DraftService {
 		draft.setEventId(aRawDraft.getEventId());
 		draft.setWins(wins);
 		draft.setLosses(losses);
-		draft.setFormatId(getFormatId(theSets));
 		
 		return draft;
-	}
-
-	public Integer getFormatId(List<Set> sets) {
-		Set packOne;
-		Set packTwo;
-		Set packThree;
-		
-		if(sets.size() == 1){
-			packOne = sets.get(0);
-			packTwo = sets.get(0);
-			packThree = sets.get(0);			
-		} else {
-			packOne = sets.get(0);
-			packTwo = sets.get(1);
-			packThree = sets.get(2);			
-		}
-		
-		Format theFormat = draftDao.getFormatByPacks(packOne, packTwo, packThree);
-		
-		if(theFormat == null) {
-			theFormat = new Format();
-			
-			theFormat.setFirstPackSet(packOne);
-			theFormat.setSecondPackSet(packTwo);
-			theFormat.setThirdPackSet(packThree);
-			
-			theFormat.setFirstPack(packOne.getId());
-			theFormat.setSecondPack(packTwo.getId());
-			theFormat.setThirdPack(packThree.getId());
-		}
-		
-		return theFormat.getId();
 	}
 
 	public List<DraftPlayer> createDraftPlayers(RawDraft aRawDraft) {

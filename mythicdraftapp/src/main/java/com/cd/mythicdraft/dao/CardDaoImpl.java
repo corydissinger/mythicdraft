@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.cd.mythicdraft.model.Card;
@@ -25,6 +26,7 @@ public class CardDaoImpl extends AbstractDao implements CardDao {
 	private DraftDao draftDao;
 	
 	@Override
+	@Transactional(readOnly = true)
 	public Map<String, Card> getCardNameToCardMap(Map<String, String> cardNameToCardSetCode, List<Set> sets) {
 		Map<String, Card> cardNameToCardMap = new HashMap<String, Card>(cardNameToCardSetCode.size());
 		List<String> setCodes = new ArrayList<String>(3);
@@ -59,6 +61,7 @@ public class CardDaoImpl extends AbstractDao implements CardDao {
 	}
 
 	@Override
+	@Transactional
 	public void persistSets(List<Set> sets) {
 		Session session = getCurrentSession();
 		
@@ -68,6 +71,7 @@ public class CardDaoImpl extends AbstractDao implements CardDao {
 	}
 
 	@Override
+	@Transactional
 	public void persistCards(List<Card> cardsInSet) {
 		Session session = getCurrentSession();
 		
@@ -77,6 +81,7 @@ public class CardDaoImpl extends AbstractDao implements CardDao {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Set> getSetsByName(Collection<String> setNames) {
 		Criteria crit = getCurrentSession().createCriteria(Set.class);
 		
@@ -88,6 +93,7 @@ public class CardDaoImpl extends AbstractDao implements CardDao {
 	}	
 
 	@Override
+	@Transactional
 	public List<Set> addPromoSets(Collection<String> setNames) {
 		Session session = getCurrentSession();
 		
@@ -110,44 +116,47 @@ public class CardDaoImpl extends AbstractDao implements CardDao {
 			usedNames.add(aSetName);
 		}
 		
-		final Set packOne;
-		final Set packTwo;
-		final Set packThree;
+		Format promoFormat;
 		
-		if(sets.size() > 1) {
-			packOne = sets.get(0);
-			packTwo = sets.get(1);
-			packThree = sets.get(2);
+		if(sets.size() == 1) {
+			promoFormat = draftDao.getFormatByPacks(sets.get(0), sets.get(0), sets.get(0));
 		} else {
-			packOne = sets.get(0);
-			packTwo = sets.get(0);
-			packThree = sets.get(0);
+			promoFormat = draftDao.getFormatByPacks(sets.get(0), sets.get(1), sets.get(2));
 		}
 
-		Format newPromoFormat = draftDao.getFormatByPacks(packOne, packTwo, packThree);		
-
-		if(newPromoFormat == null) {
-			newPromoFormat = new Format();
+		if(promoFormat == null) {
+			promoFormat = new Format();
 		}
 		
-		newPromoFormat.setFirstPackSet(packOne);
-		newPromoFormat.setSecondPackSet(packTwo);
-		newPromoFormat.setThirdPackSet(packThree);
-		
-		newPromoFormat.setFirstPack(packOne.getId());
-		newPromoFormat.setSecondPack(packTwo.getId());
-		newPromoFormat.setThirdPack(packThree.getId());		
-		
-		if(newPromoFormat.getId() != null && newPromoFormat.getId() > 0) {
-			session.merge(newPromoFormat);			
+		if(sets.size() == 1) {
+			promoFormat.setFirstPackSet(sets.get(0));
+			promoFormat.setSecondPackSet(sets.get(0));
+			promoFormat.setThirdPackSet(sets.get(0));
+			
+			promoFormat.setFirstPack(sets.get(0).getId());
+			promoFormat.setSecondPack(sets.get(0).getId());
+			promoFormat.setThirdPack(sets.get(0).getId());			
 		} else {
-			session.persist(newPromoFormat);
+			promoFormat.setFirstPackSet(sets.get(0));
+			promoFormat.setSecondPackSet(sets.get(1));
+			promoFormat.setThirdPackSet(sets.get(2));			
+			
+			promoFormat.setFirstPack(sets.get(0).getId());
+			promoFormat.setSecondPack(sets.get(1).getId());
+			promoFormat.setThirdPack(sets.get(2).getId());
+		}
+		
+		if(promoFormat.getId() != null && promoFormat.getId() > 0) {
+			session.merge(promoFormat);			
+		} else {
+			session.persist(promoFormat);
 		}		
 		
 		return sets;
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Set> getAvailableSets() {
 		Session session = getCurrentSession();
 		
@@ -155,6 +164,7 @@ public class CardDaoImpl extends AbstractDao implements CardDao {
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
 	public Map<Integer, Card> getTempCardIdToCardMap(Map<String, Integer> cardNameToTempIdMap, List<Set> sets) {
 		Map<Integer, Card> cardNameToCardMap = new HashMap<Integer, Card>(cardNameToTempIdMap.size());
 		List<String> cardList = new ArrayList<String>();
@@ -185,6 +195,7 @@ public class CardDaoImpl extends AbstractDao implements CardDao {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Card getCardByName(String cardName) {
 		Criteria crit = getCurrentSession().createCriteria(Card.class);
 		
@@ -195,6 +206,18 @@ public class CardDaoImpl extends AbstractDao implements CardDao {
 		} else {
 			return (Card) crit.list().get(0);	
 		}			
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Set> getSetsById(Collection<Integer> setIds) {
+		Criteria crit = getCurrentSession().createCriteria(Set.class);
+		
+		crit.add(Restrictions.in("id", setIds));
+		
+		List<Set> sets = crit.list();
+		
+		return sets;
 	}
 	
 }
