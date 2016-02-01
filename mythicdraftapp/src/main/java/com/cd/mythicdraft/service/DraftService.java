@@ -21,6 +21,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.cd.mythicdraft.dao.CardDao;
@@ -257,6 +258,7 @@ public class DraftService {
 		}
 	}		
 	
+	@Transactional(readOnly = true)
 	public JsonDeck getDeckById(Integer deckId) {
 		final JsonDeck deck = new JsonDeck();
 		final List<JsonCard> mainDeckCards = new ArrayList<JsonCard>();
@@ -279,6 +281,7 @@ public class DraftService {
 			jsonCard.setIsCreature(theCard.getIsCreature());
 			jsonCard.setIsNonCreature(theCard.getIsNonCreature());
 			jsonCard.setCount(aCard.getCount());
+			jsonCard.setName(theCard.getCardName());
 			
 			if(aCard.getIsMainDeck()) {
 				mainDeckCards.add(jsonCard);

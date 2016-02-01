@@ -25,7 +25,6 @@ public class FileUploadController {
 	private DraftService draftService;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	@Transactional
 	public @ResponseBody JsonUploadStatus processUpload(@RequestParam String name,
 										  				@RequestParam Integer wins,
 									  					@RequestParam Integer losses,
