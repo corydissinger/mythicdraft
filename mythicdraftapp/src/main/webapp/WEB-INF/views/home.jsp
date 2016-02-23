@@ -17,7 +17,7 @@
 
 	<c:choose>
 		<c:when test="${development}">
-			<script src="https://fb.me/react-with-addons-0.13.3.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-with-addons.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/react-modal/0.3.0/react-modal.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/react-router/0.13.3/ReactRouter.js"></script>			
 			
@@ -27,7 +27,7 @@
 			<link rel="stylesheet" media="all" href="resources/css/mythicdraft.css"/>
 		</c:when>
 		<c:otherwise>
-			<script src="https://fb.me/react-with-addons-0.13.3.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-with-addons.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/react-modal/0.3.0/react-modal.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/react-router/0.13.3/ReactRouter.min.js"></script>
 			
