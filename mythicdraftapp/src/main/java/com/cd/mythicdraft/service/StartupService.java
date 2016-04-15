@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
@@ -57,12 +61,18 @@ public class StartupService implements ApplicationListener<ContextRefreshedEvent
 	public void updateSets() throws Exception {
 		RestTemplate restTemplate = new RestTemplate();		
 		
-		final List<Set> unknownSets = checkSetsToUpdate(restTemplate);
+		HttpHeaders headers = new HttpHeaders();
+		
+		headers.set("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.3");
+		
+		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);		
+		
+		final List<Set> unknownSets = checkSetsToUpdate(restTemplate, entity);
 		
 		cardDao.persistSets(unknownSets);
 		
 		for(Set unknownSet : unknownSets) {
-			List<Card> cardsInSet = getAllCardsInSet(unknownSet, restTemplate);
+			List<Card> cardsInSet = getAllCardsInSet(unknownSet, restTemplate, entity);
 			
 			//Skips weird sets like RQS with no multiverse ID
 			if(CollectionUtils.isEmpty(cardsInSet)) {
@@ -73,8 +83,9 @@ public class StartupService implements ApplicationListener<ContextRefreshedEvent
 		}
 	}
 
-	public List<Set> checkSetsToUpdate(RestTemplate restTemplate) throws Exception {
-		String[] allSets = restTemplate.getForObject(SET_CODES_JSON, String[].class, Collections.EMPTY_MAP);
+	public List<Set> checkSetsToUpdate(RestTemplate restTemplate, HttpEntity<String> entity) throws Exception {
+		ResponseEntity<String[]> allSetsResponse = restTemplate.exchange(SET_CODES_JSON, HttpMethod.GET, entity, String[].class);
+		String[] allSets = allSetsResponse.getBody();
 		List<String> unknownSetsList = removeSpecialSets(allSets);
 		
 		final List<Set> knownSets;
@@ -114,12 +125,15 @@ public class StartupService implements ApplicationListener<ContextRefreshedEvent
 		return relevantSets;
 	}
 	
-	public List<Card> getAllCardsInSet(Set set, RestTemplate restTemplate) {
+	public List<Card> getAllCardsInSet(Set set, RestTemplate restTemplate, HttpEntity<String> entity) {
 		List<Card> cardsInSet = new ArrayList<Card>();
 		
-		MtgJsonSet setJson = restTemplate.getForObject(MTG_JSON_COM_ROOT + set.getName() + DOT_JSON, 
-													   MtgJsonSet.class, 
-													   Collections.EMPTY_MAP);
+		ResponseEntity<MtgJsonSet> setJsonResponse = restTemplate.exchange(MTG_JSON_COM_ROOT + set.getName() + DOT_JSON,
+													   					   HttpMethod.GET,
+													   					   entity,
+													   					   MtgJsonSet.class);
+		
+		MtgJsonSet setJson = setJsonResponse.getBody();
 		
 		List<Integer> crappySplitCardsThatSouldNotBeDuplicated = new ArrayList<Integer>();
 		
