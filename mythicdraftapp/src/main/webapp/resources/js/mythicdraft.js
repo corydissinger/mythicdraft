@@ -95,12 +95,12 @@ var UploadForm = React.createClass({
 
 						<div className="form-group">
 							<label htmlFor="wins">Rounds Won</label>
-							<input className="form-control" type="number" name="wins" ref="draftWins" required></input>					
+							<input className="form-control" type="number" min="0" max="3" name="wins" ref="draftWins" required></input>
 						</div>
 						
 						<div className="form-group">
 							<label htmlFor="losses">Rounds Lost</label>
-							<input className="form-control" type="number" name="losses" ref="draftLosses" required></input>					
+							<input className="form-control" type="number" min="0" max="3" name="losses" ref="draftLosses" required></input>
 						</div>					
 											
 						<button type="submit" className="btn btn-default" disabled={this.state.isSubmitDisabled}>Submit</button>					

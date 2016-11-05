@@ -26,7 +26,7 @@ public class SchedulerConfig {
 	private Job draftFormatMigration;
 	
 	//Every 30 minutes
-	@Scheduled(fixedDelay = 30 * 60 * 1000, initialDelay = 120 * 1000)
+	@Scheduled(fixedDelay = 30 * 60 * 1000, initialDelay = 60 * 1000)
 	public void statsJob() {
 		try {
 			jobLauncher.run(statsJob, new JobParameters());
@@ -43,5 +43,5 @@ public class SchedulerConfig {
 		} catch (Exception e) {
 			logger.error(ExceptionUtils.getStackTrace(e));
 		} 
-	}	
+	}
 }
