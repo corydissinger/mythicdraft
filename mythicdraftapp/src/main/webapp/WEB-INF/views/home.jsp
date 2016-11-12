@@ -13,6 +13,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<%-- Static assets --%>
+    <link rel="shortcut icon" href="resources/images/favicon.ico"></link>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/darkly/bootstrap.min.css"></link>	
 
 	<c:choose>

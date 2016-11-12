@@ -439,13 +439,10 @@ public class DraftService {
 					draftPack.setSet(aSet);
 				}
 			}
-			
-			for(DraftPackPick draftPackPick : createDraftPackPicks(aRawDraft.getPackToListOfPickToAvailablePicksMap().get(i),
-																   cardNameToCardMap,
-																   aRawDraft.getTempIdToCardNameMap())) {
-				
-				draftPack.addDraftPackPick(draftPackPick);
-			}
+
+			createDraftPackPicks(aRawDraft.getPackToListOfPickToAvailablePicksMap().get(i),
+								 cardNameToCardMap,
+								 aRawDraft.getTempIdToCardNameMap()).forEach(draftPack::addDraftPackPick);
 			
 			draftPack.setSequenceId(i);
 			draftPack.setPackSize(aRawDraft.getPackSizes().get(i));

@@ -32,6 +32,7 @@ public class StatsService {
 		JsonFormatStats stats = new JsonFormatStats();
 		
 		stats.setFormat(getJsonFormatFromFormat(statsDao.getFormat(formatId)));
+		stats.setSampleSize(statsDao.getFormatSampleSize(formatId));
 		stats.setFormatPickStats(statsDao.getFormatPickStats(formatId)
 				   .stream()
 				   .map(this::getJsonFormatStatsFromFormatPickStats)

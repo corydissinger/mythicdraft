@@ -10,7 +10,7 @@ var FormatPickStats = React.createClass({
 					{this.props.pickStats.card.name}
 				</td>
 				<td>
-					{this.props.pickStats.avgPick}
+					{this.props.pickStats.avgPick + 1}
 				</td>		
 			</tr>
 		);
@@ -49,27 +49,31 @@ var FormatStats = React.createClass({
 	
 	render: function() {
 		var formatPickStats = this.state.data.formatPickStats;		
-		var format = this.state.data.format;		
+		var format = this.state.data.format;
+		var sampleSize = this.state.data.sampleSize;
 		
 		var theFormatName = format.sets[0].trim() + " " + format.sets[1].trim() + " " + format.sets[2].trim();		
 		
 		return (
 			<div className="container-fluid">
 				<div className="row">
-					<div className="col-xs-12 col-md-3">
+					<div className="col-xs-12 col-md-3 well">
 						<h2 className="text-info text-center">
 							{theFormatName}
 						</h2>
+						<h4 className="text-right">
+						    Number of Uploaded Drafts: {sampleSize}
+						</h4>
 					</div>
 					<div className="col-xs-12 col-md-9">
 						<table className="table table-hover">
 							<thead>
 								<tr>
 									<td>
-										Card
+										<h2>Card</h2>
 									</td>
 									<td>
-										Average Pick
+										<h2>Average Pick</h2>
 									</td>
 								</tr>				
 							</thead>

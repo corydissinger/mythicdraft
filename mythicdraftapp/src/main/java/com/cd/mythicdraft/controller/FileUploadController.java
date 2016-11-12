@@ -33,12 +33,12 @@ public class FileUploadController {
 		JsonUploadStatus uploadStatus = new JsonUploadStatus();
 		
 		//Draft logs should be text and should not be huge
-		if(!"text/plain".equals(file.getContentType()) || 15000 < file.getSize()){
+		if(!"text/plain".equals(file.getContentType()) || 40000 < file.getSize()){
 			uploadStatus.setDraftInvalid(true);
 			return uploadStatus;
 		}
 		
-		if(deck != null && (!"text/plain".equals(deck.getContentType()) || 5000 < deck.getSize())) {
+		if(deck != null && (!"text/plain".equals(deck.getContentType()) || 15000 < deck.getSize())) {
 			uploadStatus.setDeckInvalid(true);
 			return uploadStatus;
 		}

@@ -4,10 +4,12 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cd.mythicdraft.model.Draft;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -118,6 +120,16 @@ public class StatsDaoImpl extends AbstractDao implements StatsDao {
 		}
 		
 		return stats;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Integer getFormatSampleSize(int formatId) {
+		Number sampleSize = (Number) getCurrentSession().createCriteria(Draft.class)
+										.add(Restrictions.eq("formatId", formatId))
+										.setProjection(Projections.rowCount()).uniqueResult();
+
+		return sampleSize.intValue();
 	}
 
 }

@@ -9,17 +9,19 @@ import com.cd.mythicdraft.model.FormatPickStats;
 
 public interface StatsDao {
 
-	public void addFormatPickStats(final FormatPickStats aFormatPickStats);
+	void addFormatPickStats(final FormatPickStats aFormatPickStats);
 	
-	public BigDecimal getCardFormatAverage(final Card aCard, final Format aFormat);
+	BigDecimal getCardFormatAverage(final Card aCard, final Format aFormat);
 	
-	public FormatPickStats getFormatPickStats(final Card aCard, final Format aFormat);
+	FormatPickStats getFormatPickStats(final Card aCard, final Format aFormat);
 
-	public List<Format> getFormats();
+	List<Format> getFormats();
 
-	public Format getFormat(int formatId);
+	Format getFormat(int formatId);
 
-	public List<FormatPickStats> getFormatPickStats(int formatId);
+	List<FormatPickStats> getFormatPickStats(int formatId);
 
-	public List<FormatPickStats> getFormatPickStats(Format theFormat);
+	List<FormatPickStats> getFormatPickStats(Format theFormat);
+
+	Integer getFormatSampleSize(int formatId);
 }
