@@ -6,7 +6,7 @@ Mythicdraft is a MTGO log vizualisation tool I attempted to monetize at one poin
 
 - [ ] Standalone local mode with SQLite perhaps for the astute layman?
 - [ ] A champion of justice to host and maintain this in the wild?
-- [ ] More intelligent backing up other than PSQL dumps?
+- [ ] More intelligent backing up other than PSQL dumps (*cough* [Flyway](https://flywaydb.org/documentation/maven/) *cough*)?
 - [ ] Down with React Native in favor of React/Redux?
 - [ ] ES6 is the light of justice?
 - [ ] Take a steaming dump on ORMs like Hibernate?
