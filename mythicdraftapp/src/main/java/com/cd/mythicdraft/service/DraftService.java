@@ -48,7 +48,6 @@ import com.cd.mythicdraft.model.DraftPack;
 import com.cd.mythicdraft.model.DraftPackAvailablePick;
 import com.cd.mythicdraft.model.DraftPackPick;
 import com.cd.mythicdraft.model.DraftPlayer;
-import com.cd.mythicdraft.model.Format;
 import com.cd.mythicdraft.model.IgnorableCards;
 import com.cd.mythicdraft.model.Player;
 import com.cd.mythicdraft.model.Set;

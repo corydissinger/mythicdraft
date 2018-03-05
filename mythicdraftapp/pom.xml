@@ -367,7 +367,7 @@
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 					<webResources>
 						<resource>
-							<directory>/src/main/webapp/resources</directory>
+							<directory>${project.basedir}/src/main/webapp/resources</directory>
 							<includes>
 								<include>**/robots.txt</include>
 							</includes>
