@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.cd.mythicdraft.model.Card;
-import com.cd.mythicdraft.model.Format;
+import com.cd.mythicdraft.model.entity.Card;
+import com.cd.mythicdraft.model.entity.Format;
 
 public class StatsRowMapper implements RowMapper<ImmutablePair<Card, Format>> {
 

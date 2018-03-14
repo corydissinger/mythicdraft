@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 import com.cd.mythicdraft.dao.CardDao;
 import com.cd.mythicdraft.dao.DraftDao;
-import com.cd.mythicdraft.model.Format;
-import com.cd.mythicdraft.model.Set;
+import com.cd.mythicdraft.model.entity.Format;
+import com.cd.mythicdraft.model.entity.Set;
 
 @Component("formatProcessor")
 public class FormatProcessor implements ItemProcessor<Format, Format> {

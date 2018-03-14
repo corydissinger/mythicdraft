@@ -6,7 +6,7 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cd.mythicdraft.dao.StatsDao;
-import com.cd.mythicdraft.model.FormatPickStats;
+import com.cd.mythicdraft.model.entity.FormatPickStats;
 
 public class StatsWriter implements ItemWriter<List<FormatPickStats>> {
 

@@ -6,7 +6,7 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cd.mythicdraft.dao.DraftDao;
-import com.cd.mythicdraft.model.Draft;
+import com.cd.mythicdraft.model.entity.Draft;
 
 public class DraftFormatWriter implements ItemWriter<Draft> {
 

@@ -45,15 +45,11 @@
 					</execution>
 
 					<execution>
-						<id>npm run build</id>
+						<id>grunt build</id>
 						<goals>
-							<goal>npm</goal>
+							<goal>grunt</goal>
 						</goals>
-						<configuration>
-							<arguments>run build --env.production=true</arguments>
-						</configuration>
 					</execution>
-
 				</executions>
 			</plugin>
 		</plugins>

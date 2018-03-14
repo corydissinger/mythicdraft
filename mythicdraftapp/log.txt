@@ -105,9 +105,9 @@ Running com.cd.mythicdraft.service.MtgoDraftParserServiceTest
 2015-06-21 13:55:23 DEBUG DefaultListableBeanFactory:220 - Creating shared instance of singleton bean 'mtgoDraftParserService'
 2015-06-21 13:55:23 DEBUG DefaultListableBeanFactory:450 - Creating instance of bean 'mtgoDraftParserService'
 2015-06-21 13:55:23 DEBUG DefaultListableBeanFactory:247 - Returning cached instance of singleton bean 'mtgoDraftParserServiceTest.ContextConfiguration'
-2015-06-21 13:55:23 DEBUG InjectionMetadata:71 - Registered injected element on class [com.cd.mythicdraft.service.MtgoDraftParserService]: AutowiredFieldElement for private com.cd.mythicdraft.grammar.impl.MTGODraftListenerImpl com.cd.mythicdraft.service.MtgoDraftParserService.mtgoDraftListener
+2015-06-21 13:55:23 DEBUG InjectionMetadata:71 - Registered injected element on class [com.cd.mythicdraft.rest.service.MtgoDraftParserService]: AutowiredFieldElement for private com.cd.mythicdraft.grammar.impl.MTGODraftListenerImpl com.cd.mythicdraft.rest.service.MtgoDraftParserService.mtgoDraftListener
 2015-06-21 13:55:23 DEBUG DefaultListableBeanFactory:524 - Eagerly caching bean 'mtgoDraftParserService' to allow for resolving potential circular references
-2015-06-21 13:55:23 DEBUG InjectionMetadata:85 - Processing injected method of bean 'mtgoDraftParserService': AutowiredFieldElement for private com.cd.mythicdraft.grammar.impl.MTGODraftListenerImpl com.cd.mythicdraft.service.MtgoDraftParserService.mtgoDraftListener
+2015-06-21 13:55:23 DEBUG InjectionMetadata:85 - Processing injected method of bean 'mtgoDraftParserService': AutowiredFieldElement for private com.cd.mythicdraft.grammar.impl.MTGODraftListenerImpl com.cd.mythicdraft.rest.service.MtgoDraftParserService.mtgoDraftListener
 2015-06-21 13:55:23 DEBUG DefaultListableBeanFactory:220 - Creating shared instance of singleton bean 'mtgoDraftListener'
 2015-06-21 13:55:23 DEBUG DefaultListableBeanFactory:450 - Creating instance of bean 'mtgoDraftListener'
 2015-06-21 13:55:23 DEBUG DefaultListableBeanFactory:247 - Returning cached instance of singleton bean 'mtgoDraftParserServiceTest.ContextConfiguration'
@@ -122,7 +122,7 @@ Running com.cd.mythicdraft.service.MtgoDraftParserServiceTest
 2015-06-21 13:55:23 DEBUG PropertySourcesPropertyResolver:81 - Searching for key 'spring.liveBeansView.mbeanDomain' in [systemEnvironment]
 2015-06-21 13:55:23 DEBUG PropertySourcesPropertyResolver:103 - Could not find key 'spring.liveBeansView.mbeanDomain' in any property source. Returning [null]
 2015-06-21 13:55:23 DEBUG DefaultCacheAwareContextLoaderDelegate:85 - Storing ApplicationContext in cache under key [[MergedContextConfiguration@5ee556a1 testClass = MtgoDraftParserServiceTest, locations = '{}', classes = '{class com.cd.mythicdraft.service.MtgoDraftParserServiceTest$ContextConfiguration}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.test.context.support.AnnotationConfigContextLoader', parent = [null]]].
-2015-06-21 13:55:23 DEBUG InjectionMetadata:85 - Processing injected method of bean 'com.cd.mythicdraft.service.MtgoDraftParserServiceTest': AutowiredFieldElement for private com.cd.mythicdraft.service.MtgoDraftParserService com.cd.mythicdraft.service.MtgoDraftParserServiceTest.mtgoDraftParserService
+2015-06-21 13:55:23 DEBUG InjectionMetadata:85 - Processing injected method of bean 'com.cd.mythicdraft.service.MtgoDraftParserServiceTest': AutowiredFieldElement for private com.cd.mythicdraft.rest.service.MtgoDraftParserService com.cd.mythicdraft.service.MtgoDraftParserServiceTest.mtgoDraftParserService
 2015-06-21 13:55:23 DEBUG DefaultListableBeanFactory:247 - Returning cached instance of singleton bean 'mtgoDraftParserService'
 2015-06-21 13:55:23 DEBUG AutowiredAnnotationBeanPostProcessor:461 - Autowiring by type from bean name 'com.cd.mythicdraft.service.MtgoDraftParserServiceTest' to bean named 'mtgoDraftParserService'
 {0=[], 1=[], 2=[]}
@@ -135,111 +135,111 @@ line 9:4 mismatched input 'grundlegus' expecting USER_NAME
 line 11:4 mismatched input 'falcon_asmira' expecting USER_NAME
 {Smite=50, Aftershock=106, Cannibalize=53, Staunch Defenders=83, Spike Colony=21, Serpent Warrior=68, Time Ebb=94, Canopy Spider=8, Killer Whale=97, Repentance=44, Endangered Armodon=41, Skyshroud Forest=67, Clot Sliver=89, Thalakos Seer=80, Thalakos Scout=45, Spike Feeder=121, Mogg Maniac=126, Carnassid=86, Swamp=27, Death Stroke=64, Seething Anger=38, Shadow Rift=17, Spellshock=122, Reanimate=139, Volrath's Curse=78, Mogg Fanatic=120, Dark Ritual=82, Disenchant=144, Spirit Mirror=133, Mogg Flunkies=58, Gaseous Form=61, Hammerhead Shark=91, Tranquility=71, Horned Sliver=104, Crashing Boars=52, Shaman en-Kor=26, Spike Hatcher=115, Lowland Basilisk=145, Charging Paladin=102, Merfolk Looter=72, Wind Drake=29, Crystalline Sliver=85, Angelic Blessing=40, Skyshaper=137, Caldera Lake=23, Dauthi Marauder=134, Plains=111, Harrow=138, Death's Duet=59, Barbed Sliver=22, Fighting Drake=33, Patchwork Gnomes=6, Dauthi Slayer=43, Gerrard's Battle Cry=110, Exalted Dragon=131, Soltari Trooper=124, Gallantry=109, Flowstone Blade=19, Furnace Brood=51, Goblin Bombardment=12, Elvish Fury=20, Rats of Rath=81, Nomads en-Kor=47, Mulch=49, Elven Rite=39, Soltari Monk=66, Kor Chant=54, Soltari Priest=10, Kindle=73, Tradewind Rider=128, Victual Sliver=77, Cursed Flesh=3, Whispers of the Muse=30, Craven Giant=75, Carnophage=56, Hermit Druid=125, Spined Wurm=105, Legerdemain=24, Mirri, Cat Warrior=123, Wall of Souls=65, Skyshroud Vampire=35, Shadowstorm=87, Curiosity=132, Horned Turtle=129, Skyshroud Troll=31, Thrull Surgeon=101, Ephemeron=13, Provoke=69, Diabolic Edict=18, Wood Sage=135, Conviction=103, Necrologia=140, Mogg Conscripts=32, Mogg Infestation=88, Fugue=25, Salt Flats=63, Scrivener=119, Rampant Growth=5, Anarchist=42, Forest=55, Armored Pegasus=116, Stun=48, Shatter=60, Anoint=70, Sabertooth Wyvern=92, Dungeon Shade=112, Spirit en-Kor=57, Lab Rats=37, Maniacal Rage=4, Sandstone Warrior=9, Bandage=7, Heartwood Dryad=84, Rolling Thunder=127, Island=36, Youthful Knight=90, Dauthi Jackal=15, Coiled Tinviper=113, Cinder Marsh=98, Mounted Archers=28, Renegade Warlord=62, Soltari Lancer=0, Telethopter=143, Field of Souls=99, Mnemonic Sliver=141, Trained Armodon=118, Shackles=96, Coercion=95, Wayward Soul=117, Twitch=2, Sea Monster=1, Forbid=93, Thalakos Drifters=11, Winged Sliver=100, Dauthi Horror=46, Skyshroud Elf=114, Reality Anchor=107, Standing Troops=16, Pegasus Stampede=34, Needle Storm=142, Gravedigger=130, Wall of Blossoms=108, Deadshot=76, Mana Leak=74, Lowland Giant=136, Mountain=14, Jinxed Idol=79}
 {0=[(13,[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14]), (18,[15, 16, 17, 19, 20, 7, 21, 22, 23, 24, 25, 26, 27]), (18,[28, 29, 19, 20, 7, 30, 31, 32, 33, 34, 35, 36]), (43,[37, 28, 30, 3, 38, 39, 40, 41, 42, 44, 14]), (46,[45, 47, 48, 49, 50, 51, 52, 53, 54, 55]), (56,[28, 57, 58, 59, 60, 61, 62, 63, 55]), (64,[15, 39, 6, 40, 65, 66, 67, 55]), (66,[68, 4, 69, 70, 30, 71, 14]), (0,[1, 3, 6, 7, 8, 14]), (21,[16, 17, 20, 7, 27]), (30,[28, 7, 31, 36]), (37,[28, 40, 14]), (50,[47, 52]), (60,[55]), (55,[])], 1=[(74,[72, 37, 64, 73, 39, 6, 40, 41, 75, 76, 77, 78, 79, 14]), (86,[80, 81, 82, 48, 5, 83, 17, 84, 42, 85, 87, 88, 36]), (93,[89, 90, 91, 74, 82, 48, 5, 83, 31, 52, 92, 27]), (97,[90, 91, 16, 72, 42, 94, 95, 96, 98, 99, 14]), (72,[100, 101, 102, 8, 84, 60, 103, 63, 87, 36]), (110,[91, 104, 22, 105, 106, 107, 108, 109, 111]), (114,[112, 47, 17, 38, 20, 113, 115, 36]), (117,[116, 38, 20, 113, 70, 118, 111]), (41,[37, 39, 40, 78, 79, 14]), (5,[82, 48, 17, 84, 36]), (52,[82, 48, 5, 27]), (94,[90, 95, 14]), (8,[102, 63]), (107,[111]), (36,[])], 2=[(123,[119, 68, 64, 38, 20, 113, 70, 74, 31, 120, 121, 92, 122, 55]), (128,[124, 68, 18, 4, 69, 31, 30, 84, 120, 125, 126, 127, 36]), (130,[129, 64, 38, 20, 113, 70, 131, 120, 132, 25, 133, 111]), (67,[112, 47, 45, 8, 95, 96, 59, 60, 134, 135, 14]), (138,[116, 117, 112, 8, 136, 107, 137, 139, 140, 36]), (5,[141, 57, 82, 48, 83, 17, 104, 65, 55]), (21,[89, 57, 20, 7, 30, 142, 12, 14]), (145,[89, 57, 84, 143, 144, 59, 36]), (31,[38, 20, 113, 70, 92, 55]), (124,[4, 69, 31, 84, 36]), (20,[38, 113, 70, 111]), (135,[47, 59, 14]), (8,[107, 36]), (48,[55]), (14,[])]}
-com.cd.mythicdraft.model.Draft@25a296b8[
+com.cd.mythicdraft.model.entity.Draft@25a296b8[
   id=<null>
   name=<null>
   eventId=8283017
   eventDate=Fri May 15 23:14:29 EDT 2015
-  draftPlayers=[com.cd.mythicdraft.model.DraftPlayer@46f8e337[
+  draftPlayers=[com.cd.mythicdraft.model.entity.DraftPlayer@46f8e337[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@25a296b8
-  player=com.cd.mythicdraft.model.Player@435867fa[
+  draft=com.cd.mythicdraft.model.entity.Draft@25a296b8
+  player=com.cd.mythicdraft.model.entity.Player@435867fa[
   id=<null>
   name=Scryb
 ]
-], com.cd.mythicdraft.model.DraftPlayer@7e0d5447[
+], com.cd.mythicdraft.model.entity.DraftPlayer@7e0d5447[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@25a296b8
-  player=com.cd.mythicdraft.model.Player@1a04a2a[
+  draft=com.cd.mythicdraft.model.entity.Draft@25a296b8
+  player=com.cd.mythicdraft.model.entity.Player@1a04a2a[
   id=<null>
   name=WWWWWWWWWWWW
 ]
-], com.cd.mythicdraft.model.DraftPlayer@1d1841f8[
+], com.cd.mythicdraft.model.entity.DraftPlayer@1d1841f8[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@25a296b8
-  player=com.cd.mythicdraft.model.Player@42650c3b[
+  draft=com.cd.mythicdraft.model.entity.Draft@25a296b8
+  player=com.cd.mythicdraft.model.entity.Player@42650c3b[
   id=<null>
   name=Pesz
 ]
-], com.cd.mythicdraft.model.DraftPlayer@23930fb4[
+], com.cd.mythicdraft.model.entity.DraftPlayer@23930fb4[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@25a296b8
-  player=com.cd.mythicdraft.model.Player@7806178a[
+  draft=com.cd.mythicdraft.model.entity.Draft@25a296b8
+  player=com.cd.mythicdraft.model.entity.Player@7806178a[
   id=<null>
   name=Ilyon
 ]
-], com.cd.mythicdraft.model.DraftPlayer@bec04ab[
+], com.cd.mythicdraft.model.entity.DraftPlayer@bec04ab[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@25a296b8
-  player=com.cd.mythicdraft.model.Player@57f3a295[
+  draft=com.cd.mythicdraft.model.entity.Draft@25a296b8
+  player=com.cd.mythicdraft.model.entity.Player@57f3a295[
   id=<null>
   name=grundlegus
 ]
-], com.cd.mythicdraft.model.DraftPlayer@34267caa[
+], com.cd.mythicdraft.model.entity.DraftPlayer@34267caa[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@25a296b8
-  player=com.cd.mythicdraft.model.Player@3c37114f[
+  draft=com.cd.mythicdraft.model.entity.Draft@25a296b8
+  player=com.cd.mythicdraft.model.entity.Player@3c37114f[
   id=<null>
   name=Pheonix35
 ]
-], com.cd.mythicdraft.model.DraftPlayer@4ac297a5[
+], com.cd.mythicdraft.model.entity.DraftPlayer@4ac297a5[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@25a296b8
-  player=com.cd.mythicdraft.model.Player@4351786b[
+  draft=com.cd.mythicdraft.model.entity.Draft@25a296b8
+  player=com.cd.mythicdraft.model.entity.Player@4351786b[
   id=<null>
   name=falcon_asmira
 ]
-], com.cd.mythicdraft.model.DraftPlayer@2d71f7fb[
+], com.cd.mythicdraft.model.entity.DraftPlayer@2d71f7fb[
   playerId=<null>
   draftId=<null>
   isActivePlayer=true
-  draft=com.cd.mythicdraft.model.Draft@25a296b8
-  player=com.cd.mythicdraft.model.Player@19b8db54[
+  draft=com.cd.mythicdraft.model.entity.Draft@25a296b8
+  player=com.cd.mythicdraft.model.entity.Player@19b8db54[
   id=<null>
   name=baronvonfonz
 ]
 ]]
-  draftPacks=[com.cd.mythicdraft.model.DraftPack@374774fd[
+  draftPacks=[com.cd.mythicdraft.model.entity.DraftPack@374774fd[
   id=<null>
   draftId=<null>
   setId=<null>
   sequenceId=0
-  draft=com.cd.mythicdraft.model.Draft@25a296b8
-  set=com.cd.mythicdraft.model.Set@d709ed1[
+  draft=com.cd.mythicdraft.model.entity.Draft@25a296b8
+  set=com.cd.mythicdraft.model.entity.Set@d709ed1[
   id=<null>
   name=TPR
 ]
-], com.cd.mythicdraft.model.DraftPack@3451aa65[
+], com.cd.mythicdraft.model.entity.DraftPack@3451aa65[
   id=<null>
   draftId=<null>
   setId=<null>
   sequenceId=1
-  draft=com.cd.mythicdraft.model.Draft@25a296b8
-  set=com.cd.mythicdraft.model.Set@7f7b6f14[
+  draft=com.cd.mythicdraft.model.entity.Draft@25a296b8
+  set=com.cd.mythicdraft.model.entity.Set@7f7b6f14[
   id=<null>
   name=TPR
 ]
-], com.cd.mythicdraft.model.DraftPack@5d89e7b8[
+], com.cd.mythicdraft.model.entity.DraftPack@5d89e7b8[
   id=<null>
   draftId=<null>
   setId=<null>
   sequenceId=2
-  draft=com.cd.mythicdraft.model.Draft@25a296b8
-  set=com.cd.mythicdraft.model.Set@b9cb6f[
+  draft=com.cd.mythicdraft.model.entity.Draft@25a296b8
+  set=com.cd.mythicdraft.model.entity.Set@b9cb6f[
   id=<null>
   name=TPR
 ]
@@ -250,7 +250,7 @@ com.cd.mythicdraft.model.Draft@25a296b8[
 2015-06-21 13:55:24 DEBUG ProfileValueUtils:82 - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.cd.mythicdraft.service.MtgoDraftParserServiceTest]
 2015-06-21 13:55:24 DEBUG DependencyInjectionTestExecutionListener:80 - Performing dependency injection for test context [[DefaultTestContext@319214bc testClass = MtgoDraftParserServiceTest, testInstance = com.cd.mythicdraft.service.MtgoDraftParserServiceTest@1381af25, testMethod = [null], testException = [null], mergedContextConfiguration = [MergedContextConfiguration@5ee556a1 testClass = MtgoDraftParserServiceTest, locations = '{}', classes = '{class com.cd.mythicdraft.service.MtgoDraftParserServiceTest$ContextConfiguration}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.test.context.support.AnnotationConfigContextLoader', parent = [null]]]].
 2015-06-21 13:55:24 DEBUG DefaultCacheAwareContextLoaderDelegate:96 - Retrieved ApplicationContext from cache with key [[MergedContextConfiguration@5ee556a1 testClass = MtgoDraftParserServiceTest, locations = '{}', classes = '{class com.cd.mythicdraft.service.MtgoDraftParserServiceTest$ContextConfiguration}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.test.context.support.AnnotationConfigContextLoader', parent = [null]]].
-2015-06-21 13:55:24 DEBUG InjectionMetadata:85 - Processing injected method of bean 'com.cd.mythicdraft.service.MtgoDraftParserServiceTest': AutowiredFieldElement for private com.cd.mythicdraft.service.MtgoDraftParserService com.cd.mythicdraft.service.MtgoDraftParserServiceTest.mtgoDraftParserService
+2015-06-21 13:55:24 DEBUG InjectionMetadata:85 - Processing injected method of bean 'com.cd.mythicdraft.service.MtgoDraftParserServiceTest': AutowiredFieldElement for private com.cd.mythicdraft.rest.service.MtgoDraftParserService com.cd.mythicdraft.service.MtgoDraftParserServiceTest.mtgoDraftParserService
 2015-06-21 13:55:24 DEBUG DefaultListableBeanFactory:247 - Returning cached instance of singleton bean 'mtgoDraftParserService'
 {0=[], 1=[], 2=[]}
 line 4:4 mismatched input 'XoXelo' expecting USER_NAME
@@ -262,111 +262,111 @@ line 9:4 mismatched input 'CptnNimo' expecting USER_NAME
 line 11:4 mismatched input 'Teddarooski' expecting USER_NAME
 {Shifting Loyalties=181, Misthoof Kirin=6, Minister of Pain=78, Hand of Silumgar=48, Alesha's Vanguard=179, Youthful Scholar=12, Whisk Away=124, Dragon Tempest=103, Wandering Tombshell=66, Sultai Skullkeeper=161, Refocus=148, Temur Runemark=140, Ugin's Construct=132, Rugged Highlands=183, Gurmag Angler=178, Tread Upon=20, Hooded Assassin=149, Dragon Fodder=99, Bathe in Dragonfire=142, Pyrotechnics=151, Negate=54, Soul Summons=160, Zephyr Scribe=4, Diplomacy of the Wastes=144, Custodian of the Trove=56, Swamp=14, Foul-Tongue Shriek=117, Encase in Ice=46, Lose Calm=16, Sidisi's Faithful=67, Temur Battle Rage=129, Douse in Gloom=121, Scaleguard Sentinels=35, Mind Rot=18, Self-Inflicted Wound=112, Damnable Pact=98, Corpseweft=79, Kindled Fury=109, Pressure Point=164, Kolaghan Skirmisher=113, Scion of Ugin=102, Lurking Arynx=44, Shambling Goblin=3, Vaultbreaker=175, Write into Being=141, Marang River Skeleton=52, Circle of Elders=60, Ambush Krotiq=153, Ancient Carp=116, Enhanced Awareness=184, Arashin War Beast=131, Strongarm Monk=36, Dragon-Scarred Bear=42, Ojutai's Breath=7, Atarka Monument=97, Frontier Mastodon=155, Alesha, Who Smiles at Death=133, Aven Skirmisher=171, Enduring Scalelord=69, Screamreach Brawler=49, Keeper of the Lens=115, Return to the Earth=191, Dragonlord's Servant=26, Dutiful Attendant=58, Feral Krushok=188, Echoes of the Kin Tree=107, Kolaghan Aspirant=105, Tail Slash=73, Rending Volley=89, Ethereal Ambush=187, Renowned Weaponsmith=167, Dirgur Nemesis=68, Abzan Advantage=147, Reduce in Stature=92, Evolving Wilds=34, Defiant Ogre=180, Sandsteppe Scavenger=101, Plains=57, Valorous Stance=158, Collateral Damage=126, Rageform=185, Taigam's Strike=55, Sight of the Scalelords=25, Flatten=85, Map the Wastes=143, Sandstorm Charger=31, Grim Contest=170, Jeskai Runemark=120, Sarkhan's Triumph=108, Shape the Sands=43, Mystic Meditation=19, Ancestral Vengeance=139, Sprinting Warbrute=21, Servant of the Scale=86, Tranquil Cove=134, Sandsteppe Outcast=128, Formless Nurturing=127, Impact Tremors=59, Glint=80, Fascination=156, Ainok Survivalist=88, Vial of Dragonfire=95, Reality Shift=173, Dromoka Dunecaster=38, Marsh Hulk=15, Hardened Berserker=30, Lotus Path Djinn=186, Silumgar's Scorn=10, Sultai Emissary=172, Updraft Elemental=41, Silumgar Sorcerer=90, Glaring Aegis=100, Display of Dominance=111, Revealing Wind=82, Sheltered Aerie=32, Contradict=87, Dragon's Eye Sentry=93, Gudul Lurker=37, Bloodfell Caves=176, Volcanic Rush=64, Harsh Sustenance=163, Pinion Feast=5, Sultai Runemark=136, Monastery Loremaster=110, Artful Maneuver=81, Will of the Naga=135, Commune with Lava=62, Dromoka Warrior=65, Gurmag Drowner=50, Archers of Qarsi=189, Magmatic Chasm=40, Sibsig Icebreakers=39, Grave Strength=130, Learn from the Past=53, Qarsi Deceiver=61, Vandalize=83, Forest=91, Silumgar Butcher=33, Gravepurge=29, Territorial Roc=17, Champion of Arashin=2, Guardian Shield-Bearer=94, Sage's Reverie=146, Swiftwater Cliffs=169, Lightning Shrieker=165, Aven Surveyor=138, Segmented Krotiq=72, Abzan Runemark=137, Qarsi High Priest=182, Gore Swine=154, Fearsome Awakening=166, Island=63, Smoldering Efreet=190, Void Squall=27, Duress=24, Glade Watcher=75, Butcher's Glee=96, Channel Harm=174, Stormcrag Elemental=45, Summit Prowler=106, Rakshasa's Disdain=177, Naturalize=51, Surge of Righteousness=119, War Flare=122, Silumgar Assassin=13, Mardu Woe-Reaper=168, Tormenting Voice=114, Sabertooth Outrider=1, Herdchaser Dragon=76, Ruthless Instincts=145, Arashin Cleric=123, Qarsi Sadist=0, Resupply=28, Wild Slash=157, Spidersilk Net=8, Stormwing Dragon=77, Sibsig Host=125, Great Teacher's Decree=11, Herald of Dromoka=71, Fate Forgotten=84, Reach of Shadows=162, Abzan Skycaptain=150, Ojutai Interceptor=70, Stampeding Elk Herd=22, Twin Bolt=9, Archfiend of Depravity=159, Defeat=74, Great-Horn Krushok=152, Ancestral Statue=23, Conifer Strider=118, Coat with Venom=104, Mountain=47}
 {0=[(13,[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14]), (21,[15, 16, 17, 18, 19, 20, 22, 23, 24, 25, 26, 27, 14]), (34,[28, 29, 30, 31, 4, 32, 33, 24, 35, 36, 37, 14]), (1,[38, 39, 40, 41, 42, 43, 23, 44, 45, 46, 47]), (48,[49, 28, 29, 50, 20, 51, 52, 43, 53, 47]), (48,[18, 40, 28, 54, 20, 55, 56, 52, 57]), (59,[10, 58, 56, 55, 60, 61, 62, 63]), (65,[64, 66, 67, 68, 51, 69, 47]), (7,[0, 2, 4, 8, 10, 14]), (18,[19, 23, 24, 26, 14]), (31,[28, 29, 32, 14]), (39,[43, 23, 47]), (29,[28, 47]), (28,[57]), (63,[])], 1=[(79,[1, 38, 39, 70, 71, 72, 73, 74, 75, 50, 76, 77, 78, 57]), (85,[38, 58, 80, 81, 82, 83, 84, 86, 87, 88, 89, 90, 91]), (96,[2, 3, 92, 93, 94, 95, 32, 4, 53, 97, 98, 57]), (15,[99, 100, 16, 19, 101, 55, 33, 34, 102, 103, 14]), (106,[65, 104, 105, 38, 19, 34, 51, 107, 108, 14]), (112,[17, 15, 109, 31, 110, 8, 43, 111, 63]), (113,[71, 114, 115, 42, 4, 44, 26, 14]), (1,[0, 116, 117, 118, 107, 119, 57]), (74,[38, 39, 76, 77, 78, 57]), (80,[38, 82, 83, 84, 91]), (53,[92, 93, 32, 57]), (16,[100, 55, 14]), (19,[51, 14]), (43,[63]), (14,[])], 2=[(133,[120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 134]), (142,[135, 136, 137, 138, 139, 122, 140, 141, 143, 144, 145, 146, 134]), (159,[147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158]), (162,[160, 161, 163, 164, 124, 165, 128, 166, 167, 168, 169]), (175,[170, 171, 172, 163, 150, 153, 141, 173, 174, 176]), (178,[170, 177, 147, 179, 180, 181, 182, 132, 183]), (185,[147, 148, 149, 150, 184, 152, 153, 173]), (186,[171, 187, 188, 165, 189, 190, 191]), (130,[120, 122, 123, 125, 127, 131]), (144,[136, 137, 139, 122, 140]), (149,[147, 152, 153, 156]), (165,[164, 166, 167]), (163,[171, 153]), (179,[147]), (184,[])]}
-com.cd.mythicdraft.model.Draft@7a431f85[
+com.cd.mythicdraft.model.entity.Draft@7a431f85[
   id=<null>
   name=<null>
   eventId=8305539
   eventDate=Thu May 21 21:26:40 EDT 2015
-  draftPlayers=[com.cd.mythicdraft.model.DraftPlayer@4cca9378[
+  draftPlayers=[com.cd.mythicdraft.model.entity.DraftPlayer@4cca9378[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@7a431f85
-  player=com.cd.mythicdraft.model.Player@3ea70c8f[
+  draft=com.cd.mythicdraft.model.entity.Draft@7a431f85
+  player=com.cd.mythicdraft.model.entity.Player@3ea70c8f[
   id=<null>
   name=XoXelo
 ]
-], com.cd.mythicdraft.model.DraftPlayer@797d2ab[
+], com.cd.mythicdraft.model.entity.DraftPlayer@797d2ab[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@7a431f85
-  player=com.cd.mythicdraft.model.Player@4929a06b[
+  draft=com.cd.mythicdraft.model.entity.Draft@7a431f85
+  player=com.cd.mythicdraft.model.entity.Player@4929a06b[
   id=<null>
   name=DaltonCastle
 ]
-], com.cd.mythicdraft.model.DraftPlayer@87dc72[
+], com.cd.mythicdraft.model.entity.DraftPlayer@87dc72[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@7a431f85
-  player=com.cd.mythicdraft.model.Player@4be2f653[
+  draft=com.cd.mythicdraft.model.entity.Draft@7a431f85
+  player=com.cd.mythicdraft.model.entity.Player@4be2f653[
   id=<null>
   name=CoolMrFrosty
 ]
-], com.cd.mythicdraft.model.DraftPlayer@5799c0a3[
+], com.cd.mythicdraft.model.entity.DraftPlayer@5799c0a3[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@7a431f85
-  player=com.cd.mythicdraft.model.Player@2199ea11[
+  draft=com.cd.mythicdraft.model.entity.Draft@7a431f85
+  player=com.cd.mythicdraft.model.entity.Player@2199ea11[
   id=<null>
   name=uhavebeenrobbed
 ]
-], com.cd.mythicdraft.model.DraftPlayer@2f363a43[
+], com.cd.mythicdraft.model.entity.DraftPlayer@2f363a43[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@7a431f85
-  player=com.cd.mythicdraft.model.Player@7fd61352[
+  draft=com.cd.mythicdraft.model.entity.Draft@7a431f85
+  player=com.cd.mythicdraft.model.entity.Player@7fd61352[
   id=<null>
   name=CptnNimo
 ]
-], com.cd.mythicdraft.model.DraftPlayer@112b1cec[
+], com.cd.mythicdraft.model.entity.DraftPlayer@112b1cec[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@7a431f85
-  player=com.cd.mythicdraft.model.Player@3f8eae0f[
+  draft=com.cd.mythicdraft.model.entity.Draft@7a431f85
+  player=com.cd.mythicdraft.model.entity.Player@3f8eae0f[
   id=<null>
   name=yo1.t
 ]
-], com.cd.mythicdraft.model.DraftPlayer@2577d2c2[
+], com.cd.mythicdraft.model.entity.DraftPlayer@2577d2c2[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@7a431f85
-  player=com.cd.mythicdraft.model.Player@30457b62[
+  draft=com.cd.mythicdraft.model.entity.Draft@7a431f85
+  player=com.cd.mythicdraft.model.entity.Player@30457b62[
   id=<null>
   name=Teddarooski
 ]
-], com.cd.mythicdraft.model.DraftPlayer@5dadd1c5[
+], com.cd.mythicdraft.model.entity.DraftPlayer@5dadd1c5[
   playerId=<null>
   draftId=<null>
   isActivePlayer=true
-  draft=com.cd.mythicdraft.model.Draft@7a431f85
-  player=com.cd.mythicdraft.model.Player@21a777b0[
+  draft=com.cd.mythicdraft.model.entity.Draft@7a431f85
+  player=com.cd.mythicdraft.model.entity.Player@21a777b0[
   id=<null>
   name=baronvonfonz
 ]
 ]]
-  draftPacks=[com.cd.mythicdraft.model.DraftPack@79a2d512[
+  draftPacks=[com.cd.mythicdraft.model.entity.DraftPack@79a2d512[
   id=<null>
   draftId=<null>
   setId=<null>
   sequenceId=0
-  draft=com.cd.mythicdraft.model.Draft@7a431f85
-  set=com.cd.mythicdraft.model.Set@6df55f1d[
+  draft=com.cd.mythicdraft.model.entity.Draft@7a431f85
+  set=com.cd.mythicdraft.model.entity.Set@6df55f1d[
   id=<null>
   name=DTK
 ]
-], com.cd.mythicdraft.model.DraftPack@3152cf21[
+], com.cd.mythicdraft.model.entity.DraftPack@3152cf21[
   id=<null>
   draftId=<null>
   setId=<null>
   sequenceId=1
-  draft=com.cd.mythicdraft.model.Draft@7a431f85
-  set=com.cd.mythicdraft.model.Set@837a151[
+  draft=com.cd.mythicdraft.model.entity.Draft@7a431f85
+  set=com.cd.mythicdraft.model.entity.Set@837a151[
   id=<null>
   name=DTK
 ]
-], com.cd.mythicdraft.model.DraftPack@339c98d3[
+], com.cd.mythicdraft.model.entity.DraftPack@339c98d3[
   id=<null>
   draftId=<null>
   setId=<null>
   sequenceId=2
-  draft=com.cd.mythicdraft.model.Draft@7a431f85
-  set=com.cd.mythicdraft.model.Set@7c3fd10d[
+  draft=com.cd.mythicdraft.model.entity.Draft@7a431f85
+  set=com.cd.mythicdraft.model.entity.Set@7c3fd10d[
   id=<null>
   name=FRF
 ]
@@ -377,7 +377,7 @@ com.cd.mythicdraft.model.Draft@7a431f85[
 2015-06-21 13:55:24 DEBUG ProfileValueUtils:82 - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.cd.mythicdraft.service.MtgoDraftParserServiceTest]
 2015-06-21 13:55:24 DEBUG DependencyInjectionTestExecutionListener:80 - Performing dependency injection for test context [[DefaultTestContext@319214bc testClass = MtgoDraftParserServiceTest, testInstance = com.cd.mythicdraft.service.MtgoDraftParserServiceTest@41b5ec35, testMethod = [null], testException = [null], mergedContextConfiguration = [MergedContextConfiguration@5ee556a1 testClass = MtgoDraftParserServiceTest, locations = '{}', classes = '{class com.cd.mythicdraft.service.MtgoDraftParserServiceTest$ContextConfiguration}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.test.context.support.AnnotationConfigContextLoader', parent = [null]]]].
 2015-06-21 13:55:24 DEBUG DefaultCacheAwareContextLoaderDelegate:96 - Retrieved ApplicationContext from cache with key [[MergedContextConfiguration@5ee556a1 testClass = MtgoDraftParserServiceTest, locations = '{}', classes = '{class com.cd.mythicdraft.service.MtgoDraftParserServiceTest$ContextConfiguration}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.test.context.support.AnnotationConfigContextLoader', parent = [null]]].
-2015-06-21 13:55:24 DEBUG InjectionMetadata:85 - Processing injected method of bean 'com.cd.mythicdraft.service.MtgoDraftParserServiceTest': AutowiredFieldElement for private com.cd.mythicdraft.service.MtgoDraftParserService com.cd.mythicdraft.service.MtgoDraftParserServiceTest.mtgoDraftParserService
+2015-06-21 13:55:24 DEBUG InjectionMetadata:85 - Processing injected method of bean 'com.cd.mythicdraft.service.MtgoDraftParserServiceTest': AutowiredFieldElement for private com.cd.mythicdraft.rest.service.MtgoDraftParserService com.cd.mythicdraft.service.MtgoDraftParserServiceTest.mtgoDraftParserService
 2015-06-21 13:55:24 DEBUG DefaultListableBeanFactory:247 - Returning cached instance of singleton bean 'mtgoDraftParserService'
 {0=[], 1=[], 2=[]}
 line 5:4 mismatched input 'linvala' expecting USER_NAME
@@ -388,111 +388,111 @@ line 10:4 mismatched input 'complexsimpleton' expecting USER_NAME
 line 11:4 mismatched input 'ergun' expecting USER_NAME
 {Mirran Crusader=127, Kami of Ancient Law=17, Frogmite=37, Commune with Nature=109, Artisan of Kozilek=27, Scavenger Drake=62, Boros Garrison=50, Blades of Velis Vel=3, Skyhunter Skirmisher=70, Thief of Hope=15, Terashi's Grasp=106, Cranial Plating=93, Nest Invader=8, Repeal=6, Alloy Myr=47, Apostle's Blessing=42, Cytoplast Root-Kin=128, Mutagenic Growth=125, Brute Force=123, Waxmane Baku=96, Overwhelm=130, Copper Carapace=72, Court Homunculus=1, Wings of Velis Vel=60, Ulamog's Crusher=49, Burst Lightning=32, Darksteel Citadel=46, Novijen Sages=40, Qumulox=94, Death Denied=111, Bone Splinters=31, Gorehorn Minotaurs=0, Viashino Slaughtermaster=16, Hikari, Twilight Guardian=38, Karplusan Strider=77, Sunspear Shikari=114, Rusted Relic=48, Izzet Boilerworks=112, Skyreach Manta=34, Etched Oracle=26, Runed Servitor=100, Deathmark=14, Vigean Graftmage=67, Necrogenesis=85, Thrive=65, Smokebraider=69, Bloodthrone Vampire=131, Necroskitter=13, Apocalypse Hydra=80, Selesnya Sanctuary=10, Moonlit Strider=63, Otherworldly Journey=75, Kor Duelist=12, Matca Rioters=44, Vapor Snag=20, Thrummingbird=58, Telling Time=115, Evolving Wilds=35, Simic Initiate=28, Dispatch=90, Sickle Ripper=97, Mighty Leap=101, Dragonsoul Knight=41, Sign in Blood=84, Water Servant=86, Combust=108, Myr Enforcer=116, Plummet=33, Mortarpod=79, Bloodshot Trainee=78, Wrap in Flames=71, Long-Forgotten Gohei=95, Wayfarer's Bauble=76, Somber Hoverguard=45, Endrek Sahr, Master Breeder=129, Incandescent Soulstoke=91, Skarrgan Firebird=126, Glint Hawk Idol=88, Narcolepsy=118, Flayer Husk=56, Helium Squirter=54, Cathodion=24, Boros Swiftblade=53, Goblin Fireslinger=98, Savage Twister=11, Lorescale Coatl=103, Flashfreeze=73, Conclave Phalanx=104, Steady Progress=102, Soulbright Flamekin=113, Instill Infection=59, Rampant Growth=21, Stoic Rebuttal=22, Scion of the Wild=124, Sphere of the Suns=36, Arrest=83, Devouring Greed=25, Reassembling Skeleton=121, Ghostly Changeling=51, Grim Affliction=7, Expedition Map=119, Thoughtcast=110, Electrolyze=39, Fiery Fall=82, Scatter the Seeds=19, Tukatongue Thallid=4, Kavu Primarch=52, Glassdust Hulk=61, Vampire Lacerator=18, Gut Shot=43, Sylvan Bounty=57, Sickleslicer=66, Sunlance=74, Cloud Elemental=107, Vines of Vastwood=89, Hearthfire Hobgoblin=120, Dimir Aqueduct=68, Ethercaste Knight=105, Root-Kin Ally=122, Shrivel=2, Raise the Alarm=30, Inner-Flame Igniter=29, Kitesail=23, Duskhunter Bat=55, Tribal Flames=92, Goblin War Paint=99, Etched Monstrosity=87, Smash to Smithereens=64, Mana Leak=132, Fortify=5, Blood Ogre=81, Hurkyl's Recall=117, Faerie Mechanist=9}
 {0=[(11,[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14]), (26,[15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28]), (39,[29, 30, 31, 32, 33, 22, 34, 35, 36, 37, 38, 40]), (41,[42, 18, 43, 44, 45, 46, 47, 48, 49, 50, 22]), (6,[51, 16, 2, 3, 4, 5, 7, 52, 53, 54]), (62,[1, 55, 56, 3, 57, 58, 59, 60, 61]), (68,[16, 63, 64, 65, 66, 67, 60, 10]), (73,[69, 70, 33, 60, 71, 72, 40]), (14,[1, 2, 3, 5, 9, 12]), (22,[16, 20, 23, 25, 28]), (33,[29, 22, 37, 40]), (48,[45, 46, 22]), (2,[16, 3]), (59,[3]), (63,[])], 1=[(80,[74, 15, 0, 75, 33, 60, 23, 71, 76, 48, 77, 78, 79, 47]), (87,[81, 30, 59, 82, 65, 83, 58, 84, 8, 54, 85, 86, 60]), (57,[0, 75, 56, 3, 88, 58, 59, 89, 45, 90, 91, 17]), (92,[41, 70, 2, 57, 83, 7, 54, 93, 94, 95, 23]), (6,[96, 97, 98, 99, 28, 100, 101, 102, 103, 24]), (86,[97, 29, 104, 64, 65, 66, 67, 105, 104]), (92,[42, 84, 28, 106, 107, 56, 108, 64]), (112,[96, 51, 109, 110, 47, 111, 113]), (77,[15, 75, 33, 60, 71, 78]), (58,[59, 65, 84, 54, 60]), (58,[75, 3, 59, 45]), (41,[2, 54, 23]), (102,[99, 28]), (97,[67]), (84,[])], 2=[(32,[30, 31, 114, 115, 33, 71, 116, 46, 47, 73, 53, 85, 117, 106]), (118,[30, 97, 2, 3, 4, 5, 6, 7, 21, 119, 120, 121, 122]), (100,[123, 17, 99, 28, 101, 6, 124, 60, 125, 126, 127, 44]), (64,[96, 97, 98, 65, 66, 67, 9, 19, 53, 128, 129]), (92,[98, 63, 2, 57, 83, 107, 7, 9, 44, 108]), (100,[51, 123, 74, 99, 28, 101, 102, 130, 71]), (32,[29, 104, 131, 132, 89, 47, 111, 67]), (92,[16, 84, 28, 106, 107, 56, 94]), (73,[114, 71, 116, 53, 85, 106]), (6,[97, 2, 3, 120, 122]), (17,[99, 28, 101, 60]), (53,[96, 65, 67]), (7,[2, 108]), (99,[28]), (67,[])]}
-com.cd.mythicdraft.model.Draft@60ba17d4[
+com.cd.mythicdraft.model.entity.Draft@60ba17d4[
   id=<null>
   name=<null>
   eventId=8404751
   eventDate=Fri Jun 19 23:39:06 EDT 2015
-  draftPlayers=[com.cd.mythicdraft.model.DraftPlayer@597290e8[
+  draftPlayers=[com.cd.mythicdraft.model.entity.DraftPlayer@597290e8[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@60ba17d4
-  player=com.cd.mythicdraft.model.Player@1304f57f[
+  draft=com.cd.mythicdraft.model.entity.Draft@60ba17d4
+  player=com.cd.mythicdraft.model.entity.Player@1304f57f[
   id=<null>
   name=Jwiley129
 ]
-], com.cd.mythicdraft.model.DraftPlayer@70879d38[
+], com.cd.mythicdraft.model.entity.DraftPlayer@70879d38[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@60ba17d4
-  player=com.cd.mythicdraft.model.Player@2a916e9a[
+  draft=com.cd.mythicdraft.model.entity.Draft@60ba17d4
+  player=com.cd.mythicdraft.model.entity.Player@2a916e9a[
   id=<null>
   name=linvala
 ]
-], com.cd.mythicdraft.model.DraftPlayer@5763013f[
+], com.cd.mythicdraft.model.entity.DraftPlayer@5763013f[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@60ba17d4
-  player=com.cd.mythicdraft.model.Player@31f4564b[
+  draft=com.cd.mythicdraft.model.entity.Draft@60ba17d4
+  player=com.cd.mythicdraft.model.entity.Player@31f4564b[
   id=<null>
   name=DraftMaster
 ]
-], com.cd.mythicdraft.model.DraftPlayer@24e6fbeb[
+], com.cd.mythicdraft.model.entity.DraftPlayer@24e6fbeb[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@60ba17d4
-  player=com.cd.mythicdraft.model.Player@204d6f8c[
+  draft=com.cd.mythicdraft.model.entity.Draft@60ba17d4
+  player=com.cd.mythicdraft.model.entity.Player@204d6f8c[
   id=<null>
   name=cjlack92
 ]
-], com.cd.mythicdraft.model.DraftPlayer@38a5143a[
+], com.cd.mythicdraft.model.entity.DraftPlayer@38a5143a[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@60ba17d4
-  player=com.cd.mythicdraft.model.Player@3bd660e5[
+  draft=com.cd.mythicdraft.model.entity.Draft@60ba17d4
+  player=com.cd.mythicdraft.model.entity.Player@3bd660e5[
   id=<null>
   name=Ninot
 ]
-], com.cd.mythicdraft.model.DraftPlayer@5dd308e3[
+], com.cd.mythicdraft.model.entity.DraftPlayer@5dd308e3[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@60ba17d4
-  player=com.cd.mythicdraft.model.Player@77737913[
+  draft=com.cd.mythicdraft.model.entity.Draft@60ba17d4
+  player=com.cd.mythicdraft.model.entity.Player@77737913[
   id=<null>
   name=complexsimpleton
 ]
-], com.cd.mythicdraft.model.DraftPlayer@49ec9f34[
+], com.cd.mythicdraft.model.entity.DraftPlayer@49ec9f34[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@60ba17d4
-  player=com.cd.mythicdraft.model.Player@3e120ba9[
+  draft=com.cd.mythicdraft.model.entity.Draft@60ba17d4
+  player=com.cd.mythicdraft.model.entity.Player@3e120ba9[
   id=<null>
   name=ergun
 ]
-], com.cd.mythicdraft.model.DraftPlayer@4dc834d6[
+], com.cd.mythicdraft.model.entity.DraftPlayer@4dc834d6[
   playerId=<null>
   draftId=<null>
   isActivePlayer=true
-  draft=com.cd.mythicdraft.model.Draft@60ba17d4
-  player=com.cd.mythicdraft.model.Player@12bba415[
+  draft=com.cd.mythicdraft.model.entity.Draft@60ba17d4
+  player=com.cd.mythicdraft.model.entity.Player@12bba415[
   id=<null>
   name=baronvonfonz
 ]
 ]]
-  draftPacks=[com.cd.mythicdraft.model.DraftPack@5d11684e[
+  draftPacks=[com.cd.mythicdraft.model.entity.DraftPack@5d11684e[
   id=<null>
   draftId=<null>
   setId=<null>
   sequenceId=0
-  draft=com.cd.mythicdraft.model.Draft@60ba17d4
-  set=com.cd.mythicdraft.model.Set@2bea6ce9[
+  draft=com.cd.mythicdraft.model.entity.Draft@60ba17d4
+  set=com.cd.mythicdraft.model.entity.Set@2bea6ce9[
   id=<null>
   name=MM2
 ]
-], com.cd.mythicdraft.model.DraftPack@21d7089e[
+], com.cd.mythicdraft.model.entity.DraftPack@21d7089e[
   id=<null>
   draftId=<null>
   setId=<null>
   sequenceId=1
-  draft=com.cd.mythicdraft.model.Draft@60ba17d4
-  set=com.cd.mythicdraft.model.Set@2b944b85[
+  draft=com.cd.mythicdraft.model.entity.Draft@60ba17d4
+  set=com.cd.mythicdraft.model.entity.Set@2b944b85[
   id=<null>
   name=MM2
 ]
-], com.cd.mythicdraft.model.DraftPack@2c76ce6d[
+], com.cd.mythicdraft.model.entity.DraftPack@2c76ce6d[
   id=<null>
   draftId=<null>
   setId=<null>
   sequenceId=2
-  draft=com.cd.mythicdraft.model.Draft@60ba17d4
-  set=com.cd.mythicdraft.model.Set@14ea1f1d[
+  draft=com.cd.mythicdraft.model.entity.Draft@60ba17d4
+  set=com.cd.mythicdraft.model.entity.Set@14ea1f1d[
   id=<null>
   name=MM2
 ]
@@ -503,7 +503,7 @@ com.cd.mythicdraft.model.Draft@60ba17d4[
 2015-06-21 13:55:24 DEBUG ProfileValueUtils:82 - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.cd.mythicdraft.service.MtgoDraftParserServiceTest]
 2015-06-21 13:55:24 DEBUG DependencyInjectionTestExecutionListener:80 - Performing dependency injection for test context [[DefaultTestContext@319214bc testClass = MtgoDraftParserServiceTest, testInstance = com.cd.mythicdraft.service.MtgoDraftParserServiceTest@16a0b3a5, testMethod = [null], testException = [null], mergedContextConfiguration = [MergedContextConfiguration@5ee556a1 testClass = MtgoDraftParserServiceTest, locations = '{}', classes = '{class com.cd.mythicdraft.service.MtgoDraftParserServiceTest$ContextConfiguration}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.test.context.support.AnnotationConfigContextLoader', parent = [null]]]].
 2015-06-21 13:55:24 DEBUG DefaultCacheAwareContextLoaderDelegate:96 - Retrieved ApplicationContext from cache with key [[MergedContextConfiguration@5ee556a1 testClass = MtgoDraftParserServiceTest, locations = '{}', classes = '{class com.cd.mythicdraft.service.MtgoDraftParserServiceTest$ContextConfiguration}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.test.context.support.AnnotationConfigContextLoader', parent = [null]]].
-2015-06-21 13:55:24 DEBUG InjectionMetadata:85 - Processing injected method of bean 'com.cd.mythicdraft.service.MtgoDraftParserServiceTest': AutowiredFieldElement for private com.cd.mythicdraft.service.MtgoDraftParserService com.cd.mythicdraft.service.MtgoDraftParserServiceTest.mtgoDraftParserService
+2015-06-21 13:55:24 DEBUG InjectionMetadata:85 - Processing injected method of bean 'com.cd.mythicdraft.service.MtgoDraftParserServiceTest': AutowiredFieldElement for private com.cd.mythicdraft.rest.service.MtgoDraftParserService com.cd.mythicdraft.service.MtgoDraftParserServiceTest.mtgoDraftParserService
 2015-06-21 13:55:24 DEBUG DefaultListableBeanFactory:247 - Returning cached instance of singleton bean 'mtgoDraftParserService'
 {0=[], 1=[], 2=[]}
 line 4:4 mismatched input 'micahmbg' expecting USER_NAME
@@ -512,113 +512,113 @@ line 6:4 mismatched input 'Alvas' expecting USER_NAME
 line 7:4 mismatched input 'trexgameeater' expecting USER_NAME
 line 9:4 mismatched input 'AgonizingDefeat' expecting USER_NAME
 line 11:4 mismatched input 'baronvonfonz' expecting USER_NAME
-{Kami of Ancient Law=2, Frogmite=20, Commune with Nature=148, Artisan of Kozilek=109, Scavenger Drake=100, Boros Garrison=125, Blades of Velis Vel=105, Skyhunter Skirmisher=39, Thief of Hope=0, Æthersnipe=83, Terashi's Grasp=67, Nest Invader=128, Repeal=43, Celestial Purge=101, Alloy Myr=32, Gnarlid Pack=3, Apostle's Blessing=88, Mutagenic Growth=133, Cytoplast Root-Kin=37, Brute Force=50, Culling Dais=63, Waxmane Baku=15, Tumble Magnet=135, Overwhelm=108, Sigil Blessing=116, Copper Carapace=115, Kozilek's Predator=123, Wings of Velis Vel=142, Court Homunculus=60, Ulamog's Crusher=34, Burst Lightning=72, Vengeful Rebirth=91, Darksteel Citadel=111, Novijen Sages=143, Qumulox=112, Death Denied=97, Gorehorn Minotaurs=120, Viashino Slaughtermaster=1, Waking Nightmare=22, Hikari, Twilight Guardian=149, Aquastrand Spider=9, Sunspear Shikari=61, Emrakul, the Aeons Torn=79, Tezzeret's Gambit=36, Rusted Relic=33, Etched Oracle=114, Skyreach Manta=35, Izzet Boilerworks=76, Pillory of the Sleepless=10, Runed Servitor=42, Everflowing Chalice=26, Vigean Graftmage=146, Thrive=130, Ashenmoor Gouger=103, Remand=46, Smokebraider=95, Lightning Bolt=24, Bloodthrone Vampire=71, Moonlit Strider=17, Otherworldly Journey=137, Sundering Vitae=57, Ulamog, the Infinite Gyre=64, Thrummingbird=131, Vapor Snag=107, Matca Rioters=56, Telling Time=45, Gust-Skimmer=6, Azorius Chancery=89, Evolving Wilds=14, Simic Initiate=41, Algae Gharial=12, Dispatch=98, Sickle Ripper=104, Mighty Leap=5, Dragonsoul Knight=38, Dread Drone=49, Sign in Blood=7, Water Servant=69, Combust=90, Myr Enforcer=21, Plummet=84, Mortarpod=11, Bloodshot Trainee=110, Long-Forgotten Gohei=136, Wrap in Flames=74, Wayfarer's Bauble=75, Somber Hoverguard=147, Glint Hawk Idol=92, Flayer Husk=44, Plagued Rusalka=94, Helium Squirter=8, Cathodion=124, Air Servant=126, Boros Swiftblade=113, Goblin Fireslinger=93, Lorescale Coatl=52, Daybreak Coronet=127, Conclave Phalanx=54, Steady Progress=18, Soulbright Flamekin=53, Instill Infection=139, Rakdos Carnarium=85, Eldrazi Temple=78, Stoic Rebuttal=62, Sphere of the Suns=96, Scion of the Wild=48, Lodestone Golem=119, Devouring Greed=58, Myrsmith=70, Reassembling Skeleton=25, Ghostly Changeling=16, Scuttling Death=55, Worldheart Phoenix=86, Thoughtcast=23, Fiery Fall=129, Tukatongue Thallid=145, Surrakar Spellblade=150, Kavu Primarch=19, Spread the Sickness=77, Stormblood Berserker=47, Vampire Lacerator=28, Drooling Groodion=65, Gut Shot=66, Sylvan Bounty=138, Sickleslicer=4, Sunlance=73, Vines of Vastwood=31, Cloud Elemental=81, Hearthfire Hobgoblin=99, Indomitable Archangel=27, Ethercaste Knight=102, Root-Kin Ally=118, Fulminator Mage=13, Orzhov Basilica=132, Shrivel=68, Nameless Inversion=117, Raise the Alarm=121, Inner-Flame Igniter=122, Kitesail=51, Blinkmoth Nexus=59, Duskhunter Bat=40, Tribal Flames=80, Goblin War Paint=82, Smash to Smithereens=140, Fortify=106, Mana Leak=30, Shrewd Hatchling=134, Blood Ogre=29, Mirror Entity=87, Hurkyl's Recall=144, Faerie Mechanist=141}
+{Kami of Ancient Law=2, Frogmite=20, Commune with Nature=148, Artisan of Kozilek=109, Scavenger Drake=100, Boros Garrison=125, Blades of Velis Vel=105, Skyhunter Skirmisher=39, Thief of Hope=0, ï¿½thersnipe=83, Terashi's Grasp=67, Nest Invader=128, Repeal=43, Celestial Purge=101, Alloy Myr=32, Gnarlid Pack=3, Apostle's Blessing=88, Mutagenic Growth=133, Cytoplast Root-Kin=37, Brute Force=50, Culling Dais=63, Waxmane Baku=15, Tumble Magnet=135, Overwhelm=108, Sigil Blessing=116, Copper Carapace=115, Kozilek's Predator=123, Wings of Velis Vel=142, Court Homunculus=60, Ulamog's Crusher=34, Burst Lightning=72, Vengeful Rebirth=91, Darksteel Citadel=111, Novijen Sages=143, Qumulox=112, Death Denied=97, Gorehorn Minotaurs=120, Viashino Slaughtermaster=1, Waking Nightmare=22, Hikari, Twilight Guardian=149, Aquastrand Spider=9, Sunspear Shikari=61, Emrakul, the Aeons Torn=79, Tezzeret's Gambit=36, Rusted Relic=33, Etched Oracle=114, Skyreach Manta=35, Izzet Boilerworks=76, Pillory of the Sleepless=10, Runed Servitor=42, Everflowing Chalice=26, Vigean Graftmage=146, Thrive=130, Ashenmoor Gouger=103, Remand=46, Smokebraider=95, Lightning Bolt=24, Bloodthrone Vampire=71, Moonlit Strider=17, Otherworldly Journey=137, Sundering Vitae=57, Ulamog, the Infinite Gyre=64, Thrummingbird=131, Vapor Snag=107, Matca Rioters=56, Telling Time=45, Gust-Skimmer=6, Azorius Chancery=89, Evolving Wilds=14, Simic Initiate=41, Algae Gharial=12, Dispatch=98, Sickle Ripper=104, Mighty Leap=5, Dragonsoul Knight=38, Dread Drone=49, Sign in Blood=7, Water Servant=69, Combust=90, Myr Enforcer=21, Plummet=84, Mortarpod=11, Bloodshot Trainee=110, Long-Forgotten Gohei=136, Wrap in Flames=74, Wayfarer's Bauble=75, Somber Hoverguard=147, Glint Hawk Idol=92, Flayer Husk=44, Plagued Rusalka=94, Helium Squirter=8, Cathodion=124, Air Servant=126, Boros Swiftblade=113, Goblin Fireslinger=93, Lorescale Coatl=52, Daybreak Coronet=127, Conclave Phalanx=54, Steady Progress=18, Soulbright Flamekin=53, Instill Infection=139, Rakdos Carnarium=85, Eldrazi Temple=78, Stoic Rebuttal=62, Sphere of the Suns=96, Scion of the Wild=48, Lodestone Golem=119, Devouring Greed=58, Myrsmith=70, Reassembling Skeleton=25, Ghostly Changeling=16, Scuttling Death=55, Worldheart Phoenix=86, Thoughtcast=23, Fiery Fall=129, Tukatongue Thallid=145, Surrakar Spellblade=150, Kavu Primarch=19, Spread the Sickness=77, Stormblood Berserker=47, Vampire Lacerator=28, Drooling Groodion=65, Gut Shot=66, Sylvan Bounty=138, Sickleslicer=4, Sunlance=73, Vines of Vastwood=31, Cloud Elemental=81, Hearthfire Hobgoblin=99, Indomitable Archangel=27, Ethercaste Knight=102, Root-Kin Ally=118, Fulminator Mage=13, Orzhov Basilica=132, Shrivel=68, Nameless Inversion=117, Raise the Alarm=121, Inner-Flame Igniter=122, Kitesail=51, Blinkmoth Nexus=59, Duskhunter Bat=40, Tribal Flames=80, Goblin War Paint=82, Smash to Smithereens=140, Fortify=106, Mana Leak=30, Shrewd Hatchling=134, Blood Ogre=29, Mirror Entity=87, Hurkyl's Recall=144, Faerie Mechanist=141}
 {0=[(13,[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14]), (27,[15, 16, 1, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]), (33,[1, 2, 28, 29, 30, 31, 32, 34, 35, 36, 37, 6]), (46,[38, 39, 40, 41, 42, 5, 43, 44, 45, 47, 48]), (46,[49, 50, 2, 31, 8, 34, 51, 35, 52, 44]), (59,[53, 54, 55, 18, 56, 57, 20, 21, 58]), (60,[40, 53, 61, 62, 32, 63, 64, 65]), (6,[28, 66, 15, 67, 68, 69, 70]), (6,[0, 1, 2, 5, 7, 8]), (20,[15, 16, 17, 18, 22]), (30,[1, 2, 28, 31]), (39,[41, 5, 45]), (44,[50, 2]), (21,[58]), (53,[])], 1=[(73,[71, 72, 0, 45, 56, 23, 51, 74, 75, 76, 77, 78, 79, 47]), (87,[28, 29, 80, 41, 67, 81, 44, 82, 83, 84, 85, 86, 78]), (92,[38, 88, 28, 66, 62, 19, 34, 51, 35, 89, 90, 91]), (98,[93, 17, 94, 95, 83, 14, 96, 20, 97, 99, 100]), (102,[54, 55, 60, 62, 35, 34, 51, 101, 103, 9]), (107,[104, 93, 105, 106, 43, 108, 109, 110, 30]), (111,[16, 50, 18, 22, 20, 112, 113, 114]), (21,[53, 61, 115, 74, 111, 116, 50]), (23,[0, 45, 56, 51, 74, 76]), (67,[41, 81, 82, 84, 86]), (88,[38, 66, 51, 35]), (20,[17, 95, 97]), (62,[54, 55]), (106,[105]), (20,[])], 2=[(119,[2, 117, 93, 17, 18, 56, 111, 115, 23, 32, 10, 118, 100, 120]), (124,[121, 104, 122, 54, 107, 123, 57, 22, 96, 125, 126, 127, 128]), (107,[0, 120, 129, 130, 131, 7, 82, 48, 132, 133, 134, 122]), (135,[15, 104, 93, 14, 96, 20, 97, 132, 86, 136, 78]), (141,[95, 137, 105, 138, 131, 139, 140, 89, 65, 141]), (111,[49, 38, 39, 40, 142, 32, 143, 144, 23]), (147,[145, 106, 146, 139, 148, 149, 118, 139]), (23,[137, 94, 15, 142, 51, 74, 150]), (111,[2, 93, 17, 18, 23, 118]), (54,[121, 104, 107, 22, 127]), (0,[130, 7, 82, 134]), (20,[15, 97, 136]), (95,[137, 105]), (40,[142]), (148,[])]}
-com.cd.mythicdraft.model.Draft@34e475e1[
+com.cd.mythicdraft.model.entity.Draft@34e475e1[
   id=<null>
   name=<null>
   eventId=8404278
   eventDate=Fri Jun 19 20:15:36 EDT 2015
-  draftPlayers=[com.cd.mythicdraft.model.DraftPlayer@2f721e8[
+  draftPlayers=[com.cd.mythicdraft.model.entity.DraftPlayer@2f721e8[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@34e475e1
-  player=com.cd.mythicdraft.model.Player@67f02555[
+  draft=com.cd.mythicdraft.model.entity.Draft@34e475e1
+  player=com.cd.mythicdraft.model.entity.Player@67f02555[
   id=<null>
   name=micahmbg
 ]
-], com.cd.mythicdraft.model.DraftPlayer@2ed307dd[
+], com.cd.mythicdraft.model.entity.DraftPlayer@2ed307dd[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@34e475e1
-  player=com.cd.mythicdraft.model.Player@472324c2[
+  draft=com.cd.mythicdraft.model.entity.Draft@34e475e1
+  player=com.cd.mythicdraft.model.entity.Player@472324c2[
   id=<null>
   name=nyoro_
 ]
-], com.cd.mythicdraft.model.DraftPlayer@20a9562f[
+], com.cd.mythicdraft.model.entity.DraftPlayer@20a9562f[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@34e475e1
-  player=com.cd.mythicdraft.model.Player@5442610a[
+  draft=com.cd.mythicdraft.model.entity.Draft@34e475e1
+  player=com.cd.mythicdraft.model.entity.Player@5442610a[
   id=<null>
   name=Alvas
 ]
-], com.cd.mythicdraft.model.DraftPlayer@4d593869[
+], com.cd.mythicdraft.model.entity.DraftPlayer@4d593869[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@34e475e1
-  player=com.cd.mythicdraft.model.Player@51f102bd[
+  draft=com.cd.mythicdraft.model.entity.Draft@34e475e1
+  player=com.cd.mythicdraft.model.entity.Player@51f102bd[
   id=<null>
   name=trexgameeater
 ]
-], com.cd.mythicdraft.model.DraftPlayer@1c869d2b[
+], com.cd.mythicdraft.model.entity.DraftPlayer@1c869d2b[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@34e475e1
-  player=com.cd.mythicdraft.model.Player@25eaf052[
+  draft=com.cd.mythicdraft.model.entity.Draft@34e475e1
+  player=com.cd.mythicdraft.model.entity.Player@25eaf052[
   id=<null>
   name=skeelog2004
 ]
-], com.cd.mythicdraft.model.DraftPlayer@49b880ae[
+], com.cd.mythicdraft.model.entity.DraftPlayer@49b880ae[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@34e475e1
-  player=com.cd.mythicdraft.model.Player@6347aaf0[
+  draft=com.cd.mythicdraft.model.entity.Draft@34e475e1
+  player=com.cd.mythicdraft.model.entity.Player@6347aaf0[
   id=<null>
   name=AgonizingDefeat
 ]
-], com.cd.mythicdraft.model.DraftPlayer@70084551[
+], com.cd.mythicdraft.model.entity.DraftPlayer@70084551[
   playerId=<null>
   draftId=<null>
   isActivePlayer=false
-  draft=com.cd.mythicdraft.model.Draft@34e475e1
-  player=com.cd.mythicdraft.model.Player@7627a57b[
+  draft=com.cd.mythicdraft.model.entity.Draft@34e475e1
+  player=com.cd.mythicdraft.model.entity.Player@7627a57b[
   id=<null>
   name=nothingman22780
 ]
-], com.cd.mythicdraft.model.DraftPlayer@2eff024d[
+], com.cd.mythicdraft.model.entity.DraftPlayer@2eff024d[
   playerId=<null>
   draftId=<null>
   isActivePlayer=true
-  draft=com.cd.mythicdraft.model.Draft@34e475e1
-  player=com.cd.mythicdraft.model.Player@24e16ad7[
+  draft=com.cd.mythicdraft.model.entity.Draft@34e475e1
+  player=com.cd.mythicdraft.model.entity.Player@24e16ad7[
   id=<null>
   name=baronvonfonz
 ]
 ]]
-  draftPacks=[com.cd.mythicdraft.model.DraftPack@4b2d5c2b[
+  draftPacks=[com.cd.mythicdraft.model.entity.DraftPack@4b2d5c2b[
   id=<null>
   draftId=<null>
   setId=<null>
   sequenceId=0
-  draft=com.cd.mythicdraft.model.Draft@34e475e1
-  set=com.cd.mythicdraft.model.Set@6eeae9f1[
+  draft=com.cd.mythicdraft.model.entity.Draft@34e475e1
+  set=com.cd.mythicdraft.model.entity.Set@6eeae9f1[
   id=<null>
   name=MM2
 ]
-], com.cd.mythicdraft.model.DraftPack@efe319c[
+], com.cd.mythicdraft.model.entity.DraftPack@efe319c[
   id=<null>
   draftId=<null>
   setId=<null>
   sequenceId=1
-  draft=com.cd.mythicdraft.model.Draft@34e475e1
-  set=com.cd.mythicdraft.model.Set@a5061b[
+  draft=com.cd.mythicdraft.model.entity.Draft@34e475e1
+  set=com.cd.mythicdraft.model.entity.Set@a5061b[
   id=<null>
   name=MM2
 ]
-], com.cd.mythicdraft.model.DraftPack@526b0074[
+], com.cd.mythicdraft.model.entity.DraftPack@526b0074[
   id=<null>
   draftId=<null>
   setId=<null>
   sequenceId=2
-  draft=com.cd.mythicdraft.model.Draft@34e475e1
-  set=com.cd.mythicdraft.model.Set@5233d6f1[
+  draft=com.cd.mythicdraft.model.entity.Draft@34e475e1
+  set=com.cd.mythicdraft.model.entity.Set@5233d6f1[
   id=<null>
   name=MM2
 ]

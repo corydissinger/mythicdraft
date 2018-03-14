@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 
 import com.cd.mythicdraft.dao.CardDao;
 import com.cd.mythicdraft.dao.StatsDao;
-import com.cd.mythicdraft.model.Card;
-import com.cd.mythicdraft.model.Format;
-import com.cd.mythicdraft.model.FormatPickStats;
+import com.cd.mythicdraft.model.entity.Card;
+import com.cd.mythicdraft.model.entity.Format;
+import com.cd.mythicdraft.model.entity.FormatPickStats;
 
 @Component("draftStatsProcessor")
 public class StatsProcessor implements ItemProcessor<Format, List<FormatPickStats>> {

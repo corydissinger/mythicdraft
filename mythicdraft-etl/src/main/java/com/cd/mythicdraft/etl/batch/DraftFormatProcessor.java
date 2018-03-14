@@ -7,10 +7,10 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cd.mythicdraft.dao.DraftDao;
-import com.cd.mythicdraft.model.Draft;
-import com.cd.mythicdraft.model.DraftPack;
-import com.cd.mythicdraft.model.Format;
-import com.cd.mythicdraft.model.Set;
+import com.cd.mythicdraft.model.entity.Draft;
+import com.cd.mythicdraft.model.entity.DraftPack;
+import com.cd.mythicdraft.model.entity.Format;
+import com.cd.mythicdraft.model.entity.Set;
 
 public class DraftFormatProcessor implements ItemProcessor<Draft, Draft> {
 
